@@ -1,6 +1,7 @@
 body {
-    background-color: #e5e1ee;
+    background-color: #f5f5f5
 }
+
 #sidebar-wrapper {
     background: #90BEDE !important;
 }
@@ -25,4 +26,19 @@ body {
 
 #main_content {
     margin-top: 200px;
+}
+
+#nav-item {
+    text-align: center;
+    display: inline;
+}
+
+.create_room_info {
+    margin-top: 10px;
+}
+
+
+.well {
+    border: 2px solid #e3e3e3 !important;
+    border-radius: 7px !important;
 }
