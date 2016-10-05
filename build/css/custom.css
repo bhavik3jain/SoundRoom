@@ -1,3 +1,6 @@
+body {
+    background-color: #e5e1ee;
+}
 #sidebar-wrapper {
     background: #90BEDE !important;
 }
@@ -14,4 +17,12 @@
 
 #soundroom_title, #user_playlists {
     color: white;
+}
+
+#user_icon {
+    margin-right: 10px;
+}
+
+#main_content {
+    margin-top: 200px;
 }
