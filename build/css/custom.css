@@ -1,0 +1,17 @@
+#sidebar-wrapper {
+    background: #90BEDE !important;
+}
+
+#sidebar-brand {
+    color: white !important;
+}
+
+#home_page_navbar {
+    border-bottom: 1px solid black !important;
+    text-align: center;
+}
+
+
+#soundroom_title, #user_playlists {
+    color: white;
+}
