@@ -51,24 +51,24 @@
                           </ul>
                         </nav>
                         <!--  Main Content GOES HERE -->
-                        <div class="row">
-                          <div id="home_content">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-primary btn-lg btn-block">Create Room</button>
-                                <div class="well well-sm create_room_info">
-                                    Create room allows you to make a room in which other users
-                                    can come and add songs to a playlist...
-                                </div>
-
-                            </div>
-                            <div class="col-md-6">
-                                <a href="/join_room.html"><button type="button" class="btn btn-success btn-lg btn-block">Join Room</button></a>
-                                <div class="well well-sm create_room_info">
-                                    Joining a room allows you to join an exisiting room by using a unique string identifider....
-                                </div>
-                            </div>
-                          </div>
+                        <div class="row" id="main_content">
+                              <!-- join_room code begins -->
+                                 <div class = "col-md-4"></div>
+                                  <div class = "col-md-4">
+                                      <div class="panel panel-default panel-joinroom">
+                                        <div class="panel-body">
+                                          <h3>Join a Room</h3>
+                                          <h5>Room Number</h5>
+                                          <input type="text" class="form-control"
+                                              placeholder="">
+                                          <button type = "button" class="btn btn-default">Join</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <div class = "col-md-4"></div>
+                            <!-- join_room code ends -->
                         </div>
+
                     </div>
                </div>
            </div>
