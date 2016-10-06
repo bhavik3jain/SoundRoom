@@ -54,12 +54,14 @@ th, td {
     padding: 5px;
     text-align: center;
 }
-table tr:nth-child(even) {
+table tr{
     background-color: #f5f5f5;
 }
-table tr:nth-child(odd) {
-   background-color:#BFDDF2;
+
+tr:hover {
+  background-color: #BFDDF2;
 }
+
 table th {
     background-color: #90BEDE;
     color: black;
