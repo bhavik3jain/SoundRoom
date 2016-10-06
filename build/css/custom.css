@@ -91,5 +91,16 @@ tr:hover {
 table th {
     background-color: #90BEDE;
     color: black;
+}
 
+th, td {
+  text-align: center;
+}
+
+.panel-body {
+  padding: 0px;
+}
+
+.media-body {
+  padding-top: 20px;
 }
