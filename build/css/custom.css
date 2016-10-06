@@ -55,7 +55,7 @@ th, td {
     text-align: center;
 }
 table tr:nth-child(even) {
-    background-color: #FFFFFF;
+    background-color: #f5f5f5;
 }
 table tr:nth-child(odd) {
    background-color:#BFDDF2;
