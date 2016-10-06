@@ -1,4 +1,4 @@
-body {
+Gbody {
     background-color: #f5f5f5
 }
 
@@ -103,4 +103,14 @@ th, td {
 
 .media-body {
   padding-top: 20px;
+}
+
+
+#join_room_panel {
+  padding: 20px;
+}
+
+#join_room_text {
+  text-align: center;
+  margin-bottom: 25px;
 }
