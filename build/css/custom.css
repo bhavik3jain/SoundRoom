@@ -42,3 +42,25 @@ body {
     border: 2px solid #e3e3e3 !important;
     border-radius: 7px !important;
 }
+
+table {
+    width:100%;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: center;
+}
+table tr:nth-child(even) {
+    background-color: #FFFFFF;
+}
+table tr:nth-child(odd) {
+   background-color:#BFDDF2;
+}
+table th {
+    background-color: #90BEDE;
+    color: black;
+}
