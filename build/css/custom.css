@@ -24,8 +24,12 @@ body {
     margin-right: 10px;
 }
 
-#main_content {
+#home_content{
     margin-top: 200px;
+}
+
+#home_content a:hover{
+    text-decoration: none
 }
 
 #nav-item {
@@ -37,8 +41,30 @@ body {
     margin-top: 10px;
 }
 
-
 .well {
     border: 2px solid #e3e3e3 !important;
     border-radius: 7px !important;
+}
+
+.panel-joinroom{
+  background-color: #DFEAF3;
+  margin-top: 120px;
+}
+
+.panel-joinroom .panel-body h3{
+  color:#333333;
+}
+
+.panel-joinroom .panel-body h5{
+  margin-top:40px;
+  color:#333333;
+}
+
+.panel-joinroom .panel-body button{
+  width:100%;
+  margin-top: 30px;
+  font-size: 20px;
+  background-color: #5CB85C;
+  color:white;
+  border: none;
 }
