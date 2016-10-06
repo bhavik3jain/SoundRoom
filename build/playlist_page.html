@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>SoundRoom</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/simple-sidebar.css">
+    <!-- Custom CSS goes here -->
+  </head>
+  <body>
+    <!-- Custom HTML goes here -->
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#" id="soundroom_title">
+                        SoundRoom
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="user_playlists">Playlists</a>
+                </li>
+            </ul>
+        </div>
+        <!-- Page Content -->
+       <div id="page-content-wrapper">
+           <div class="container-fluid">
+               <div class="row">
+                   <div class="col-lg-12">
+                       <nav class="navbar navbar-light bg-faded" id="home_page_navbar">
+                            <ul class="nav navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Soundroom Logo Goes Here</a>
+                                </li>
+                            </ul>
+                            <!-- <p class="glyphicon glyphicon-user" aria-hidden="true"></p> -->
+                            <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i id="user_icon" class="glyphicon glyphicon-user"></i>Account<span class="caret"></span></a>
+                              <ul class="dropdown-menu">
+                                <li><a href="/account_info.html">Account Info</a></li>
+                                <li><a href="#">Sign out</a></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </nav>
+                        <!--  Main Content GOES HERE -->
+                        <div class="row" id="main_content">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-lg btn-block">Create Room</button>
+                                <div class="well well-sm create_room_info">
+                                    Create room allows you to make a room in which other users
+                                    can come and add songs to a playlist...
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-success btn-lg btn-block">Join Room</button>
+                                <div class="well well-sm create_room_info">
+                                    Joining a room allows you to join an exisiting room by using a unique string identifider....
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+           </div>
+       </div>
+   </div>
+        <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bundle.js"></script>
+  </body>
+</html>
