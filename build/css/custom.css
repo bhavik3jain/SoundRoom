@@ -94,7 +94,7 @@ table th {
 }
 
 th, td {
-  text-align: center;
+  text-align: left;
 }
 
 .panel-body {
@@ -135,4 +135,8 @@ th, td {
 
 #country{
   margin-bottom: 30px;
+}
+
+.current-song {
+  background: #BEFF33;
 }
