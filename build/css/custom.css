@@ -15,6 +15,13 @@ body {
     text-align: center;
 }
 
+#soundroom_logo{
+    max-height: 150px;
+    max-width: 150px;
+    padding-top: 20px;
+    margin-right: 50px;
+    margin-left: 50px;
+}
 
 #soundroom_title, #user_playlists {
     color: white;
