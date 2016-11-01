@@ -12,7 +12,7 @@ body {
 }
 
 #home_page_navbar {
-    border-bottom: 1px solid black !important;
+    border-bottom: 1px solid #57E4E8 !important;
     text-align: center;
 }
 
@@ -48,15 +48,21 @@ body {
 
 #title{
   color: #FE5D59;
+  font-family: 'BenchNine', sans-serif;
   text-align: center;
+  text-transform: uppercase;
 }
 
 #title h3{
   margin-bottom: 0px;
+    font-family: 'BenchNine', sans-serif;
+    font-size: 300%;
 }
 
 #title h1{
   margin-top: 0px;
+  font-family: 'BenchNine', sans-serif;
+  font-size: 500%;
 }
 
 #user_icon {
