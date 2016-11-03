@@ -30,6 +30,7 @@ body {
 
 #user_playlists{
   color: white;
+
 }
 
 #user_playlists h3{
@@ -55,8 +56,8 @@ body {
 
 #title h3{
   margin-bottom: 0px;
-    font-family: 'BenchNine', sans-serif;
-    font-size: 300%;
+  font-family: 'BenchNine', sans-serif;
+  font-size: 300%;
 }
 
 #title h1{
@@ -70,20 +71,27 @@ body {
 }
 
 #home_content{
-    margin-top: 200px;
+    margin-top: 50px;
 }
 
-#home_content a:hover{
-    text-decoration: none
+.left_button{
+  padding-right: 0px;
+padding-left: 0px;
+}
+
+.right_button{
+  padding-right: 0px;
+padding-left: 0px;
+}
+
+#bottom_of_container{
+  margin-top: 70px;
+  border-bottom: 1px solid #57E4E8 !important;
 }
 
 #nav-item {
     text-align: center;
     display: inline;
-}
-
-.create_room_info {
-    margin-top: 10px;
 }
 
 .well {
