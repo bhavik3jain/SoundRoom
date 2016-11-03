@@ -44,8 +44,20 @@ body {
 
 #home_page_navbar{
     text-align: center;
-
 }
+
+.dropdown-toggle{
+  width: 50px;
+}
+
+.top-dropdown{
+    padding-top: 30px;
+}
+
+.top-dropdown a{
+    color: #FE5D59 !important;
+}
+
 
 #title{
   color: #FE5D59;
@@ -76,12 +88,12 @@ body {
 
 .left_button{
   padding-right: 0px;
-padding-left: 0px;
+  padding-left: 0px;
 }
 
 .right_button{
   padding-right: 0px;
-padding-left: 0px;
+  padding-left: 0px;
 }
 
 #bottom_of_container{
