@@ -1,12 +1,13 @@
 import React from 'react';
 
 export default class Sidebar extends React.Component{
+  render(){
     return (
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="home_page.html" id="soundroom_title">
-                        <img src="../../build/img/SR_logo.png" alt="SoundRoom Logo" id="soundroom_logo">
+                        <img src="../../build/img/SR_logo.png" alt="SoundRoom Logo" id="soundroom_logo"/>
                     </a>
                 </li>
 
@@ -18,4 +19,5 @@ export default class Sidebar extends React.Component{
             </ul>
         </div>
     );
+  }
 }

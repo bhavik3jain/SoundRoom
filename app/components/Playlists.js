@@ -76,6 +76,6 @@ export default class Playlists extends React.Component{
           </tr>
         </table>
       </div>
-    )
+    );
   }
 }
