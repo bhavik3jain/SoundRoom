@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class Navbar extends React.Component{
   render(){
-
+      
     const proPicStyle = {
       width: '60%',
       height: '60%',

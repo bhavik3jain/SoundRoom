@@ -6,7 +6,22 @@ var startupName = "SoundRoom";
 
 // Put your mock objects here, as in Workshop 4
 var initialData = {
-
+    "users":{
+        "1": {
+          "_id":1,
+          "firstname": "Aarsh",
+          "lastname": "Patel"
+          "nickname": "AP"
+          "avatar": "img/profile_pic.png",
+          "description": "Hello everyone, I'm a mock user",
+          "country": "US",
+          "state": "MA",
+          "city": "Amherst",
+          "playlists": {
+              "Playlist1": ["Song1", "Song2", "Song3", "Song4", "Song5"]},
+              "Playlist2":["Song6", "Song7"]
+          }
+      }
 };
 
 var data = JSON.parse(localStorage.getItem(startupName));
