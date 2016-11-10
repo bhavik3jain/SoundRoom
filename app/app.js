@@ -13,15 +13,16 @@ import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 
 class App extends React.Component{
-  render(){
-    return (
-      <div>
-        <Sidebar />
-        <Navbar />
-        <Homepage />
-      </div>
-    );
-  }
+    render(){
+        const user_id_logged_in = "2";
+        return (
+          <div>
+            <Sidebar user_id={user_id_logged_in}/>
+            <Navbar />
+            <CreateRoom />
+          </div>
+        );
+    }
 }
 
 ReactDOM.render(<App />, document.getElementById('wrapper'));
