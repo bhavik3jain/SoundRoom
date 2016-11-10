@@ -1,5 +1,6 @@
 import React from 'react';
 import {getPlaylistData} from '../server';
+import {Link} from 'react-router';
 
 export default class Sidebar extends React.Component{
     constructor(props) {
@@ -24,7 +25,7 @@ export default class Sidebar extends React.Component{
         var i = 0
 
         for (var playlist in this.state.user_playlists) {
-            playlists.push(<a href='playlist_page.html' key={i}>{playlist}</a>);
+            playlists.push(<Link to='/playlists' key={i}>{playlist}</Link>);
             i++;
         }
 
@@ -32,9 +33,9 @@ export default class Sidebar extends React.Component{
             <div id="sidebar-wrapper">
                 <ul className="sidebar-nav">
                     <li className="sidebar-brand">
-                        <a href="#" id="soundroom_title">
+                        <Link to="/" id="soundroom_title">
                             <img src="img/SR_logo.png" alt="SoundRoom Logo" id="soundroom_logo"/>
-                        </a>
+                        </Link>
                     </li>
 
                     <li id ="user_playlists">
