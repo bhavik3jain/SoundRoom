@@ -12,11 +12,23 @@ import Room from './components/Room';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
-class PlaylistsPage extends React.Component {
+const user_id_logged_in = "2";
+
+class SidebarPage extends React.Component {
   render() {
     return (
       <div>
-        <Playlists />
+        <Sidebar user_id={user_id_logged_in} />
+      </div>
+    )
+  }
+}
+
+class AccountPage extends React.Component {
+  render() {
+    return (
+      <div>
+        <AccountInfo user_id={user_id_logged_in} />
       </div>
     )
   }
@@ -25,7 +37,6 @@ class PlaylistsPage extends React.Component {
 class App extends React.Component{
   render(){
     const { navbar, sidebar, content } = this.props
-    const user_id_logged_in = "2";
 
     return (
       <div>
@@ -36,7 +47,7 @@ class App extends React.Component{
           {navbar || <Navbar />}
         </div>
         <div className="content">
-          {content || <AccountInfo user_id={user_id_logged_in} />}
+          {content || <Homepage />}
         </div>
       </div>
     );
@@ -46,10 +57,10 @@ class App extends React.Component{
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="/account/(:user_id)" components={{ content: AccountInfo, sidebar: Sidebar }}/>
-      <Route path="createroom" components={{ content: CreateRoom, sidebar: Sidebar }}/>
-      <Route path="joinroom" components={{ content: JoinRoom, sidebar: Sidebar }}/>
-      <Route path="playlists" components={{ content: Playlists, sidebar: Sidebar }}/>
+      <Route path="account" components={{ content: AccountPage, sidebar: SidebarPage }}/>
+      <Route path="createroom" components={{ content: CreateRoom, sidebar: SidebarPage }}/>
+      <Route path="joinroom" components={{ content: JoinRoom, sidebar: SidebarPage }}/>
+      <Route path="playlists" components={{ content: Playlists, sidebar: SidebarPage }}/>
     </Route>
   </Router>
 ), document.getElementById('wrapper'))
