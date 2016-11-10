@@ -18,7 +18,7 @@ class App extends React.Component{
       <div>
         <Sidebar />
         <Navbar />
-        <Room />
+        <Homepage />
       </div>
     );
   }

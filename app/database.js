@@ -10,18 +10,21 @@ var initialData = {
         "1": {
           "_id":1,
           "firstname": "Aarsh",
-          "lastname": "Patel"
-          "nickname": "AP"
+          "lastname": "Patel",
+          "nickname": "AP",
           "avatar": "img/profile_pic.png",
           "description": "Hello everyone, I'm a mock user",
           "country": "US",
           "state": "MA",
           "city": "Amherst",
           "playlists": {
-              "Playlist1": ["Song1", "Song2", "Song3", "Song4", "Song5"]},
-              "Playlist2":["Song6", "Song7"]
+              "Beach Songs": ["Song1", "Song2", "Song3", "Song4", "Song5"],
+              "Rock N Roll":["Song6", "Song7"],
+              "Party": ["Song8", "Song9"],
+              "Hip Hop": ["Drake Songs", "Kayne Songs", "Some rapper"]
           }
       }
+  }
 };
 
 var data = JSON.parse(localStorage.getItem(startupName));
@@ -84,19 +87,19 @@ export function resetDatabase() {
 /**
  * Reset database button.
  */
-class ResetDatabase extends React.Component {
-  render() {
-    return (
-      <button className="btn btn-default" type="button" onClick={() => {
-        resetDatabase();
-        window.alert("Database reset! Refreshing the page now...");
-        document.location.reload(false);
-      }}>Reset Mock DB</button>
-    );
-  }
-}
-
-ReactDOM.render(
-  <ResetDatabase />,
-  document.getElementById('db-reset')
-);
+// class ResetDatabase extends React.Component {
+//   render() {
+//     return (
+//       <button className="btn btn-default" type="button" onClick={() => {
+//         resetDatabase();
+//         window.alert("Database reset! Refreshing the page now...");
+//         document.location.reload(false);
+//       }}>Reset Mock DB</button>
+//     );
+//   }
+// }
+//
+// ReactDOM.render(
+//   <ResetDatabase />,
+//   document.getElementById('db-reset')
+// );
