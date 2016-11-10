@@ -11,7 +11,7 @@ export default class Sidebar extends React.Component{
 	}
 
     getUserPlaylists() {
-        getPlaylistData("1", (playlistData) => {
+        getPlaylistData(this.props.user_id, (playlistData) => {
 			this.setState({"user_playlists": playlistData});
 		});
     }
@@ -25,7 +25,7 @@ export default class Sidebar extends React.Component{
         var i = 0
 
         for (var playlist in this.state.user_playlists) {
-            playlists.push(<a href='playlist_page.html' key={i}>{playlist}</a>);
+            playlists.push(<Link to='/playlists' key={i}>{playlist}</Link>);
             i++;
         }
 

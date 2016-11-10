@@ -11,11 +11,13 @@ var initialData = {
           "_id":1,
           "firstname": "Aarsh",
           "lastname": "Patel",
+          "email": "aarshpatel@umass.edu",
           "nickname": "AP",
-          "avatar": "img/profile_pic.png",
+          "avatar": "https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10399045_101311279883992_7165089_n.jpg?oh=3fb467ee0dcecd4a1ce8d501e4c69f63&oe=58C78EE4",
           "description": "Hello everyone, I'm a mock user",
           "country": "US",
           "state": "MA",
+          "dob": "08/06/1996",
           "city": "Amherst",
           "playlists": {
               "Beach Songs": ["Song1", "Song2", "Song3", "Song4", "Song5"],
@@ -23,8 +25,25 @@ var initialData = {
               "Party": ["Song8", "Song9"],
               "Hip Hop": ["Drake Songs", "Kayne Songs", "Some rapper"]
           }
-      }
-  }
+      },
+      "2": {
+            "_id":2,
+            "firstname": "Bhavik",
+            "lastname": "Jain",
+            "email": "bjain@umass.edu",
+            "nickname": "Bjain",
+            "avatar": "https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10399045_101311279883992_7165089_n.jpg?oh=3fb467ee0dcecd4a1ce8d501e4c69f63&oe=58C78EE4",
+            "description": "Hello everyone, I'm a mock user",
+            "country": "US",
+            "state": "MA",
+            "dob": "04/10/1996",
+            "city": "Amherst",
+            "playlists": {
+                "Drake Playlists": ["Song1", "Song2", "Song3", "Song4", "Song5"],
+                "Logic Playlists (Awesome)":["Song6", "Song7"]
+            }
+        }
+    }
 };
 
 var data = JSON.parse(localStorage.getItem(startupName));
