@@ -1,5 +1,6 @@
 import React from 'react';
 import {getPlaylistData} from '../server';
+import {Link} from 'react-router';
 
 export default class Sidebar extends React.Component{
     constructor(props) {
@@ -32,9 +33,9 @@ export default class Sidebar extends React.Component{
             <div id="sidebar-wrapper">
                 <ul className="sidebar-nav">
                     <li className="sidebar-brand">
-                        <a href="home_page.html" id="soundroom_title">
+                        <Link to="/" id="soundroom_title">
                             <img src="img/SR_logo.png" alt="SoundRoom Logo" id="soundroom_logo"/>
-                        </a>
+                        </Link>
                     </li>
 
                     <li id ="user_playlists">

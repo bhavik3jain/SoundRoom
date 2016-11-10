@@ -10,18 +10,44 @@ import AccountInfo from './components/AccountInfo';
 import Room from './components/Room';
 
 import ReactDOM from 'react-dom';
-import { IndexRoute, Router, Route, hashHistory } from 'react-router';
+import { IndexRoute, Router, Route, browserHistory } from 'react-router';
+
+class PlaylistsPage extends React.Component {
+  render() {
+    return (
+      <div>
+        <Playlists />
+      </div>
+    )
+  }
+}
 
 class App extends React.Component{
   render(){
+    const { navbar, sidebar, content } = this.props
+
     return (
       <div>
-        <Sidebar />
-        <Navbar />
-        <Homepage />
+        <div className="sidebar">
+          {sidebar || <Sidebar />}
+        </div>
+        <div className="navbar">
+          {navbar || <Navbar />}
+        </div>
+        <div className="content">
+          {content || <Homepage />}
+        </div>
       </div>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('wrapper'));
+ReactDOM.render((
+  <Router history={browserHistory}>
+    <Route path="/" component={App}>
+      <Route path="account" components={{ content: AccountInfo, sidebar: Sidebar }}/>
+      <Route path="createroom" components={{ content: CreateRoom, sidebar: Sidebar }}/>
+      <Route path="joinroom" components={{ content: JoinRoom, sidebar: Sidebar }}/>
+    </Route>
+  </Router>
+), document.getElementById('wrapper'))
