@@ -32,7 +32,7 @@ export default class Sidebar extends React.Component{
             <div id="sidebar-wrapper">
                 <ul className="sidebar-nav">
                     <li className="sidebar-brand">
-                        <a href="home_page.html" id="soundroom_title">
+                        <a href="#" id="soundroom_title">
                             <img src="img/SR_logo.png" alt="SoundRoom Logo" id="soundroom_logo"/>
                         </a>
                     </li>

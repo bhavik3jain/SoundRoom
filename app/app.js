@@ -14,12 +14,12 @@ import { IndexRoute, Router, Route, hashHistory } from 'react-router';
 
 class App extends React.Component{
     render(){
-        const user_id_logged_in = "2";
+        const user_id_logged_in = "1";
         return (
           <div>
             <Sidebar user_id={user_id_logged_in}/>
             <Navbar />
-            <CreateRoom />
+            <Homepage />
           </div>
         );
     }

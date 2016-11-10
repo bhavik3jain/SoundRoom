@@ -21,3 +21,9 @@ export function getPlaylistData(user, cb) {
   // invokes (calls) the "cb" function some time in the future.
   emulateServerReturn(userPlaylists, cb);
 }
+
+
+// TODO:
+// export function addPlaylistToRoom(roomID, cb) {
+//     var roomData = readDocument("room", roomID);
+// // }
