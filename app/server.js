@@ -19,11 +19,4 @@ export function getPlaylistData(user, cb) {
   var userPlaylists = readDocument('users', user)['playlists'];
   // emulateServerReturn will emulate an asynchronous server operation, which
   // invokes (calls) the "cb" function some time in the future.
-  emulateServerReturn(userPlaylists, cb);
-}
-
-
-// TODO:
-// export function addPlaylistToRoom(roomID, cb) {
-//     var roomData = readDocument("room", roomID);
-// // }
+  emulateServerReturn(userPlaylists, cb); }
