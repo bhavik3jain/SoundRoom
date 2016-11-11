@@ -19,11 +19,12 @@ var initialData = {
           "state": "MA",
           "dob": "08/06/1996",
           "city": "Amherst",
-          "playlists": {
-              "Beach Songs": ["Song1", "Song2", "Song3", "Song4", "Song5"],
-              "Rock N Roll":["Song6", "Song7"],
-              "Party": ["Song8", "Song9"],
-              "Hip Hop": ["Drake Songs", "Kayne Songs", "Some rapper"]
+          "roomHostID": null,
+          "playlists": { // playlists hold trackID for songs
+              "Beach Songs": ["1", "2", "3", "4", "5"],
+              "Rock N Roll":["6", "7"],
+              "Party": ["8", "9"],
+              "Hip Hop": ["10", "11", "12"]
           }
       },
       "2": {
@@ -38,10 +39,85 @@ var initialData = {
             "state": "MA",
             "dob": "04/10/1996",
             "city": "Amherst",
+            "roomHostID": null,
             "playlists": {
-                "Drake Playlists": ["Song1", "Song2", "Song3", "Song4", "Song5"],
-                "Logic Playlists (Awesome)":["Song6", "Song7"]
+                "Drake Playlists": ["1", "2", "3", "4", "5"],
+                "Logic Playlists (Awesome)":["2", "3"]
             }
+        }
+    },
+    "songs": {
+        "1": {
+            "title":  "Pt. 2",
+            "artist": "Kayne West",
+            "album": "Life of Pablo"
+        },
+        "2": {
+            "title": "Welcome to heartbreak",
+            "artist": "Kayne West",
+            "album": "808s Hearbreak"
+        },
+        "3": {
+            "title": "Starboy",
+            "artist": "The Weeknd",
+            "album": "Starboy"
+        },
+        "4": {
+            "title": "Now and forever",
+            "artist": "Drake",
+            "album": "If you are reading this"
+        },
+        "5": {
+            "title": "Soul Food",
+            "artist": "Logic",
+            "album": "Underpressure"
+        },
+        "6": {
+            "title": "Nikki",
+            "artist": "Logic",
+            "album": "Underpressure"
+        },
+        "7": {
+            "title": "Man of the year",
+            "artist": "Logic",
+            "album": "Young Sinatra"
+        },
+        "8": {
+            "title": "Lose",
+            "artist": "Travis Scott",
+            "album": "Birds and Trap Scene"
+        },
+        "9": {
+            "title": "Break your heart",
+            "artist": "Taio Cruz",
+            "album": "Rakstarr"
+        },
+        "10": {
+            "title": "Two Reasons",
+            "artist": "Trey Songz",
+            "album": "Chapter V"
+        },
+        "11": {
+            "title": "Not Nice",
+            "artist": "PartyNextDoor",
+            "album": "PartyNextDoor 3"
+        },
+        "12": {
+            "title": "Stainless",
+            "artist": "Stainless",
+            "album": "Incredible True Story"
+        }
+    },
+    "rooms": {
+        "Room1": {
+            "host": "1",
+            "participants": ["1", "2", "3"],
+            "playlists": [{"trackID": "2", "likes": 0}, {"tackID": "1", "likes": 0}, {"trackID": "10", "likes": 0}]
+        },
+        "Room2": {
+            "host": "2",
+            "participants": ["4", "5"],
+            "playlists": [{"trackID": "3", "likes": 0}, {"tackID": "4", "likes": 0}, {"trackID": "4", "likes": 0}]
         }
     }
 };
