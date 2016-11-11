@@ -21,3 +21,7 @@ export function getPlaylistData(user, cb) {
   // invokes (calls) the "cb" function some time in the future.
   emulateServerReturn(userPlaylists, cb);
 }
+
+export function getSongsForPlaylist(playlistID, cb) {
+    var songsData = readDocument('user', user)['playlists']
+}

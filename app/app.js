@@ -34,6 +34,16 @@ class AccountPage extends React.Component {
   }
 }
 
+class PlaylistPage extends React.Component{
+  render(){
+    return (
+      <div>
+        <Playlists />
+      </div>
+    )
+  }
+}
+
 class App extends React.Component{
   render(){
     const { navbar, sidebar, content } = this.props
@@ -57,10 +67,10 @@ class App extends React.Component{
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="account" components={{ content: AccountPage, sidebar: SidebarPage }}/>
-      <Route path="createroom" components={{ content: CreateRoom, sidebar: SidebarPage }}/>
-      <Route path="joinroom" components={{ content: JoinRoom, sidebar: SidebarPage }}/>
-      <Route path="playlists" components={{ content: Playlists, sidebar: SidebarPage }}/>
+      <Route path="account" components={{content: AccountPage}}/>
+      <Route path="createroom" components={{content: CreateRoom}}/>
+      <Route path="joinroom" components={{content: JoinRoom}}/>
+      <Route path="playlists/:playlistData" components={{content: Playlists}}/>
     </Route>
   </Router>
 ), document.getElementById('wrapper'))
