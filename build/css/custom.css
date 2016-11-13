@@ -112,26 +112,34 @@ body {
 }
 
 .panel-joinroom{
-  background-color: #DFEAF3;
+  background-color: #343434;
   margin-top: 120px;
+  border: 1px solid #57E4E8;
 }
 
-.panel-joinroom .panel-body h3{
-  color:#333333;
+.panel-joinroom .panel-body h2{
+  color:#57E4E8;
+
 }
 
 .panel-joinroom .panel-body h5{
-  margin-top:40px;
-  color:#333333;
+  color:#57E4E8;
+
+}
+
+.panel-joinroom .panel-body input{
+  border: 1px solid #57E4E8;
+  background-color: #343434;
+  color:#57E4E8;
 }
 
 .panel-joinroom .panel-body button{
   width:100%;
   margin-top: 30px;
-  font-size: 20px;
-  background-color: #5CB85C;
-  color:white;
-  border: none;
+  font-size: 25px;
+  background-color: #343434;
+  color:#57E4E8;
+  border: 2px solid #57E4E8;
 }
 
 table {
