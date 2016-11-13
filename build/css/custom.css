@@ -113,8 +113,8 @@ body {
 
 .panel-joinroom{
   background-color: #343434;
-  margin-top: 120px;
-  border: 1px solid #57E4E8;
+  margin-top: 10px;
+  border: 1px solid #343434;
 }
 
 .panel-joinroom .panel-body h2{
@@ -142,6 +142,10 @@ body {
   border: 2px solid #57E4E8;
 }
 
+.panel-joinroom .panel-body button:hover{
+  box-shadow: 0 5px 15px #57E4E8;
+
+}
 table {
     width:100%;
 }
