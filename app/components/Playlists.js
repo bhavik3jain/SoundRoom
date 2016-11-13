@@ -24,7 +24,7 @@ export default class Playlists extends React.Component{
       playlistTableData.push(<tr><td>{songName}</td></tr>);
     }
     return (
-      <div>
+      <div className="saved-playlist">
         <h1>Playlist</h1>
 
         <table>
