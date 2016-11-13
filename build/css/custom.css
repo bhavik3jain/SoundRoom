@@ -247,3 +247,12 @@ th, td {
     border:0;
     background:transparent;
 }
+
+.input-group h3{
+  color:#57E4E8;
+      margin-top: 0px;
+}
+
+#account-input-box{
+  width: 200%;
+}
