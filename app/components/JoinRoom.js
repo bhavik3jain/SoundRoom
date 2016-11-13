@@ -9,6 +9,8 @@ import {Link} from 'react-router';
 
 export default class JoinRoom extends React.Component{
 
+
+
   constructor(props){
     super(props);
     this.state = {text:""};
