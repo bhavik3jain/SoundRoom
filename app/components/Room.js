@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Join extends React.Component{
+export default class Room extends React.Component{
     render() {
         return (
             <div>
