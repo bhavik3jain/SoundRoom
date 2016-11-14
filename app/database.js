@@ -124,7 +124,7 @@ var initialData = {
         "1": {
             "_id" : 1,
             "host": "1",
-            "participants": ["1", "2", "3"],
+            "participants": ["1", "2"],
             "playlists": [{"trackID": "2", "likes": 0}, {"tackID": "1", "likes": 0}, {"trackID": "10", "likes": 0}]
         },
         "2": {

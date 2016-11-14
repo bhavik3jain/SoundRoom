@@ -7,7 +7,7 @@ import React from 'react';
 
 export default class CreateRoom extends React.Component{
 
-    getHashCode() {
+    createHashCode() {
         // gets a unique hash code to make a room session
         // how you make up the hash code is up to the implementor
         return "1bxlQ44tb";
