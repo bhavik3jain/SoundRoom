@@ -21,6 +21,7 @@ export default class Room extends React.Component{
                           </div>
 
                           <table className="table room-playlist">
+                          <tbody>
                             <tr>
                               <th>Artist</th>
                               <th>Song</th>
@@ -65,6 +66,7 @@ export default class Room extends React.Component{
                               <td>Drake</td>
                               <td>Now & Forever</td>
                             </tr>
+                          </tbody>
                           </table>
                         </div>
                       </div>
@@ -80,6 +82,7 @@ export default class Room extends React.Component{
                           </div>
                       </div>
                         <table className="table room-list">
+                        <tbody>
                           <tr>
                             <th>Participants</th>
                           </tr>
@@ -101,6 +104,7 @@ export default class Room extends React.Component{
                           <tr>
                             <td>Bhavik Jain</td>
                           </tr>
+                        </tbody>
                         </table>
                       </div>
                     </div>

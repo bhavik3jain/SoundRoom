@@ -21,16 +21,18 @@ export default class Playlists extends React.Component{
 
     for (var playlist in playlistData) {
       var songName = playlistData[playlist];
-      playlistTableData.push(<tr><td>{songName}</td></tr>);
+      playlistTableData.push(<tbody><tr><td>{songName}</td></tr></tbody>);
     }
     return (
       <div className="saved-playlist">
         <h1>Playlist</h1>
 
         <table>
+        <tbody>
           <tr>
             <th> Song Name </th>
           </tr>
+        </tbody>
           { playlistTableData }
         </table>
       </div>
