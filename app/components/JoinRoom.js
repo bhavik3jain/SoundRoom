@@ -43,7 +43,7 @@ export default class JoinRoom extends React.Component{
                          <h2 id="join_room_text">Join a Room</h2>
                          <input type="text" className="form-control" id="userInput" onChange={(e)=>this.validateRoom(e)}
                              placeholder="Enter Room Number" />
-                           <Link to={{pathname:"room/:roomId",query:{roomId:roomNumber}}}>
+                           <Link to={{pathname:"room",query:{roomId:roomNumber}}}>
                                <button type = "button" className="btn btn-default" id="btn1" >Join</button>
                            </Link>
                            <Link to="/">
