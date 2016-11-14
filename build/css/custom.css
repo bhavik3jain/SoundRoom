@@ -158,19 +158,43 @@ body {
 #accountinfo-btn1{
   width:30%;
   font-size: 16px;
-  margin-left: 16px;
+  margin-left: 13px;
+  margin-bottom: 20px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
 }
 
-#accountinfo-btn2{
+#accountinfo-btn1:hover {
   width:30%;
+  font-size: 16px;
+  margin-left: 13px;
+  margin-bottom: 20px;
+  background-color: #343434;
+  color:#57E4E8;
+  border: 1px solid #57E4E8;
+  box-shadow: 0 5px 15px #57E4E8;
+}
+
+#accountinfo-btn2{
+  width:33%;
   margin-left: 10px;
+  margin-bottom: 20px;
   font-size: 16px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
+}
+
+#accountinfo-btn2:hover{
+  width:33%;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  background-color: #343434;
+  color:#57E4E8;
+  border: 1px solid #57E4E8;
+  box-shadow: 0 5px 15px #57E4E8;
 }
 
 #update_pic_button{
@@ -179,6 +203,15 @@ body {
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
+}
+
+#update_pic_button:hover{
+  width:35%;
+  font-size: 16px;
+  background-color: #343434;
+  color:#57E4E8;
+  border: 1px solid #57E4E8;
+  box-shadow: 0 5px 15px #57E4E8;
 }
 
 .panel-joinroom .panel-body button:hover{

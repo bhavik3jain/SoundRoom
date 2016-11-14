@@ -26,10 +26,15 @@ export default class AccountInfo extends React.Component{
         <div className="row" id="main_content">
           <div className="col-md-6">
             <div className="input-group">
-              <h3>Full Name</h3>
-              <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.firstname + " " + this.state.account_info.lastname} aria-describedby="basic-addon2" />
+              <h3>First Name</h3>
+              <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.firstname} aria-describedby="basic-addon2" />
             </div>
             <br />
+              <div className="input-group">
+                <h3>Last Name</h3>
+                <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.lastname} aria-describedby="basic-addon2" />
+              </div>
+              <br />
             <div className="input-group">
               <h3>Email</h3>
               <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.email} aria-describedby="basic-addon2" />
