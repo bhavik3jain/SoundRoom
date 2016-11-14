@@ -1,4 +1,5 @@
 import React from 'react';
+import {getSongsData} from '../server';
 
 export default class Playlists extends React.Component{
   constructor(props) {
@@ -14,18 +15,28 @@ export default class Playlists extends React.Component{
       });
   }
 
-  render() {
-    var playlistData = this.props.location.query.playlistData;
-    console.log(playlistData);
-    var playlistTableData = [];
-
-    for (var playlist in playlistData) {
-      var songName = playlistData[playlist];
-      playlistTableData.push(<tbody><tr><td>{songName}</td></tr></tbody>);
+  getUserSongsFromPlaylists(playlistData) {
+    var songData = []
+    for(var songId in playlistData) {
+      songData.push(getSongsData(parseInt(playlistData[songId])).title)
     }
+    return songData;
+  }
+
+  render() {
+
+    var playlistTableData = [];
+    var playlistData = this.props.location.query.playlistData;
+    var playlistName = this.props.location.query.playlistName;
+    console.log(playlistName);
+    var songData = this.getUserSongsFromPlaylists(playlistData);
+    for(var title in songData) {
+      playlistTableData.push(<tbody><tr><td>{songData[title]}</td></tr></tbody>);
+    }
+
     return (
       <div className="saved-playlist">
-        <h1>Playlist</h1>
+        <h1>{playlistName}</h1>
 
         <table>
         <tbody>

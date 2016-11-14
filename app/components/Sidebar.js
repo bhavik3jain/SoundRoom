@@ -25,7 +25,7 @@ export default class Sidebar extends React.Component{
         var i = 1
 
         for (var playlist in this.state.user_playlists) {
-            playlists.push(<Link to={{pathname: 'playlists', query: {playlistData:this.state.user_playlists[playlist]}}} key={i}>{playlist}</Link>);
+            playlists.push(<Link to={{pathname: 'playlists', query: {playlistData:this.state.user_playlists[playlist], playlistName: playlist}}} key={i}>{playlist}</Link>);
             i++;
         }
 

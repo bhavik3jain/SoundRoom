@@ -48,61 +48,73 @@ var initialData = {
     },
     "songs": {
         "1": {
+            "_id": 1,
             "title":  "Pt. 2",
             "artist": "Kayne West",
             "album": "Life of Pablo"
         },
         "2": {
+            "_id": 2,
             "title": "Welcome to heartbreak",
             "artist": "Kayne West",
             "album": "808s Hearbreak"
         },
         "3": {
+            "_id": 3,
             "title": "Starboy",
             "artist": "The Weeknd",
             "album": "Starboy"
         },
         "4": {
+            "_id": 4,
             "title": "Now and forever",
             "artist": "Drake",
             "album": "If you are reading this"
         },
         "5": {
+            "_id": 5,
             "title": "Soul Food",
             "artist": "Logic",
             "album": "Underpressure"
         },
         "6": {
+            "_id": 6,
             "title": "Nikki",
             "artist": "Logic",
             "album": "Underpressure"
         },
         "7": {
+            "_id": 7,
             "title": "Man of the year",
             "artist": "Logic",
             "album": "Young Sinatra"
         },
         "8": {
+            "_id": 8,
             "title": "Lose",
             "artist": "Travis Scott",
             "album": "Birds and Trap Scene"
         },
         "9": {
+            "_id": 9,
             "title": "Break your heart",
             "artist": "Taio Cruz",
             "album": "Rakstarr"
         },
         "10": {
+            "_id": 10,
             "title": "Two Reasons",
             "artist": "Trey Songz",
             "album": "Chapter V"
         },
         "11": {
+            "_id": 11,
             "title": "Not Nice",
             "artist": "PartyNextDoor",
             "album": "PartyNextDoor 3"
         },
         "12": {
+            "_id": 12,
             "title": "Stainless",
             "artist": "Stainless",
             "album": "Incredible True Story"

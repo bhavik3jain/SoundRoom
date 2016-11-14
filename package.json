@@ -1,8 +1,8 @@
 {
-  "name": "team-project-client",
+  "name": "SoundRoom",
   "version": "0.0.1",
-  "description": "Build support for the client-side of CS326 projects.",
-  "author": "John Vilk <jvilk@cs.umass.edu>",
+  "description": "SoundRoom Project Code",
+  "author": "SoundRoom",
   "license": "MIT",
   "scripts": {
     "build": "./node_modules/.bin/webpack",
