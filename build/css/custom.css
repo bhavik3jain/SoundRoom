@@ -133,13 +133,26 @@ body {
   color:#57E4E8;
 }
 
-.panel-joinroom .panel-body button{
-  width:100%;
-  margin-top: 30px;
-  font-size: 25px;
+ #btn1{
+  width:40%;
+  margin-left:15px;
+  margin-top: 20px;
+  font-size: 15px;
   background-color: #343434;
   color:#57E4E8;
-  border: 2px solid #57E4E8;
+  border: 1px solid #57E4E8;
+}
+
+#btn2{
+
+  width:40%;
+  margin-left:10px;
+  margin-top: 20px;
+  font-size: 15px;
+  background-color: #343434;
+  color:#57E4E8;
+  border: 1px solid #57E4E8;
+
 }
 
 .panel-joinroom .panel-body button:hover{

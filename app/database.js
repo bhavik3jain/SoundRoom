@@ -110,13 +110,13 @@ var initialData = {
     },
     "rooms": {
         "1": {
-            "_id" : "1",
+            "_id" : 1,
             "host": "1",
             "participants": ["1", "2", "3"],
             "playlists": [{"trackID": "2", "likes": 0}, {"tackID": "1", "likes": 0}, {"trackID": "10", "likes": 0}]
         },
         "2": {
-            "_id" : "2",
+            "_id" : 2,
             "host": "2",
             "participants": ["4", "5"],
             "playlists": [{"trackID": "3", "likes": 0}, {"tackID": "4", "likes": 0}, {"trackID": "4", "likes": 0}]
@@ -146,6 +146,11 @@ export function readDocument(collection, id) {
   // Clone the data. We do this to model a database, where you receive a
   // *copy* of an object and not the object itself.
   return JSONClone(data[collection][id]);
+}
+
+export function readAllDocuments(collection){
+
+  return JSONClone(data[collection]);
 }
 
 /**
