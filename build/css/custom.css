@@ -135,9 +135,9 @@ body {
 
  #btn1{
   width:40%;
-  margin-left:15px;
+  margin-left:27px;
   margin-top: 20px;
-  font-size: 15px;
+  font-size: 16px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
@@ -148,11 +148,37 @@ body {
   width:40%;
   margin-left:10px;
   margin-top: 20px;
-  font-size: 15px;
+  font-size: 16px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
 
+}
+
+#accountinfo-btn1{
+  width:30%;
+  font-size: 16px;
+  margin-left: 16px;
+  background-color: #343434;
+  color:#57E4E8;
+  border: 1px solid #57E4E8;
+}
+
+#accountinfo-btn2{
+  width:30%;
+  margin-left: 10px;
+  font-size: 16px;
+  background-color: #343434;
+  color:#57E4E8;
+  border: 1px solid #57E4E8;
+}
+
+#update_pic_button{
+  width:35%;
+  font-size: 16px;
+  background-color: #343434;
+  color:#57E4E8;
+  border: 1px solid #57E4E8;
 }
 
 .panel-joinroom .panel-body button:hover{
@@ -266,6 +292,11 @@ th, td {
       margin-top: 0px;
 }
 
+#account_info_name{
+    color:#57E4E8;
+}
+
 #account-input-box{
-  width: 200%;
+  max-width: 200%;
+  min-width: 200%;
 }

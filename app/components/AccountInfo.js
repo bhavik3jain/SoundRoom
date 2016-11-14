@@ -45,8 +45,8 @@ export default class AccountInfo extends React.Component{
               <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.country} aria-describedby="basic-addon2" />
             </div>
 
-            <button type="button" className="btn btn-primary btn-lg" >Update Profile</button>
-            <button type="button" className="btn btn-success btn-lg">Change Password</button>
+            <button type="button" id="accountinfo-btn1" className="btn btn-primary btn-lg" >Update Profile</button>
+            <button type="button" id="accountinfo-btn2" className="btn btn-success btn-lg">Change Password</button>
           </div>
           <div className="col-md-6">
             <h1 id="account_info_name">{this.state.account_info.firstname + " " + this.state.account_info.lastname}</h1>
