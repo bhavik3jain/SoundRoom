@@ -46,7 +46,7 @@ export default class JoinRoom extends React.Component{
                            <Link to={{pathname:"room/:roomId",query:{roomId:roomNumber}}}>
                                <button type = "button" className="btn btn-default" id="btn1" >Join</button>
                            </Link>
-                           <Link to="/homepage">
+                           <Link to="/">
                              <button type = "button" className="btn btn-default" id="btn2" >Back</button>
                            </Link>
 
