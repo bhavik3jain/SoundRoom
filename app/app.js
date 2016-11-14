@@ -46,18 +46,21 @@ class PlaylistPage extends React.Component{
 
 class App extends React.Component{
   render(){
-    const { navbar, sidebar, content } = this.props
+    const { navbar, sidebar, content, player } = this.props
 
     return (
       <div>
         <div className="sidebar">
-          {sidebar || <Sidebar user_id={user_id_logged_in} />}
+          <Sidebar user_id={user_id_logged_in} />
         </div>
         <div className="navbar">
-          {navbar || <Navbar />}
+          <Navbar />
         </div>
         <div className="content">
           {content || <Homepage />}
+        </div>
+        <div className="player">
+          {player}
         </div>
       </div>
     );
