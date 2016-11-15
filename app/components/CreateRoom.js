@@ -10,7 +10,13 @@ export default class CreateRoom extends React.Component{
     createHashCode() {
         // gets a unique hash code to make a room session
         // how you make up the hash code is up to the implementor
-        return "1bxlQ44tb";
+        var s="";
+        for(var j=0;j<9;++j)
+        {
+          s=s+Math.floor(Math.random()*10);
+        }
+
+        return s;
     }
 
     render() {
@@ -23,7 +29,7 @@ export default class CreateRoom extends React.Component{
                         <div className="panel panel-default panel-joinroom">
                           <div className="panel-body">
                             <h3>Congratulations!</h3>
-                            <h5>You have created <b>Room 12</b> with the joining code : <b>{code}</b></h5>
+                            <h5>You have created <b>a room</b> with the joining code : <b>{code}</b></h5>
                             <button type = "button" className="btn btn-default"><span className="glyphicon glyphicon-share"></span>Share</button>
                           </div>
                         </div>
