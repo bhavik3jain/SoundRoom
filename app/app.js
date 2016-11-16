@@ -55,7 +55,7 @@ class App extends React.Component{
           <Sidebar user_id={user_id_logged_in} />
         </div>
         <div className="navbar">
-          <Navbar />
+          <Navbar user_id={user_id_logged_in} />
         </div>
         <div className="content">
           {content || <Homepage />}

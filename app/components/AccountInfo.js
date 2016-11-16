@@ -30,11 +30,11 @@ export default class AccountInfo extends React.Component{
               <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.firstname} aria-describedby="basic-addon2" />
             </div>
             <br />
-              <div className="input-group">
-                <h3>Last Name</h3>
-                <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.lastname} aria-describedby="basic-addon2" />
-              </div>
-              <br />
+            <div className="input-group">
+              <h3>Last Name</h3>
+              <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.lastname} aria-describedby="basic-addon2" />
+            </div>
+            <br />
             <div className="input-group">
               <h3>Email</h3>
               <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.email} aria-describedby="basic-addon2" />
@@ -55,9 +55,8 @@ export default class AccountInfo extends React.Component{
           </div>
           <div className="col-md-6">
             <h1 id="account_info_name">{this.state.account_info.firstname + " " + this.state.account_info.lastname}</h1>
-            <img src={this.state.account_info.avatar} alt="Profile pic" className="img-circle" id="account_info_pic" />
-            <button type="button" className="btn btn-primary btn-lg" id="update_pic_button">Upload new picture</button>
-          </div>
+            <img src={this.state.account_info.avatar} alt="Profile pic" className="img-circle" id="account_info_pic"/>
+                </div>
         </div>
 
       </div>
