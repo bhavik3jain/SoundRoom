@@ -11,17 +11,15 @@ export default class CreateRoom extends React.Component{
     getHashCode() {
         // gets a unique hash code to make a room session
         // how you make up the hash code is up to the implementor
-        var s="";
-        for(var j=0;j<9;++j)
-        {
-          s=s+Math.floor(Math.random()*10);
-        }
-
-        return s;
+        var result = '';
+        var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        for (var i = 8; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+        return result;
     }
 
     render() {
         const code = this.getHashCode();
+        console.log(code);
         return (
             <div>
                 <div className="row">
