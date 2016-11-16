@@ -30,8 +30,9 @@ export default class Room extends React.Component{
         for (var song in roomPlaylistSongs) {
           roomPlaylistSongsElements.push(
             <tr>
-              <td>{roomPlaylistSongs[song].artist}</td>
               <td>{roomPlaylistSongs[song].title}</td>
+              <td>{roomPlaylistSongs[song].artist}</td>
+              <td>{roomPlaylistSongs[song].album}</td>
             </tr>
           );
         }
@@ -59,8 +60,9 @@ export default class Room extends React.Component{
                           <table className="table room-playlist">
                           <tbody>
                             <tr>
-                              <th>Artist</th>
                               <th>Song</th>
+                              <th>Artist</th>
+                              <th>Album</th>
                             </tr>
                             {roomPlaylistSongsElements}
                           </tbody>
