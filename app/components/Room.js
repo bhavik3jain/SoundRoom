@@ -5,7 +5,7 @@ export default class Room extends React.Component{
 
     constructor(props) {
       super(props);
-      this.state = {current_room: ""}
+      this.state = {playlist: {}}
     }
 
     getRoomPlaylist(roomId) {
@@ -14,30 +14,29 @@ export default class Room extends React.Component{
 
     getRoomPlaylistSongs(roomId) {
       var roomData = getRoomData(parseInt(roomId));
-
       var songs = [];
-
-      // var songs = roomData.playlists.map(function(track) {
-      //   return getSongsData(parseInt(roomData.playlists[track]));
-      // });
 
       for (var track in roomData.playlists) {
         songs.push(getSongsData(parseInt(roomData.playlists[track].trackID)));
       }
 
-      // for (var track in roomData.playlists) {
-      //   songs.push(getSongsData(parseInt(track.trackID)).title);
-      // }
       return songs;
     }
 
     render() {
 
-        // var roomId = this.props.location.query.roomId;
-        // temporarily using test value while JoinRoom is being fixed
-        // var roomData = this.getRoomPlaylist(1);
-        var roomData = this.getRoomPlaylistSongs(1);
-        console.log(roomData);
+        var roomPlaylistSongs = this.getRoomPlaylistSongs(2);
+        var roomPlaylistSongsElements = [];
+        for (var song in roomPlaylistSongs) {
+          roomPlaylistSongsElements.push(
+            <tr>
+              <td>{roomPlaylistSongs[song].artist}</td>
+              <td>{roomPlaylistSongs[song].title}</td>
+            </tr>
+          );
+        }
+
+        console.log(roomPlaylistSongs);
 
         return (
             <div>
@@ -63,46 +62,7 @@ export default class Room extends React.Component{
                               <th>Artist</th>
                               <th>Song</th>
                             </tr>
-                            <tr className="current-song">
-                              <td>Drake</td>
-                              <td>Hotline Bling</td>
-                            </tr>
-                            <tr>
-                              <td>Drake</td>
-                              <td>Controlla</td>
-                            </tr>
-                            <tr>
-                              <td>DJ Khaled</td>
-                              <td>I got the Keys</td>
-                            </tr>
-                            <tr>
-                              <td>The Chainsmokers</td>
-                              <td>Closer</td>
-                            </tr>
-                            <tr>
-                              <td>twenty one pilots</td>
-                              <td>Heathens</td>
-                            </tr>
-                            <tr>
-                              <td>Kanye West</td>
-                              <td>Pt. 2</td>
-                            </tr>
-                            <tr>
-                              <td>Logic</td>
-                              <td>Soul Food</td>
-                            </tr>
-                            <tr>
-                              <td>Travis Scott</td>
-                              <td>Lose</td>
-                            </tr>
-                            <tr>
-                              <td>Trey Songz</td>
-                              <td>2 Reasons (feat T.I.)</td>
-                            </tr>
-                            <tr>
-                              <td>Drake</td>
-                              <td>Now & Forever</td>
-                            </tr>
+                            {roomPlaylistSongsElements}
                           </tbody>
                           </table>
                         </div>
