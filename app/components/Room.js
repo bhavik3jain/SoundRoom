@@ -1,5 +1,5 @@
 import React from 'react';
-import {getRoomData} from '../server';
+import {getRoomData, getSongsData} from '../server';
 
 export default class Room extends React.Component{
 
@@ -9,17 +9,34 @@ export default class Room extends React.Component{
     }
 
     getRoomPlaylist(roomId) {
-      var rooms = [];
-      for (id in roomId) {
-        rooms.push(getRoomData(parseInt(id)));
+      return getRoomData(parseInt(roomId));
+    }
+
+    getRoomPlaylistSongs(roomId) {
+      var roomData = getRoomData(parseInt(roomId));
+
+      var songs = [];
+
+      // var songs = roomData.playlists.map(function(track) {
+      //   return getSongsData(parseInt(roomData.playlists[track]));
+      // });
+
+      for (var track in roomData.playlists) {
+        songs.push(getSongsData(parseInt(roomData.playlists[track].trackID)));
       }
-      return rooms;
+
+      // for (var track in roomData.playlists) {
+      //   songs.push(getSongsData(parseInt(track.trackID)).title);
+      // }
+      return songs;
     }
 
     render() {
 
-        var roomId = this.props.location.query.roomId;
-        var roomData = this.getRoomPlaylist(roomId);
+        // var roomId = this.props.location.query.roomId;
+        // temporarily using test value while JoinRoom is being fixed
+        // var roomData = this.getRoomPlaylist(1);
+        var roomData = this.getRoomPlaylistSongs(1);
         console.log(roomData);
 
         return (
