@@ -24,7 +24,7 @@ export default class Navbar extends React.Component{
                 <img src="/img/profile_pic.jpg" alt="Join Room" className="img-responsive center-block img-circle" style={proPicStyle}/>
                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i id="user_icon"></i><span className="caret"></span></a>
                <ul className="dropdown-menu">
-                 <li><Link to="account" params={{user_id: "2"}}>Account Info</Link></li>
+                 <li><Link to="account">Account Info</Link></li>
                  <li><a href="#">Sign out</a></li>
                </ul>
              </li>
