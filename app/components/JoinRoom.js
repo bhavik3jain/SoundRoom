@@ -13,7 +13,6 @@ var input_room_number;
 export default class JoinRoom extends React.Component{
 
   validateRoom(e){
-  e.preventDefault();
   var rooms = getRoomIds();
   for (var room in rooms){
       input_room_number = document.getElementById("userInput").value;
@@ -27,6 +26,7 @@ export default class JoinRoom extends React.Component{
 
 
   render() {
+
         return (
             <div>
                 <div className = "col-md-4"></div>
@@ -36,7 +36,7 @@ export default class JoinRoom extends React.Component{
                          <h2 id="join_room_text">Join a Room</h2>
                          <input type="text" className="form-control" id="userInput"
                              placeholder="Enter Room Number" />
-                           <Link to={{pathname:'room',query:{roomId:input_room_number}}}>
+                           <Link to={{pathname: 'room', query: {roomId: input_room_number}}}>
                                <button type = "button" className="btn btn-default" id="btn1" onClick={(e)=>this.validateRoom(e)}>Join</button>
                            </Link>
                            <Link to="/">
