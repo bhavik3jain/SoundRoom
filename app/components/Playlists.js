@@ -23,15 +23,39 @@ export default class Playlists extends React.Component{
     return songData;
   }
 
+  getUserSongArtistsFromPlaylists(playlistData) {
+    var artists = []
+    for(var songId in playlistData) {
+      artists.push(getSongsData(parseInt(playlistData[songId])).artist)
+    }
+    return artists;
+  }
+
+  getUserSongAlbumFromPlaylists(playlistData) {
+    var artists = []
+    for(var songId in playlistData) {
+      artists.push(getSongsData(parseInt(playlistData[songId])).album)
+    }
+    return artists;
+  }
+
   render() {
 
     var playlistTableData = [];
     var playlistData = this.props.location.query.playlistData;
     var playlistName = this.props.location.query.playlistName;
-    console.log(playlistName);
     var songData = this.getUserSongsFromPlaylists(playlistData);
+    var artistsData = this.getUserSongArtistsFromPlaylists(playlistData);
+    var albumData = this.getUserSongAlbumFromPlaylists(playlistData);
+    console.log(artistsData);
     for(var title in songData) {
-      playlistTableData.push(<tbody><tr><td>{songData[title]}</td></tr></tbody>);
+      playlistTableData.push(<tbody>
+                              <tr>
+                                <td>{songData[title]}</td>
+                                <td>{artistsData[title]}</td>
+                                <td>{albumData[title]}</td>
+                              </tr>
+                             </tbody>);
     }
 
     return (
@@ -42,6 +66,8 @@ export default class Playlists extends React.Component{
         <tbody>
           <tr>
             <th> Song Name </th>
+            <th> Artist </th>
+            <th> Album </th>
           </tr>
         </tbody>
           { playlistTableData }
