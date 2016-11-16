@@ -19,6 +19,7 @@ export default class Playlists extends React.Component{
     var songData = []
     for(var songId in playlistData) {
       songData.push(getSongsData(parseInt(playlistData[songId])).title)
+      console.log("printing playlistdata: " + playlistData[songId]);
     }
     return songData;
   }

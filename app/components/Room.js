@@ -1,7 +1,27 @@
 import React from 'react';
+import {getRoomData} from '../server';
 
 export default class Room extends React.Component{
+
+    constructor(props) {
+      super(props);
+      this.state = {current_room: ""}
+    }
+
+    getRoomPlaylist(roomId) {
+      var rooms = [];
+      for (id in roomId) {
+        rooms.push(getRoomData(parseInt(id)));
+      }
+      return rooms;
+    }
+
     render() {
+
+        var roomId = this.props.location.query.roomId;
+        var roomData = this.getRoomPlaylist(roomId);
+        console.log(roomData);
+
         return (
             <div>
             <div>
