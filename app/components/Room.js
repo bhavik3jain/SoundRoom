@@ -5,7 +5,7 @@ export default class Room extends React.Component{
 
     constructor(props) {
       super(props);
-     var roomId = this.props.location.query.roomId;
+      var roomId = this.props.location.query.roomId;
       this.state = {currentRoomId: roomId, playlist: {}, participants: {}}
     }
 
@@ -49,7 +49,7 @@ export default class Room extends React.Component{
         for (var song in this.state.playlist) {
           roomPlaylistSongsElements.push(
             <tr>
-              <td>{this.state.playlist[song].likes}</td>
+              <td><button type="button" className="btn btn-secondary btn-playlist"><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
               <td>{this.state.playlist[song].title}</td>
               <td>{this.state.playlist[song].artist}</td>
               <td>{this.state.playlist[song].album}</td>
@@ -76,7 +76,7 @@ export default class Room extends React.Component{
             <div>
             <div>
             <div>
-                <div className="col-md-8">
+                <div className="col-md-9">
                   <div>
                     <div className="media">
                       <div className="media-left">
@@ -101,7 +101,7 @@ export default class Room extends React.Component{
                           </table>
                         </div>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                       <div id="imaginary_container">
                           <div className="input-group stylish-input-group">
                               <input type="text" className="form-control"  placeholder="Search Tracks"></input>

@@ -238,6 +238,10 @@ tr:hover {
   background-color: #88898c;
 }
 
+tr:hover .btn-playlist {
+  background-color: #88898c;
+}
+
 table th {
     background-color: #343434;
 }
@@ -336,4 +340,11 @@ th, td {
 
 #current_song_playing_in_room {
     color: white;
+}
+
+.btn-playlist {
+  background-color: #343434;
+  border: none;
+  font-size:20px;
+  padding: 0px;
 }
