@@ -1,73 +1,7 @@
 import React from 'react';
-import {getRoomData, getSongsData, getUserIds} from '../server';
 
 export default class Room extends React.Component{
-
-    constructor(props) {
-      super(props);
-      this.state = {playlist: {}}
-    }
-
-    getRoomPlaylist(roomId) {
-      return getRoomData(parseInt(roomId));
-    }
-
-    getRoomPlaylistSongs(roomId) {
-      var roomData = getRoomData(parseInt(roomId));
-      var songs = [];
-
-      for (var track in roomData.playlists) {
-        var songData = getSongsData(parseInt(roomData.playlists[track].trackID));
-        songData.likes = roomData.playlists[track].likes;
-        songs.push(songData);
-      }
-
-      return songs;
-    }
-
-    getRoomParticipants(roomId) {
-      var roomData = getRoomData(parseInt(roomId));
-      var pars = [];
-
-      for (var participant in roomData.participants) {
-        pars.push(parseInt(roomData.participants[participant]));
-      }
-
-      return pars;
-    }
-
     render() {
-
-        var currentRoomId = 1;
-
-        var roomPlaylistSongs = this.getRoomPlaylistSongs(currentRoomId);
-        var roomPlaylistSongsElements = [];
-        for (var song in roomPlaylistSongs) {
-          roomPlaylistSongsElements.push(
-            <tr>
-              <td>{roomPlaylistSongs[song].likes}</td>
-              <td>{roomPlaylistSongs[song].title}</td>
-              <td>{roomPlaylistSongs[song].artist}</td>
-              <td>{roomPlaylistSongs[song].album}</td>
-            </tr>
-          );
-        }
-
-        var participants = this.getRoomParticipants(currentRoomId);
-        var userIds = getUserIds();
-        var roomParticipantsNames = [];
-        for (var participant in participants) {
-          for (var id in userIds){
-            if (userIds[id]._id == participants[participant]){
-              roomParticipantsNames.push(
-                <tr>
-                  <td>{userIds[id].firstname + " " + userIds[id].lastname}</td>
-                </tr>
-              );
-            }
-          }
-        }
-
         return (
             <div>
             <div>
@@ -89,12 +23,9 @@ export default class Room extends React.Component{
                           <table className="table room-playlist">
                           <tbody>
                             <tr>
-                              <th>Votes</th>
-                              <th>Song</th>
                               <th>Artist</th>
-                              <th>Album</th>
+                              <th>Song</th>
                             </tr>
-                            {roomPlaylistSongsElements}
                           </tbody>
                           </table>
                         </div>
@@ -115,8 +46,9 @@ export default class Room extends React.Component{
                           <tr>
                             <th>Participants</th>
                           </tr>
-                          {roomParticipantsNames}
-
+                          <tr>
+                            <td>Ronit Arora</td>
+                          </tr>
                         </tbody>
                         </table>
                       </div>

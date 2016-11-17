@@ -37,6 +37,17 @@ export function getRoomIds(){
     return roomIds;
 }
 
+export function getUserIds(){
+
+  var userIds = readAllDocuments("users");
+  return userIds;
+}
+
+export function getRoomData(roomId, cb) {
+  var roomData = readDocument('rooms', roomId);
+  return roomData;
+}
+
 // TODO:
 // export function addPlaylistToRoom(roomID, cb) {
 //     var roomData = readDocument("room", roomID);

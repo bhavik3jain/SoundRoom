@@ -1,5 +1,6 @@
 import React from 'react';
-
+import {getRoomIds} from '../server';
+import {Link} from 'react-router';
 // TODO:
 // 1) Implement the getHashCode method to retrieve a hash code from the server and then display it
 // 2) Fix up the css for this webpage, this looks ugly. Please contact Justin for design help
@@ -10,17 +11,15 @@ export default class CreateRoom extends React.Component{
     createHashCode() {
         // gets a unique hash code to make a room session
         // how you make up the hash code is up to the implementor
-        var s="";
-        for(var j=0;j<9;++j)
-        {
-          s=s+Math.floor(Math.random()*10);
-        }
-
-        return s;
+        var result = '';
+        var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        for (var i = 8; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+        return result;
     }
 
     render() {
         const code = this.getHashCode();
+        console.log(code);
         return (
             <div>
                 <div className="row">
@@ -28,9 +27,10 @@ export default class CreateRoom extends React.Component{
                     <div className= "col-md-4">
                         <div className="panel panel-default panel-joinroom">
                           <div className="panel-body">
-                            <h3>Congratulations!</h3>
-                            <h5>You have created <b>a room</b> with the joining code : <b>{code}</b></h5>
-                            <button type = "button" className="btn btn-default"><span className="glyphicon glyphicon-share"></span>Share</button>
+                        <Link to={{pathname:"emptyroom",query:{roomId:10}}}>
+
+                            <button type = "button" className="btn btn-default">Create a Room!</button>
+                            </Link>
                           </div>
                         </div>
                       </div>
