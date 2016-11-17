@@ -135,7 +135,7 @@ body {
 
  #btn1{
   width:40%;
-  margin-left:15px;
+
   margin-top: 20px;
   font-size: 16px;
   background-color: #343434;
@@ -144,7 +144,6 @@ body {
 }
 
 #btn2{
-
   width:40%;
   margin-left:10px;
   margin-top: 20px;
@@ -152,24 +151,23 @@ body {
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
-
 }
 
 #accountinfo-btn1{
-  width:30%;
-  font-size: 16px;
-  margin-left: 13px;
   margin-bottom: 20px;
+  margin-right: 10px;
+  margin-left: 15px;
+    font-size: 16px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
 }
 
 #accountinfo-btn1:hover {
-  width:30%;
   font-size: 16px;
-  margin-left: 13px;
   margin-bottom: 20px;
+  margin-left: 15px;
+  margin-right: 10px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
@@ -177,25 +175,23 @@ body {
 }
 
 #accountinfo-btn2{
-  width:33%;
-  margin-left: 10px;
-  margin-bottom: 20px;
   font-size: 16px;
+
+  margin-bottom: 20px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
 }
 
 #accountinfo-btn2:hover{
-  width:33%;
-  margin-left: 10px;
-  margin-bottom: 20px;
   font-size: 16px;
+  margin-bottom: 20px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
   box-shadow: 0 5px 15px #57E4E8;
 }
+
 
 #update_pic_button{
   width:35%;
@@ -235,6 +231,10 @@ table tr{
 }
 
 tr:hover {
+  background-color: #88898c;
+}
+
+tr:hover .btn-playlist {
   background-color: #88898c;
 }
 
@@ -332,4 +332,15 @@ th, td {
 #account-input-box{
   max-width: 200%;
   min-width: 200%;
+}
+
+#current_song_playing_in_room {
+    color: white;
+}
+
+.btn-playlist {
+  background-color: #343434;
+  border: none;
+  font-size:20px;
+  padding: 0px;
 }

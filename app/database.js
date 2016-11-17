@@ -127,7 +127,7 @@ var initialData = {
         },
         "2": {
             "_id": 2,
-            "title": "Welcome to heartbreak",
+            "title": "Welcome to Heartbreak",
             "artist": "Kayne West",
             "album": "808s Hearbreak"
         },
@@ -196,7 +196,7 @@ var initialData = {
         "1": {
             "_id" : 1,
             "host": "1",
-            "participants": ["1", "2", "3"],
+            "participants": ["2", "3"],
             "playlists": [{"trackID": "2", "likes": 0}, {"trackID": "1", "likes": 0}, {"trackID": "10", "likes": 0}]
         },
         "2": {
@@ -273,6 +273,7 @@ export function resetDatabase() {
 /**
  * Reset database button.
  */
+
 class ResetDatabase extends React.Component {
   render() {
     return (
