@@ -27,9 +27,8 @@ export default class CreateRoom extends React.Component{
                     <div className= "col-md-4">
                         <div className="panel panel-default panel-joinroom">
                           <div className="panel-body">
-                        <Link to={{pathname:"emptyroom",query:{roomId:10}}}>
-
-                            <button type = "button" className="btn btn-default">Create a Room!</button>
+                            <Link to={{pathname:'room',query:{roomId:2}}}>
+                              <button type = "button" className="btn btn-default">Create a Room!</button>
                             </Link>
                           </div>
                         </div>
