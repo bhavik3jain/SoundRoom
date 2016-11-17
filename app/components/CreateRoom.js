@@ -18,7 +18,7 @@ export default class CreateRoom extends React.Component{
     }
 
     render() {
-        const code = this.getHashCode();
+        const code = this.createHashCode();
         console.log(code);
         return (
             <div>
