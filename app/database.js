@@ -196,8 +196,13 @@ var initialData = {
         "1": {
             "_id" : 1,
             "host": "1",
+<<<<<<< HEAD
+            "participants": ["1", "2"],
+            "playlists": [{"trackID": "2", "likes": 0}, {"tackID": "1", "likes": 0}, {"trackID": "10", "likes": 0}]
+=======
             "participants": ["1", "2", "3"],
             "playlists": [{"trackID": "2", "likes": 0}, {"trackID": "1", "likes": 0}, {"trackID": "10", "likes": 0}]
+>>>>>>> c269dd7725e914ca32a2f8cbbbc74d68436e4e61
         },
         "2": {
             "_id" : 2,
