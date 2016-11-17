@@ -5,7 +5,11 @@ export default class Room extends React.Component{
 
     constructor(props) {
       super(props);
-      this.state = {playlist: {}}
+      this.state = {currentRoomId: 2, playlist: {}, participants: {}}
+    }
+
+    componentDidMount() {
+      this.setState({currentRoomId: this.state.currentRoomId, playlist: this.getRoomPlaylistSongs(this.state.currentRoomId), participants: this.getRoomParticipants(this.state.currentRoomId)});
     }
 
     getRoomPlaylist(roomId) {
@@ -37,28 +41,25 @@ export default class Room extends React.Component{
     }
 
     render() {
+        var currentRoomId = this.state.currentRoomId;
 
-        var currentRoomId = 1;
-
-        var roomPlaylistSongs = this.getRoomPlaylistSongs(currentRoomId);
         var roomPlaylistSongsElements = [];
-        for (var song in roomPlaylistSongs) {
+        for (var song in this.state.playlist) {
           roomPlaylistSongsElements.push(
             <tr>
-              <td>{roomPlaylistSongs[song].likes}</td>
-              <td>{roomPlaylistSongs[song].title}</td>
-              <td>{roomPlaylistSongs[song].artist}</td>
-              <td>{roomPlaylistSongs[song].album}</td>
+              <td>{this.state.playlist[song].likes}</td>
+              <td>{this.state.playlist[song].title}</td>
+              <td>{this.state.playlist[song].artist}</td>
+              <td>{this.state.playlist[song].album}</td>
             </tr>
           );
         }
 
-        var participants = this.getRoomParticipants(currentRoomId);
         var userIds = getUserIds();
         var roomParticipantsNames = [];
-        for (var participant in participants) {
+        for (var participant in this.state.participants) {
           for (var id in userIds){
-            if (userIds[id]._id == participants[participant]){
+            if (userIds[id]._id == this.state.participants[participant]){
               roomParticipantsNames.push(
                 <tr>
                   <td>{userIds[id].firstname + " " + userIds[id].lastname}</td>
