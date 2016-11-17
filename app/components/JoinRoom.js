@@ -38,10 +38,13 @@ export default class JoinRoom extends React.Component{
                          <h2 id="join_room_text">Join a Room</h2>
                          <input type="text" className="form-control" id="userInput"
                              placeholder="Enter Room Number" />
+                           <center>
                             <button type = "button" className="btn btn-default" id="btn1" onClick={(e)=>this.validateRoom(e)}>Join</button>
                            <Link to="/">
                              <button type = "button" className="btn btn-default" id="btn2" >Back</button>
+
                            </Link>
+                           </center>
                        </div>
                      </div>
                    </div>

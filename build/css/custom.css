@@ -135,7 +135,7 @@ body {
 
  #btn1{
   width:40%;
-  margin-left:27px;
+
   margin-top: 20px;
   font-size: 16px;
   background-color: #343434;
@@ -144,7 +144,6 @@ body {
 }
 
 #btn2{
-
   width:40%;
   margin-left:10px;
   margin-top: 20px;
@@ -155,18 +154,20 @@ body {
 }
 
 #accountinfo-btn1{
-  width:33%;
-  font-size: 16px;
   margin-bottom: 20px;
+  margin-right: 10px;
+  margin-left: 15px;
+    font-size: 16px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
 }
 
 #accountinfo-btn1:hover {
-  width:33%;
   font-size: 16px;
   margin-bottom: 20px;
+  margin-left: 15px;
+  margin-right: 10px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
@@ -174,20 +175,17 @@ body {
 }
 
 #accountinfo-btn2{
-  width:35%;
-  margin-left: 10px;
-  margin-bottom: 20px;
   font-size: 16px;
+
+  margin-bottom: 20px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
 }
 
 #accountinfo-btn2:hover{
-  width:35%;
-  margin-left: 10px;
-  margin-bottom: 20px;
   font-size: 16px;
+  margin-bottom: 20px;
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
