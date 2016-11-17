@@ -135,7 +135,7 @@ body {
 
  #btn1{
   width:40%;
-  margin-left:15px;
+  margin-left:27px;
   margin-top: 20px;
   font-size: 16px;
   background-color: #343434;
@@ -152,13 +152,11 @@ body {
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
-
 }
 
 #accountinfo-btn1{
-  width:30%;
+  width:33%;
   font-size: 16px;
-  margin-left: 13px;
   margin-bottom: 20px;
   background-color: #343434;
   color:#57E4E8;
@@ -166,9 +164,8 @@ body {
 }
 
 #accountinfo-btn1:hover {
-  width:30%;
+  width:33%;
   font-size: 16px;
-  margin-left: 13px;
   margin-bottom: 20px;
   background-color: #343434;
   color:#57E4E8;
@@ -177,7 +174,7 @@ body {
 }
 
 #accountinfo-btn2{
-  width:33%;
+  width:35%;
   margin-left: 10px;
   margin-bottom: 20px;
   font-size: 16px;
@@ -187,7 +184,7 @@ body {
 }
 
 #accountinfo-btn2:hover{
-  width:33%;
+  width:35%;
   margin-left: 10px;
   margin-bottom: 20px;
   font-size: 16px;
@@ -196,6 +193,7 @@ body {
   border: 1px solid #57E4E8;
   box-shadow: 0 5px 15px #57E4E8;
 }
+
 
 #update_pic_button{
   width:35%;
