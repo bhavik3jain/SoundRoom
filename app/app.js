@@ -5,7 +5,6 @@ import Sidebar from './components/Sidebar';
 import Homepage from './components/Homepage';
 import Playlists from './components/Playlists';
 import CreateRoom from './components/CreateRoom';
-import EmptyRoom from './components/EmptyRoom';
 import JoinRoom from './components/JoinRoom';
 import AccountInfo from './components/AccountInfo';
 import Room from './components/Room';
@@ -73,7 +72,6 @@ ReactDOM.render((
     <Route path="/" component={App}>
       <Route path="account" components={{content: AccountPage}}/>
       <Route path="createroom" components={{content: CreateRoom}}/>
-      <Route path="emptyroom" components={{content: EmptyRoom}}/>
       <Route path="joinroom" components={{content: JoinRoom}}/>
       <Route path="playlists" components={{content: Playlists}}/>
       <Route path="room" components={{content: Room}}/>
