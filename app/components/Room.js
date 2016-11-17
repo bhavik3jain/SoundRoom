@@ -1,5 +1,5 @@
 import React from 'react';
-import {getRoomData, getSongsData} from '../server';
+import {getRoomData, getSongsData, getUserIds} from '../server';
 
 export default class Room extends React.Component{
 
@@ -23,9 +23,22 @@ export default class Room extends React.Component{
       return songs;
     }
 
+    getRoomParticipants(roomId) {
+      var roomData = getRoomData(parseInt(roomId));
+      var pars = [];
+
+      for (var participant in roomData.participants) {
+        pars.push(parseInt(roomData.participants[participant]));
+      }
+
+      return pars;
+    }
+
     render() {
 
-        var roomPlaylistSongs = this.getRoomPlaylistSongs(2);
+        var currentRoomId = 1;
+
+        var roomPlaylistSongs = this.getRoomPlaylistSongs(currentRoomId);
         var roomPlaylistSongsElements = [];
         for (var song in roomPlaylistSongs) {
           roomPlaylistSongsElements.push(
@@ -36,7 +49,20 @@ export default class Room extends React.Component{
           );
         }
 
-        console.log(roomPlaylistSongs);
+        var participants = this.getRoomParticipants(currentRoomId);
+        var userIds = getUserIds();
+        var roomParticipantsNames = [];
+        for (var participant in participants) {
+          for (var id in userIds){
+            if (userIds[id]._id == participants[participant]){
+              roomParticipantsNames.push(
+                <tr>
+                  <td>{userIds[id].firstname + " " + userIds[id].lastname}</td>
+                </tr>
+              );
+            }
+          }
+        }
 
         return (
             <div>
@@ -83,24 +109,8 @@ export default class Room extends React.Component{
                           <tr>
                             <th>Participants</th>
                           </tr>
-                          <tr>
-                            <td>Lynn Samson</td>
-                          </tr>
-                          <tr>
-                            <td>Siddarth Patel</td>
-                          </tr>
-                          <tr>
-                            <td>Justin Martinelli</td>
-                          </tr>
-                          <tr>
-                            <td>Aarsh Patel</td>
-                          </tr>
-                          <tr>
-                            <td>Ronit Arora</td>
-                          </tr>
-                          <tr>
-                            <td>Bhavik Jain</td>
-                          </tr>
+                          {roomParticipantsNames}
+
                         </tbody>
                         </table>
                       </div>

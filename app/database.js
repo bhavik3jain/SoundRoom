@@ -44,7 +44,79 @@ var initialData = {
                 "Drake Playlists": ["1", "2", "3", "4", "5"],
                 "Logic Playlists (Awesome)":["2", "3"]
             }
-        }
+        },
+        "3": {
+              "_id":3,
+              "firstname": "Siddarth",
+              "lastname": "Patel",
+              "email": "siddarthpate@umass.edu",
+              "nickname": "Sid",
+              "avatar": "https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10399045_101311279883992_7165089_n.jpg?oh=3fb467ee0dcecd4a1ce8d501e4c69f63&oe=58C78EE4",
+              "description": "Hello everyone, I'm a mock user",
+              "country": "US",
+              "state": "MA",
+              "dob": "02/18/1996",
+              "city": "Amherst",
+              "roomHostID": null,
+              "playlists": {
+                  "Drake Playlists": ["1", "2", "3", "4", "5"],
+                  "Logic Playlists (Awesome)":["2", "3"]
+              }
+          },
+          "4": {
+                "_id":4,
+                "firstname": "Justin",
+                "lastname": "Martinelli",
+                "email": "justinmartinelli@umass.edu",
+                "nickname": "Jus",
+                "avatar": "https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10399045_101311279883992_7165089_n.jpg?oh=3fb467ee0dcecd4a1ce8d501e4c69f63&oe=58C78EE4",
+                "description": "Hello everyone, I'm a mock user",
+                "country": "US",
+                "state": "NY",
+                "dob": "04/10/1996",
+                "city": "NYC",
+                "roomHostID": null,
+                "playlists": {
+                    "Drake Playlists": ["1", "2", "3", "4", "5"],
+                    "Logic Playlists (Awesome)":["2", "3"]
+                }
+            },
+            "5": {
+                  "_id":5,
+                  "firstname": "Lynn",
+                  "lastname": "Samson",
+                  "email": "lasamson@umass.edu",
+                  "nickname": "Lynn",
+                  "avatar": "https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10399045_101311279883992_7165089_n.jpg?oh=3fb467ee0dcecd4a1ce8d501e4c69f63&oe=58C78EE4",
+                  "description": "Hello everyone, I'm a mock user",
+                  "country": "US",
+                  "state": "MA",
+                  "dob": "01/10/1997",
+                  "city": "Amherst",
+                  "roomHostID": null,
+                  "playlists": {
+                      "Drake Playlists": ["1", "2", "3", "4", "5"],
+                      "Logic Playlists (Awesome)":["2", "3"]
+                  }
+              },
+              "6": {
+                    "_id":6,
+                    "firstname": "Ronit",
+                    "lastname": "Arora",
+                    "email": "rarora@umass.edu",
+                    "nickname": "Ron",
+                    "avatar": "https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10399045_101311279883992_7165089_n.jpg?oh=3fb467ee0dcecd4a1ce8d501e4c69f63&oe=58C78EE4",
+                    "description": "Hello everyone, I'm a mock user",
+                    "country": "US",
+                    "state": "MA",
+                    "dob": "04/10/1996",
+                    "city": "Amherst",
+                    "roomHostID": null,
+                    "playlists": {
+                        "Drake Playlists": ["1", "2", "3", "4", "5"],
+                        "Logic Playlists (Awesome)":["2", "3"]
+                    }
+                }
     },
     "songs": {
         "1": {
