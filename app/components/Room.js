@@ -76,7 +76,7 @@ export default class Room extends React.Component{
             <div>
             <div>
             <div>
-                <div className="col-md-8">
+            <div className="col-md-8">
                   <div>
                     <div className="media">
                       <div className="media-left">
