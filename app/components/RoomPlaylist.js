@@ -1,4 +1,5 @@
 import React from 'react';
+import Song from './Song';
 import {getRoomData, getSongsData} from '../server';
 
 export default class RoomPlaylist extends React.Component {
@@ -29,12 +30,7 @@ export default class RoomPlaylist extends React.Component {
     var roomPlaylistSongsElements = [];
     for (var song in this.state.playlist) {
       roomPlaylistSongsElements.push(
-        <tr>
-          <td><button type="button" className="btn btn-secondary btn-playlist"><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
-          <td>{this.state.playlist[song].title}</td>
-          <td>{this.state.playlist[song].artist}</td>
-          <td>{this.state.playlist[song].album}</td>
-        </tr>
+        <Song song={this.state.playlist[song]} />
       );
     }
 
