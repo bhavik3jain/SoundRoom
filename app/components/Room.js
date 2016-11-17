@@ -17,7 +17,9 @@ export default class Room extends React.Component{
       var songs = [];
 
       for (var track in roomData.playlists) {
-        songs.push(getSongsData(parseInt(roomData.playlists[track].trackID)));
+        var songData = getSongsData(parseInt(roomData.playlists[track].trackID));
+        songData.likes = roomData.playlists[track].likes;
+        songs.push(songData);
       }
 
       return songs;
@@ -43,8 +45,10 @@ export default class Room extends React.Component{
         for (var song in roomPlaylistSongs) {
           roomPlaylistSongsElements.push(
             <tr>
-              <td>{roomPlaylistSongs[song].artist}</td>
+              <td>{roomPlaylistSongs[song].likes}</td>
               <td>{roomPlaylistSongs[song].title}</td>
+              <td>{roomPlaylistSongs[song].artist}</td>
+              <td>{roomPlaylistSongs[song].album}</td>
             </tr>
           );
         }
@@ -85,8 +89,10 @@ export default class Room extends React.Component{
                           <table className="table room-playlist">
                           <tbody>
                             <tr>
-                              <th>Artist</th>
+                              <th>Votes</th>
                               <th>Song</th>
+                              <th>Artist</th>
+                              <th>Album</th>
                             </tr>
                             {roomPlaylistSongsElements}
                           </tbody>
