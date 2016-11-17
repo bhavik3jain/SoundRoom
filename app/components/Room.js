@@ -5,7 +5,8 @@ export default class Room extends React.Component{
 
     constructor(props) {
       super(props);
-      this.state = {currentRoomId: 2, playlist: {}, participants: {}}
+     var roomId = this.props.location.query.roomId;
+      this.state = {currentRoomId: roomId, playlist: {}, participants: {}}
     }
 
     componentDidMount() {
