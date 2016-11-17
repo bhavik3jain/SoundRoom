@@ -23,15 +23,6 @@ export default class Room extends React.Component{
             <div>
                 <div className="col-md-9">
                   <div>
-                    <div className="media">
-                      <div className="media-left">
-                        <img className="media-object album-cover" src="/img/views_album_cover.jpg" width="150px" alt="Drake - Views" />
-                      </div>
-                      <div className="media-body">
-
-                          <br />
-                            </div>
-                          </div>
 
                           <RoomPlaylist currentRoomId={this.state.currentRoomId} />
                         </div>

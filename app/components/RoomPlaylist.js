@@ -56,17 +56,27 @@ export default class RoomPlaylist extends React.Component {
     }
 
     return (
-      <table className="table room-playlist">
-      <tbody>
-        <tr>
-          <th>Votes</th>
-          <th>Song</th>
-          <th>Artist</th>
-          <th>Album</th>
-        </tr>
-        {roomPlaylistSongsElements}
-      </tbody>
-      </table>
+      <div>
+        <div className="media">
+          <div className="media-left">
+            <img className="media-object album-cover" src="/img/views_album_cover.jpg" width="150px" alt="Drake - Views" />
+          </div>
+          <div className="media-body">
+            <br />
+          </div>
+        </div>
+        <table className="table room-playlist">
+        <tbody>
+          <tr>
+            <th>Votes</th>
+            <th>Song</th>
+            <th>Artist</th>
+            <th>Album</th>
+          </tr>
+          {roomPlaylistSongsElements}
+        </tbody>
+        </table>
+      </div>
     );
   }
 
