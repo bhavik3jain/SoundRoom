@@ -333,3 +333,7 @@ th, td {
   max-width: 200%;
   min-width: 200%;
 }
+
+#current_song_playing_in_room {
+    color: white;
+}

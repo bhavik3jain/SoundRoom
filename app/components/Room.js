@@ -9,7 +9,7 @@ export default class Room extends React.Component{
       this.state = {currentRoomId: roomId, playlist: {}, participants: {}}
     }
 
-    componentDidMount() {
+    componentWillMount() {
       this.setState({currentRoomId: this.state.currentRoomId, playlist: this.getRoomPlaylistSongs(this.state.currentRoomId), participants: this.getRoomParticipants(this.state.currentRoomId)});
     }
 
@@ -43,6 +43,7 @@ export default class Room extends React.Component{
 
     render() {
         var currentRoomId = this.state.currentRoomId;
+        var currentSongToPlay = this.state.playlist[0].title
 
         var roomPlaylistSongsElements = [];
         for (var song in this.state.playlist) {
@@ -82,8 +83,7 @@ export default class Room extends React.Component{
                         <img className="media-object album-cover" src="/img/views_album_cover.jpg" width="150px" alt="Drake - Views" />
                       </div>
                       <div className="media-body">
-                        <h3 className="media-heading">Hotline Bling</h3>
-                          <h5 className="media-heading">Drake</h5>
+                        <h3 id="current_song_playing_in_room" className="media-heading">Playing: {currentSongToPlay}</h3>
                           <br />
                             </div>
                           </div>
