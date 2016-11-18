@@ -43,6 +43,11 @@ export function getUserIds(){
   return userIds;
 }
 
+export function getUserDataNCB(user, cb) {
+  var userData = readDocument('users', user);
+  return userData;
+}
+
 export function getRoomData(roomId, cb) {
   var roomData = readDocument('rooms', roomId);
   return roomData;

@@ -1,12 +1,12 @@
 import React from 'react';
-import {getRoomData, getSongsData} from '../server';
+import {getRoomData, getSongsData, getUserDataNCB} from '../server';
+import {writeDocument} from '../database';
 
 export default class RoomPlaylist extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {currentRoomId: this.props.currentRoomId, playlist: {}};
-
     this.addLikeToSong = this.addLikeToSong.bind(this);
   }
 
@@ -41,8 +41,13 @@ export default class RoomPlaylist extends React.Component {
     this.setState({currentRoomId: this.state.currentRoomId, playlist: modifiedPlayList});
   }
 
+  savePlaylist() {
+    alert("playlist saved!");
+  }
+
   render() {
     var roomPlaylistSongsElements = [];
+    var currentSongToPlay = this.state.playlist[0];
     for (var song in this.state.playlist) {
       console.log(this.state.playlist[song]._id);
       roomPlaylistSongsElements.push(
@@ -62,7 +67,8 @@ export default class RoomPlaylist extends React.Component {
             <img className="media-object album-cover" src="/img/views_album_cover.jpg" width="150px" alt="Drake - Views" />
           </div>
           <div className="media-body">
-            <br />
+            {currentSongToPlay.title} <br />
+            {currentSongToPlay.artist} - {currentSongToPlay.album}
           </div>
         </div>
         <table className="table room-playlist">
@@ -76,6 +82,7 @@ export default class RoomPlaylist extends React.Component {
           {roomPlaylistSongsElements}
         </tbody>
         </table>
+        <button type="button" className="btn btn-primary" onClick={(e)=>this.savePlaylist(e)}>Save Playlist</button>
       </div>
     );
   }
