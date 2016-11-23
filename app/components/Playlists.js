@@ -1,5 +1,6 @@
 import React from 'react';
 import {getSongsData} from '../server';
+import ReactDOM from 'react-dom';
 
 export default class Playlists extends React.Component{
   constructor(props) {
@@ -7,6 +8,13 @@ export default class Playlists extends React.Component{
     this.state = {
       value: ""
     };
+  }
+
+  handleSongClick(songData) {
+      console.log("Playing song: ", songData);
+      var oldState = this.state;
+      oldState.songToPlay = songData;
+      this.setState(oldState)
   }
 
   getUserPlaylists() {
@@ -19,7 +27,6 @@ export default class Playlists extends React.Component{
     var songData = []
     for(var songId in playlistData) {
       songData.push(getSongsData(parseInt(playlistData[songId])).title)
-      console.log("printing playlistdata: " + playlistData[songId]);
     }
     return songData;
   }
@@ -41,39 +48,59 @@ export default class Playlists extends React.Component{
   }
 
   render() {
-
     var playlistTableData = [];
     var playlistData = this.props.location.query.playlistData;
     var playlistName = this.props.location.query.playlistName;
     var songData = this.getUserSongsFromPlaylists(playlistData);
     var artistsData = this.getUserSongArtistsFromPlaylists(playlistData);
     var albumData = this.getUserSongAlbumFromPlaylists(playlistData);
-    console.log(artistsData);
-    for(var title in songData) {
-      playlistTableData.push(<tbody>
-                              <tr>
+    var N = songData.length;
+    var songlist_N = Array.apply(null, {length: N}).map(Number.call, Number)
+    var playlistTableData = songlist_N.map((title) => <tbody key={title}>
+                              <tr onClick={() => this.handleSongClick("https://soundcloud.com/youngma/young-ma-ooouuu-1")} key={title}>
                                 <td>{songData[title]}</td>
                                 <td>{artistsData[title]}</td>
                                 <td>{albumData[title]}</td>
                               </tr>
-                             </tbody>);
-    }
+                           </tbody>);
+
+    SC.initialize({
+      client_id: '20c77541bd6ca84e8d987789d0bc4b8d'
+    });
+
+    var track_url = this.state.songToPlay;
+
+    SC.oEmbed(track_url, {maxheight: 166, show_comments: false, sharing: false, downloadable:false}).then(function(oEmbed) {
+        var oldState = this.state; oldState.soundPlayerIframe = oEmbed.html
+        this.setState(oldState);
+    }.bind(this));
 
     return (
       <div className="saved-playlist">
         <h1>{playlistName}</h1>
 
         <table>
-        <tbody>
-          <tr>
-            <th> Song Name </th>
-            <th> Artist </th>
-            <th> Album </th>
-          </tr>
-        </tbody>
-          { playlistTableData }
+            <tbody>
+              <tr>
+                <th> Song Name </th>
+                <th> Artist </th>
+                <th> Album </th>
+              </tr>
+            </tbody>
+
+            { playlistTableData }
+
         </table>
+
+        <br/>
+
+        <div dangerouslySetInnerHTML={{__html: this.state.soundPlayerIframe}} >
+        </div>
+
+
       </div>
+
+
     );
   }
 }

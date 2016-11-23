@@ -57,3 +57,10 @@ export function getRoomData(roomId, cb) {
 // export function addPlaylistToRoom(roomID, cb) {
 //     var roomData = readDocument("room", roomID);
 // // }
+//
+//
+export function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
+    var userData = readDocument("users", userId);
+    userData.playlists[playlistName] = playlistsToSave;
+    writeDocument('users', userData);
+}

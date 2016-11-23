@@ -7,7 +7,7 @@ export default class Room extends React.Component{
 
     constructor(props) {
       super(props);
-      this.state = {currentRoomId: this.props.location.query.roomId}
+      this.state = {currentRoomId: this.props.location.query.roomId, currentUser: this.props.location.query.user_logged_in}
     }
 
     componentWillMount() {
@@ -15,7 +15,6 @@ export default class Room extends React.Component{
     }
 
     render() {
-
         return (
             <div>
             <div>
@@ -24,7 +23,7 @@ export default class Room extends React.Component{
                 <div className="col-md-9">
                   <div>
 
-                          <RoomPlaylist currentRoomId={this.state.currentRoomId} />
+                          <RoomPlaylist currentRoomId={this.state.currentRoomId} userLoggedIn={this.state.currentUser}/>
                         </div>
                       </div>
                       <div className="col-md-3">

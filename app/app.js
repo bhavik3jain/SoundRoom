@@ -12,7 +12,7 @@ import Room from './components/Room';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
-const user_id_logged_in = "2";
+const user_id_logged_in = "1";
 
 class SidebarPage extends React.Component {
   render() {
@@ -57,7 +57,7 @@ class App extends React.Component{
           <Navbar user_id={user_id_logged_in} />
         </div>
         <div className="content">
-          {content || <Homepage />}
+          {content || <Homepage user_id={user_id_logged_in}/>}
         </div>
         <div className="player">
           {player}
