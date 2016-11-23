@@ -22,7 +22,7 @@ export function getPlaylistData(user, cb) {
   emulateServerReturn(userPlaylists, cb);
 }
 
-export function getSongsData(songId, cb) {
+export function getSongsData(songId) {
   var songList = readDocument('songs', songId);
   return songList;
 }
@@ -57,3 +57,10 @@ export function getRoomData(roomId, cb) {
 // export function addPlaylistToRoom(roomID, cb) {
 //     var roomData = readDocument("room", roomID);
 // // }
+//
+//
+export function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
+    var userData = readDocument("users", userId);
+    userData.playlists[playlistName] = playlistsToSave;
+    writeDocument('users', userData);
+}

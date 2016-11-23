@@ -19,7 +19,7 @@ export default class JoinRoom extends React.Component{
       input_room_number = document.getElementById("userInput").value;
       if (rooms[room]._id == input_room_number){
         input_room_number = rooms[room]._id;
-        browserHistory.push("room/?roomId=" + input_room_number);
+        browserHistory.push("room/?roomId=" + input_room_number + "&user_logged_in=" + this.props.location.query.user_logged_in);
         console.log("Allowing user to join the room " + input_room_number);
       }
     }
@@ -28,7 +28,6 @@ export default class JoinRoom extends React.Component{
 
 
   render() {
-
         return (
             <div>
                 <div className = "col-md-4"></div>

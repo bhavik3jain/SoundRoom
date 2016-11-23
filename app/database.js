@@ -153,13 +153,15 @@ var initialData = {
             "_id": 6,
             "title": "Nikki",
             "artist": "Logic",
-            "album": "Underpressure"
+            "album": "Underpressure",
+            "soundcloud_url": "https://soundcloud.com/teamvisionary/logic-nikki"
         },
         "7": {
             "_id": 7,
             "title": "Man of the year",
             "artist": "Logic",
-            "album": "Young Sinatra"
+            "album": "Young Sinatra",
+            "soundcloud_url": "https://soundcloud.com/swagytracks/logic-man-of-the-year-prod-no"
         },
         "8": {
             "_id": 8,
@@ -177,19 +179,22 @@ var initialData = {
             "_id": 10,
             "title": "Two Reasons",
             "artist": "Trey Songz",
-            "album": "Chapter V"
+            "album": "Chapter V",
+            "soundcloud_url": "https://soundcloud.com/anderssivgaard/trey-songz-remixet"
         },
         "11": {
             "_id": 11,
-            "title": "Not Nice",
+            "title": "Recognize",
             "artist": "PartyNextDoor",
-            "album": "PartyNextDoor 3"
+            "album": "PartyNextDoor Two",
+            "soundcloud_url": "https://soundcloud.com/partyomo/partynextdoor-recognize-feat-drake"
         },
         "12": {
             "_id": 12,
             "title": "Stainless",
             "artist": "Stainless",
-            "album": "Incredible True Story"
+            "album": "Incredible True Story",
+            "soundcloud_url": "https://soundcloud.com/teamvisionary/stainless"
         }
     },
     "rooms": {
