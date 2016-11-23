@@ -22,7 +22,7 @@ export function getPlaylistData(user, cb) {
   emulateServerReturn(userPlaylists, cb);
 }
 
-export function getSongsData(songId, cb) {
+export function getSongsData(songId) {
   var songList = readDocument('songs', songId);
   return songList;
 }

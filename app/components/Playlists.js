@@ -6,7 +6,8 @@ export default class Playlists extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      value: ""
+      value: "",
+      soundPlayerIframe: this.props.location.query.setSongToPlay
     };
   }
 
@@ -52,12 +53,13 @@ export default class Playlists extends React.Component{
     var playlistData = this.props.location.query.playlistData;
     var playlistName = this.props.location.query.playlistName;
     var songData = this.getUserSongsFromPlaylists(playlistData);
+    var sc_urls = playlistData.map((id) => getSongsData(id).soundcloud_url);
     var artistsData = this.getUserSongArtistsFromPlaylists(playlistData);
     var albumData = this.getUserSongAlbumFromPlaylists(playlistData);
     var N = songData.length;
     var songlist_N = Array.apply(null, {length: N}).map(Number.call, Number)
     var playlistTableData = songlist_N.map((title) => <tbody key={title}>
-                              <tr onClick={() => this.handleSongClick("https://soundcloud.com/youngma/young-ma-ooouuu-1")} key={title}>
+                              <tr onClick={() => this.handleSongClick(sc_urls[title])} key={title}>
                                 <td>{songData[title]}</td>
                                 <td>{artistsData[title]}</td>
                                 <td>{albumData[title]}</td>
@@ -71,7 +73,8 @@ export default class Playlists extends React.Component{
     var track_url = this.state.songToPlay;
 
     SC.oEmbed(track_url, {maxheight: 166, show_comments: false, sharing: false, downloadable:false}).then(function(oEmbed) {
-        var oldState = this.state; oldState.soundPlayerIframe = oEmbed.html
+        var oldState = this.state;
+        oldState.soundPlayerIframe = oEmbed.html
         this.setState(oldState);
     }.bind(this));
 
