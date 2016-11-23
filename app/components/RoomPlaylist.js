@@ -28,17 +28,19 @@ export default class RoomPlaylist extends React.Component {
   }
 
   addLikeToSong(e, song) {
-    // for (var song in this.state.playlist) {
-    //   if (songId == this.state.playlist[song]._id) {
-    //     var modifiedPlayList = this.state.playlist;
-    //     modifiedPlayList[song].likes += 1;
-    //     this.setState({currentRoomId: this.state.currentRoomId, playlist: modifiedPlayList});
-    //     break;
-    //   }
-    // }
     var modifiedPlayList = this.state.playlist;
     modifiedPlayList[song].likes += 1;
     this.setState({currentRoomId: this.state.currentRoomId, playlist: modifiedPlayList});
+  }
+
+  compareVotes(a, b) {
+    if (this.state.playlist[a].likes < this.state.playlist[b].likes) {
+      return 1;
+    }
+    if (this.state.playlist[a].likes > this.state.playlist[b].likes) {
+      return -1;
+    }
+    return 0;
   }
 
   savePlaylist() {
@@ -53,24 +55,14 @@ export default class RoomPlaylist extends React.Component {
     var currentSongToPlay = this.state.playlist[0];
     var N = this.state.playlist.length;
     var playlist_N = Array.apply(null, {length: N}).map(Number.call, Number);
-    var roomPlaylistSongsElements = playlist_N.map((song) => <tr key={song}>
+    playlist_N.sort(this.compareVotes.bind(this));
+    var roomPlaylistSongsElements = playlist_N.map((song) =>
+                                <tr key={song}>
                                   <td><button type="button" className="btn btn-secondary btn-playlist" onClick={(e)=>this.addLikeToSong(e, song)}><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
                                   <td>{this.state.playlist[song].title}</td>
                                   <td>{this.state.playlist[song].artist}</td>
                                   <td>{this.state.playlist[song].album}</td>
                                 </tr>);
-
-    // for (var song in this.state.playlist) {
-    //   console.log(this.state.playlist[song]._id);
-    //   roomPlaylistSongsElements.push(
-        //   <tr>
-        //     <td><button type="button" className="btn btn-secondary btn-playlist" onClick={(e)=>this.addLikeToSong(e, song)}><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
-        //     <td>{this.state.playlist[song].title}</td>
-        //     <td>{this.state.playlist[song].artist}</td>
-        //     <td>{this.state.playlist[song].album}</td>
-        //   </tr>
-    //   );
-    // }
 
     return (
       <div>
