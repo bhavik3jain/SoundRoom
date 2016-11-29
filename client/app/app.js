@@ -59,10 +59,7 @@ class App extends React.Component{
         <div className="content">
           {content || <Homepage user_id={user_id_logged_in}/>}
         </div>
-        <div className="player">
-          {player}
-        </div>
-      </div>
+    </div>
     );
   }
 }
@@ -73,7 +70,7 @@ ReactDOM.render((
       <Route path="account" components={{content: AccountPage}}/>
       <Route path="createroom" components={{content: CreateRoom}}/>
       <Route path="joinroom" components={{content: JoinRoom}}/>
-      <Route path="playlists" components={{content: Playlists}}/>
+      <Route path="playlists" components={{content: Playlists}} />
       <Route path="room" components={{content: Room}}/>
     </Route>
   </Router>

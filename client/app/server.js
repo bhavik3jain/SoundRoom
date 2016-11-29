@@ -22,9 +22,28 @@ export function getPlaylistData(user, cb) {
   emulateServerReturn(userPlaylists, cb);
 }
 
-export function getSongsData(songId) {
-  var songList = readDocument('songs', songId);
-  return songList;
+export function getSongsData(sc_track, cb) {
+
+    SC.initialize({
+        client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'
+    });
+
+    return SC.get(sc_track).then((response) => {
+        var title = response.title;
+        var album = "Some Album";
+        var artist = "Some Artist";
+        var soundcloud_url = response.uri;
+
+        var song = {
+            "album": album,
+            "artist": artist,
+            "title": title,
+            "soundcloud_url": soundcloud_url
+        };
+
+        return song
+    });
+
 }
 
 export function getSongsForPlaylist(playlistID, cb) {

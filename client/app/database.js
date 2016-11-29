@@ -21,10 +21,7 @@ var initialData = {
           "city": "Amherst",
           "roomHostID": null,
           "playlists": { // playlists hold trackID for songs
-              "Beach Songs": ["1", "2", "3", "4", "5"],
-              "Rock N Roll":["6", "7"],
-              "Party": ["8", "9"],
-              "Hip Hop": ["10", "11", "12"]
+              "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
           }
       },
       "2": {
@@ -41,8 +38,7 @@ var initialData = {
             "city": "Amherst",
             "roomHostID": null,
             "playlists": {
-                "Drake Playlists": ["1", "2", "3", "4", "5"],
-                "Logic Playlists (Awesome)":["2", "3"]
+                "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
             }
         },
         "3": {
@@ -59,8 +55,7 @@ var initialData = {
               "city": "Amherst",
               "roomHostID": null,
               "playlists": {
-                  "Drake Playlists": ["1", "2", "3", "4", "5"],
-                  "Logic Playlists (Awesome)":["2", "3"]
+                  "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
               }
           },
           "4": {
@@ -77,140 +72,20 @@ var initialData = {
                 "city": "NYC",
                 "roomHostID": null,
                 "playlists": {
-                    "Drake Playlists": ["1", "2", "3", "4", "5"],
-                    "Logic Playlists (Awesome)":["2", "3"]
+                    "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
                 }
-            },
-            "5": {
-                  "_id":5,
-                  "firstname": "Lynn",
-                  "lastname": "Samson",
-                  "email": "lasamson@umass.edu",
-                  "nickname": "Lynn",
-                  "avatar": "https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10399045_101311279883992_7165089_n.jpg?oh=3fb467ee0dcecd4a1ce8d501e4c69f63&oe=58C78EE4",
-                  "description": "Hello everyone, I'm a mock user",
-                  "country": "US",
-                  "state": "MA",
-                  "dob": "01/10/1997",
-                  "city": "Amherst",
-                  "roomHostID": null,
-                  "playlists": {
-                      "Drake Playlists": ["1", "2", "3", "4", "5"],
-                      "Logic Playlists (Awesome)":["2", "3"]
-                  }
-              },
-              "6": {
-                    "_id":6,
-                    "firstname": "Ronit",
-                    "lastname": "Arora",
-                    "email": "rarora@umass.edu",
-                    "nickname": "Ron",
-                    "avatar": "https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/10399045_101311279883992_7165089_n.jpg?oh=3fb467ee0dcecd4a1ce8d501e4c69f63&oe=58C78EE4",
-                    "description": "Hello everyone, I'm a mock user",
-                    "country": "US",
-                    "state": "MA",
-                    "dob": "04/10/1996",
-                    "city": "Amherst",
-                    "roomHostID": null,
-                    "playlists": {
-                        "Drake Playlists": ["1", "2", "3", "4", "5"],
-                        "Logic Playlists (Awesome)":["2", "3"]
-                    }
-                }
-    },
-    "songs": {
-        "1": {
-            "_id": 1,
-            "title":  "Pt. 2",
-            "artist": "Kayne West",
-            "album": "Life of Pablo"
-        },
-        "2": {
-            "_id": 2,
-            "title": "Welcome to Heartbreak",
-            "artist": "Kayne West",
-            "album": "808s Hearbreak"
-        },
-        "3": {
-            "_id": 3,
-            "title": "Starboy",
-            "artist": "The Weeknd",
-            "album": "Starboy"
-        },
-        "4": {
-            "_id": 4,
-            "title": "Now and forever",
-            "artist": "Drake",
-            "album": "If you are reading this"
-        },
-        "5": {
-            "_id": 5,
-            "title": "Soul Food",
-            "artist": "Logic",
-            "album": "Underpressure"
-        },
-        "6": {
-            "_id": 6,
-            "title": "Logic - Wrist (Feat. Pusha T) TeamVisionary",
-            "artist": "Logic",
-            "album": "Hip-hop & Rap",
-            "soundcloud_url": "https://soundcloud.com/youngzean/logic-wrist-feat-pusha-t",
-            "artwork_url": "https://i1.sndcdn.com/artworks-000169098013-7c3uj9-large.jpg"
-        },
-        "7": {
-            "_id": 7,
-            "title": "Man of the year",
-            "artist": "Logic",
-            "album": "Hip-hop/rap",
-            "soundcloud_url": "https://soundcloud.com/swagytracks/logic-man-of-the-year-prod-no",
-            "artwork_url": "https://i1.sndcdn.com/artworks-000047449930-2d124v-large.jpg"
-        },
-        "8": {
-            "_id": 8,
-            "title": "Lose",
-            "artist": "Travis Scott",
-            "album": "Birds and Trap Scene"
-        },
-        "9": {
-            "_id": 9,
-            "title": "Break your heart",
-            "artist": "Taio Cruz",
-            "album": "Rakstarr"
-        },
-        "10": {
-            "_id": 10,
-            "title": "Two Reasons",
-            "artist": "Trey Songz",
-            "album": "Chapter V",
-            "soundcloud_url": "https://soundcloud.com/anderssivgaard/trey-songz-remixet"
-        },
-        "11": {
-            "_id": 11,
-            "title": "Recognize",
-            "artist": "PartyNextDoor",
-            "album": "PartyNextDoor Two",
-            "soundcloud_url": "https://soundcloud.com/partyomo/partynextdoor-recognize-feat-drake"
-        },
-        "12": {
-            "_id": 12,
-            "title": "Stainless",
-            "artist": "Stainless",
-            "album": "Incredible True Story",
-            "soundcloud_url": "https://soundcloud.com/teamvisionary/stainless"
-        }
+            }
     },
     "rooms": {
         "1": {
             "_id" : 1,
             "host": "1",
-            "participants": ["2", "3"],
-            "playlists": [{"trackID": "10", "likes": 0}, {"trackID": "11", "likes": 0}, {"trackID": "12", "likes": 0}]
+            "participants": ["2", "3"]
         },
         "2": {
             "_id" : 2,
             "host": "2",
-            "participants": ["4", "5"],
-            "playlists": [{"trackID": "6", "likes": 0}, {"trackID": "7", "likes": 0}, {"trackID": "11", "likes": 0}]
+            "participants": ["4", "5"]
         }
     }
 };
