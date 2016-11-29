@@ -11,7 +11,7 @@ export default class SoundCloudPlayer extends React.Component {
     }
 
 
-    setupPlayer(track_url) {
+    setupPlayer(track_url, maxHeight, maxWidth) {
 
         SC.initialize({
           client_id: '20c77541bd6ca84e8d987789d0bc4b8d'
@@ -19,7 +19,7 @@ export default class SoundCloudPlayer extends React.Component {
 
         console.log("setting up player");
 
-        SC.oEmbed(track_url, {maxheight: 350, show_comments: false, sharing: false, downloadable:false}).then(function(oEmbed) {
+        SC.oEmbed(track_url, {maxheight: maxHeight, show_comments: false, sharing: false, downloadable:false}).then(function(oEmbed) {
             var oldState = this.state;
             oldState.soundPlayerIframe = oEmbed.html
             this.setState(oldState);
@@ -29,7 +29,8 @@ export default class SoundCloudPlayer extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         var track_url = nextProps.track_url;
-        this.setupPlayer(track_url);
+        var maxHeight = nextProps.maxHeight;
+        this.setupPlayer(track_url, maxHeight);
     }
 
 

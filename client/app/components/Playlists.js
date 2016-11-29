@@ -117,7 +117,7 @@ export default class Playlists extends React.Component{
                  </div>
               </div>
               <div className="col-md-6">
-                 <SoundCloudPlayer track_url={track_url} />
+                 <SoundCloudPlayer track_url={track_url} maxHeight={350} />
               </div>
             </div>
 

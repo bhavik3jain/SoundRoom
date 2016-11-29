@@ -204,13 +204,13 @@ var initialData = {
             "_id" : 1,
             "host": "1",
             "participants": ["2", "3"],
-            "playlists": [{"trackID": "2", "likes": 0}, {"trackID": "1", "likes": 0}, {"trackID": "10", "likes": 0}]
+            "playlists": [{"trackID": "10", "likes": 0}, {"trackID": "11", "likes": 0}, {"trackID": "12", "likes": 0}]
         },
         "2": {
             "_id" : 2,
             "host": "2",
             "participants": ["4", "5"],
-            "playlists": [{"trackID": "3", "likes": 0}, {"trackID": "4", "likes": 0}, {"trackID": "4", "likes": 0}]
+            "playlists": [{"trackID": "6", "likes": 0}, {"trackID": "7", "likes": 0}, {"trackID": "11", "likes": 0}]
         }
     }
 };
