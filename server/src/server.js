@@ -27,20 +27,53 @@ app.get('/user/:userId/playlists', function(req, res) {
     res.send(getUserPlaylistData(userId));
 });
 
-app.post('/room/:roomId/:hostId', function(req, res) {
+app.post('/createroom/:roomId/:hostId', function(req, res) {
     var hostId = parseInt(req.params.hostId);
     var roomId = parseInt(req.params.roomId);
     // Add user authentication here (getUserIdFromToken)
-    rss.send(createRoom(hostId, roomId));
+
+    // create a new room with a host and room id
+    createRoom(hostId, roomId);
+
+    // redirect the host to the new room
+    res.redirect('/room/' + roomId);
+
+});
+
+app.post('/joinroom/:roomId/:userId', function(req, res) {
+    var roomId = parseInt(req.params.roomId),
+        userId = parseInt(req.params.userId),
+        var roomData = getRoomData(roomId);
+
+    if(validateRoom(roomId)) {
+        // validate that the room exists
+
+        // add to the rooms document a new participant and take them to the room
+        roomData.participants = roomData.participants.push(userId);
+        writeDocument('rooms', roomData);
+
+        res.redirect('/room/' + roomId)
+
+    }
+});
+
+app.get("/room/:roomId", function(req, res) {
+    var roomId = parseInt(req.params.roomId),
+        roomData = getRoomData(roomId);
+
+    res.send(roomData);
 });
 
 app.post('/room/:roomId/:userId/save', function(req, res) {
-    var body = req.body;
-    var userId = parseInt(req.params.userId);
-    var roomId = parseInt(req.params.userId)
-    var playlistName = body.playlistName;
+    var body = req.body,
+        userId = parseInt(req.params.userId),
+        roomId = parseInt(req.params.userId),
+        playlistName = body.playlistName,
+        roomData = getRoomData(roomId)['playlists'],
+        playlistsToSave = roomData.map((item) => item.trackID);
+
     res.send(saveSongsAsPlayist(userId, playlistName, playlistsToSave));
-})
+});
 
 function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
     var userData = readDocument("users", userId);
@@ -68,6 +101,7 @@ function createRoom(hostId, roomId) {
     return newRoom;
 }
 
+
 function getUserPlaylistData(userId) {
   var userPlaylists = readDocument('users', user)['playlists'];
   return userPlaylists;
@@ -78,7 +112,16 @@ function getUserData(userId) {
     return userData;
 }
 
-export function getSongsData(songId) {
+function getSongsData(songId) {
   var songList = readDocument('songs', songId);
   return songList;
+}
+
+function getRoomData(roomId) {
+    var roomData = readDocument('rooms', roomId);
+    return roomData;
+}
+
+function validateRoom(roomId) {
+    return true;
 }

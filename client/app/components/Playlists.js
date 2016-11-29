@@ -1,21 +1,21 @@
 import React from 'react';
 import {getSongsData} from '../server';
 import ReactDOM from 'react-dom';
+import SoundCloudPlayer from './SoundCloudPlayer';
 
 export default class Playlists extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      value: "",
-      soundPlayerIframe: this.props.location.query.setSongToPlay
-    };
+      value: ""
+    }
   }
 
   handleSongClick(songData) {
       console.log("Playing song: ", songData);
       var oldState = this.state;
       oldState.songToPlay = songData;
-      this.setState(oldState)
+      this.setState(oldState);
   }
 
   getUserPlaylists() {
@@ -62,6 +62,7 @@ export default class Playlists extends React.Component{
   }
 
   render() {
+      console.log("reload");
     //var songData = this.getUserSongsFromPlaylists(playlistData);
     //var artistsData = this.getUserSongArtistsFromPlaylists(playlistData);
     //var albumData = this.getUserSongAlbumFromPlaylists(playlistData);
@@ -81,17 +82,18 @@ export default class Playlists extends React.Component{
                               </tr>
                            </tbody>);
 
-    SC.initialize({
-      client_id: '20c77541bd6ca84e8d987789d0bc4b8d'
-    });
+    // SC.initialize({
+    //   client_id: '20c77541bd6ca84e8d987789d0bc4b8d'
+    // });
+    //
 
     var track_url = this.state.songToPlay;
-
-    SC.oEmbed(track_url, {maxheight: 350, show_comments: false, sharing: false, downloadable:false}).then(function(oEmbed) {
-        var oldState = this.state;
-        oldState.soundPlayerIframe = oEmbed.html
-        this.setState(oldState);
-    }.bind(this));
+    console.log("Track Url", track_url);
+    // SC.oEmbed(track_url, {maxheight: 350, show_comments: false, sharing: false, downloadable:false}).then(function(oEmbed) {
+    //     var oldState = this.state;
+    //     oldState.soundPlayerIframe = oEmbed.html
+    //     this.setState(oldState);
+    // }.bind(this));
 
     return (
         <div>
@@ -115,8 +117,7 @@ export default class Playlists extends React.Component{
                  </div>
               </div>
               <div className="col-md-6">
-                  <div dangerouslySetInnerHTML={{__html: this.state.soundPlayerIframe}} >
-                  </div>
+                 <SoundCloudPlayer track_url={track_url} />
               </div>
             </div>
 
