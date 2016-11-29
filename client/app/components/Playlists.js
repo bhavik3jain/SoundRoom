@@ -72,38 +72,44 @@ export default class Playlists extends React.Component{
 
     var track_url = this.state.songToPlay;
 
-    SC.oEmbed(track_url, {maxheight: 166, show_comments: false, sharing: false, downloadable:false}).then(function(oEmbed) {
+    SC.oEmbed(track_url, {maxheight: 350, show_comments: false, sharing: false, downloadable:false}).then(function(oEmbed) {
         var oldState = this.state;
         oldState.soundPlayerIframe = oEmbed.html
         this.setState(oldState);
     }.bind(this));
 
     return (
-      <div className="saved-playlist">
-        <h1>{playlistName}</h1>
+        <div>
+            <div className="row">
+              <div className="col-md-6">
+                <div className="saved-playlist">
+                    <h1 id="user_playlist_name">{playlistName}</h1>
 
-        <table>
-            <tbody>
-              <tr>
-                <th> Song Name </th>
-                <th> Artist </th>
-                <th> Album </th>
-              </tr>
-            </tbody>
+                  <table className="table-inverse">
+                      <tbody>
+                        <tr>
+                          <th> Song Name </th>
+                          <th> Artist </th>
+                          <th> Album </th>
+                        </tr>
+                      </tbody>
 
-            { playlistTableData }
+                      { playlistTableData }
 
-        </table>
+                  </table>
+                 </div>
+              </div>
+              <div className="col-md-6">
+                  <div dangerouslySetInnerHTML={{__html: this.state.soundPlayerIframe}} >
+                  </div>
+              </div>
+            </div>
 
-        <br/>
-
-        <div dangerouslySetInnerHTML={{__html: this.state.soundPlayerIframe}} >
-        </div>
+            <br/>
 
 
-      </div>
 
-
+          </div>
     );
   }
 }

@@ -151,17 +151,19 @@ var initialData = {
         },
         "6": {
             "_id": 6,
-            "title": "Nikki",
+            "title": "Logic - Wrist (Feat. Pusha T) TeamVisionary",
             "artist": "Logic",
-            "album": "Underpressure",
-            "soundcloud_url": "https://soundcloud.com/teamvisionary/logic-nikki"
+            "album": "Hip-hop & Rap",
+            "soundcloud_url": "https://soundcloud.com/youngzean/logic-wrist-feat-pusha-t",
+            "artwork_url": "https://i1.sndcdn.com/artworks-000169098013-7c3uj9-large.jpg"
         },
         "7": {
             "_id": 7,
             "title": "Man of the year",
             "artist": "Logic",
-            "album": "Young Sinatra",
-            "soundcloud_url": "https://soundcloud.com/swagytracks/logic-man-of-the-year-prod-no"
+            "album": "Hip-hop/rap",
+            "soundcloud_url": "https://soundcloud.com/swagytracks/logic-man-of-the-year-prod-no",
+            "artwork_url": "https://i1.sndcdn.com/artworks-000047449930-2d124v-large.jpg"
         },
         "8": {
             "_id": 8,
