@@ -1,6 +1,7 @@
 import React from 'react';
 import {getRoomData, getSongsData, getUserDataNCB, saveSongsAsPlayist} from '../server';
 import {writeDocument} from '../database';
+import SoundCloudPlayer from './SoundCloudPlayer';
 
 export default class RoomPlaylist extends React.Component {
 
@@ -50,30 +51,33 @@ export default class RoomPlaylist extends React.Component {
     saveSongsAsPlayist(this.props.userLoggedIn, playlistName, songsId);
   }
 
+  handleSongClick(songData) {
+      console.log("Playing song: ", songData);
+      var oldState = this.state;
+      oldState.songToPlay = songData;
+      this.setState(oldState);
+  }
+
   render() {
     var roomPlaylistSongsElements = [];
     var currentSongToPlay = this.state.playlist[0];
     var N = this.state.playlist.length;
+    console.log(this.state.playlist);
     var playlist_N = Array.apply(null, {length: N}).map(Number.call, Number);
     playlist_N.sort(this.compareVotes.bind(this));
     var roomPlaylistSongsElements = playlist_N.map((song) =>
-                                <tr key={song}>
+                                <tr key={song} onClick={() => this.handleSongClick(this.state.playlist[song].soundcloud_url)}>
                                   <td><button type="button" className="btn btn-secondary btn-playlist" onClick={(e)=>this.addLikeToSong(e, song)}><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
                                   <td>{this.state.playlist[song].title}</td>
                                   <td>{this.state.playlist[song].artist}</td>
                                   <td>{this.state.playlist[song].album}</td>
                                 </tr>);
+    var track_url = this.state.songToPlay;
 
     return (
       <div>
         <div className="media">
-          <div className="media-left">
-            <img className="media-object album-cover" src="/img/views_album_cover.jpg" width="150px" alt="Drake - Views" />
-          </div>
-          <div className="media-body">
-            {currentSongToPlay.title} <br />
-            {currentSongToPlay.artist} - {currentSongToPlay.album}
-          </div>
+            <SoundCloudPlayer track_url={track_url} maxHeight={100}/>
         </div>
         <table className="table room-playlist">
         <tbody>

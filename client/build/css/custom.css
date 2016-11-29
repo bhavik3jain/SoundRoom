@@ -349,3 +349,8 @@ th, td {
   font-size:20px;
   padding: 0px;
 }
+
+
+#user_playlist_name {
+    margin-top: 0px;
+}

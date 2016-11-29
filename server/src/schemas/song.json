@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "songId": {
+      "type": "integer"
+    },
+    "soundcloud_url": {
+        "type": "string"
+    }
+},
+  "required": [
+    "songId",
+    "soundcloud_url"
+  ]
+}
