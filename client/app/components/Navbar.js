@@ -21,7 +21,6 @@ export default class Navbar extends React.Component{
   }
 
   render(){
-    console.log(this.state);
     const proPicStyle = {
       width: '60%',
       height: '60%'

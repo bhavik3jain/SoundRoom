@@ -1,99 +1,92 @@
 import React from 'react';
-import {getSongsData} from '../server';
+import {getSongsData, getPlaylistData} from '../server';
 import ReactDOM from 'react-dom';
 import SoundCloudPlayer from './SoundCloudPlayer';
 
 export default class Playlists extends React.Component{
   constructor(props) {
-    super(props);
-    this.state = {
-      value: ""
-    }
-  }
+      super(props);
+      this.state = {playlist: []};
+    //   #this.setupPlaylist();
+   }
 
   handleSongClick(songData) {
-      console.log("Playing song: ", songData);
       var oldState = this.state;
       oldState.songToPlay = songData;
       this.setState(oldState);
   }
 
-  getUserPlaylists() {
-      getPlaylistData(this.props.user_id, (playlistData) => {
-        this.setState({"user_playlists": playlistData});
-      });
+  // getUserPlaylists() {
+  //     getPlaylistData(this.props.user_id, (playlistData) => {
+  //       this.setState({"user_playlists": playlistData});
+  //     });
+  // }
+
+
+  componentDidMount() {
+      var playlistData = this.props.location.query.playlistData;
+      for(var song in playlistData) {
+          getSongsData(playlistData[song]).then(function(d) {
+              var arrayvar = this.state.playlist.slice();
+              arrayvar.push(d);
+              this.setState({playlist: arrayvar});
+          }.bind(this));
+      }
   }
 
-  // getUserSongsFromPlaylists(playlistData) {
-  //   var songData = []
-  //   for(var songId in playlistData) {
-  //     songData.push(getSongsData(parseInt(playlistData[songId])).title)
-  //   }
-  //   return songData;
-  // }
-
-  // getUserSongArtistsFromPlaylists(playlistData) {
-  //   var artists = []
-  //   for(var songId in playlistData) {
-  //     artists.push(getSongsData(parseInt(playlistData[songId])).artist)
-  //   }
-  //   return artists;
-  // }
-
-  // getUserSongAlbumFromPlaylists(playlistData) {
-  //   var artists = []
-  //   for(var songId in playlistData) {
-  //     artists.push(getSongsData(parseInt(playlistData[songId])).album)
-  //   }
-  //   return artists;
-  // }
-
-  getUserSongInfo(playlistData){
-    var data = []
-    for(var songId in playlistData) {
-      data.push({
-                  song_id: getSongsData(parseInt(playlistData[songId]))._id,
-                  song_title: getSongsData(parseInt(playlistData[songId])).title,
-                  song_artist: getSongsData(parseInt(playlistData[songId])).artist,
-                  song_album: getSongsData(parseInt(playlistData[songId])).album
-                })
-    }
-    return data;
+  componentWillReceiveProps(nextProps) {
+      var playlistData = this.props.location.query.playlistData;
+      console.log(playlistData);
+      this.setState({playlist: []});
+      for(var song in playlistData) {
+          getSongsData(playlistData[song]).then(function(d) {
+              var arrayvar = this.state.playlist.slice();
+              arrayvar.push(d);
+              this.setState({playlist: arrayvar});
+          }.bind(this));
+      }
   }
+
+  componentWillUnmount() {
+      console.log("component will unmount");
+  }
+
+
 
   render() {
-      console.log("reload");
-    //var songData = this.getUserSongsFromPlaylists(playlistData);
-    //var artistsData = this.getUserSongArtistsFromPlaylists(playlistData);
-    //var albumData = this.getUserSongAlbumFromPlaylists(playlistData);
+    //   var playlistData = this.props.location.query.playlistData;
+    //   playlistData.map((song) => {
+    //       getSongsData(song).then(function(d) {
+    //           var arrayvar = this.state.playlist.slice();
+    //           arrayvar.push(<tbody key={song}>
+    //                             <tr onClick={() => this.handleSongClick(d.soundcloud_url)} key={song}>
+    //                               <td>{d.title}</td>
+    //                               <td>{d.artist}</td>
+    //                               <td>{d.album}</td>
+    //                             </tr>
+    //                         </tbody>);
+    //          this.setState({playlist: arrayvar});
+    //       }.bind(this));
+    //   });
+
+
+    var data = this.state.playlist;
+    // console.log("Data", data);
+    var sc_urls = data.map((song) => song.soundcloud_url);
     var playlistTableData = [];
-    var playlistData = this.props.location.query.playlistData;
     var playlistName = this.props.location.query.playlistName;
-    var sc_urls = playlistData.map((id) => getSongsData(id).soundcloud_url);
-    var data = this.getUserSongInfo(playlistData);
-    console.log(data);
     var N = data.length;
     var songlist_N = Array.apply(null, {length: N}).map(Number.call, Number)
     var playlistTableData = songlist_N.map((title) => <tbody key={title}>
                               <tr onClick={() => this.handleSongClick(sc_urls[title])} key={title}>
-                                <td>{data[title].song_title}</td>
-                                <td>{data[title].song_artist}</td>
-                                <td>{data[title].song_album}</td>
+                                <td>{data[title].title}</td>
+                                <td>{data[title].artist}</td>
+                                <td>{data[title].album}</td>
                               </tr>
                            </tbody>);
 
-    // SC.initialize({
-    //   client_id: '20c77541bd6ca84e8d987789d0bc4b8d'
-    // });
-    //
 
     var track_url = this.state.songToPlay;
-    console.log("Track Url", track_url);
-    // SC.oEmbed(track_url, {maxheight: 350, show_comments: false, sharing: false, downloadable:false}).then(function(oEmbed) {
-    //     var oldState = this.state;
-    //     oldState.soundPlayerIframe = oEmbed.html
-    //     this.setState(oldState);
-    // }.bind(this));
 
     return (
         <div>
@@ -122,9 +115,6 @@ export default class Playlists extends React.Component{
             </div>
 
             <br/>
-
-
-
           </div>
     );
   }

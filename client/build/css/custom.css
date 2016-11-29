@@ -354,3 +354,7 @@ th, td {
 #user_playlist_name {
     margin-top: 0px;
 }
+
+#room_sound_player {
+    padding: 10px;
+}
