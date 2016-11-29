@@ -25,6 +25,9 @@
     },
     "playlists": {
       "type": "object"
+    },
+    "roomHostId": {
+      "type": "string"
     }
   },
   "required": [
@@ -34,6 +37,7 @@
     "country",
     "dob",
     "avatar",
-    "email"
+    "email",
+    "roomHostId"
   ]
 }
