@@ -27,6 +27,32 @@ app.get('/user/:userId/playlists', function(req, res) {
     res.send(getUserPlaylistData(userId));
 });
 
+app.post('/room/:hostId/:roomId', function(req, res) {
+    var hostId = parseInt(req.params.hostId);
+    var roomId = parseInt(req.params.roomId);
+    // Add user authentication here (getUserIdFromToken)
+    rss.send(createRoom(hostId, roomId));
+});
+
+function createRoom(hostId, roomId) {
+
+    // update users roomHostID key in the users table
+    var userAccountInfo = readDocument('users', hostId);
+    userAccountInfo.roomHostID = roomId;
+    writeDocument('users', userAccountInfo);
+
+    // create a new empty room in the table
+    var newRoomDocument = {
+        "roomId": roomId,
+        "host": hostId,
+        "participants": [hostId],
+        "playlists": []
+    };
+    var newRoom = addDocument('rooms', newRoomDocument);
+
+    return newRoom;
+}
+
 function getUserPlaylistData(userId) {
   var userPlaylists = readDocument('users', user)['playlists'];
   return userPlaylists;
