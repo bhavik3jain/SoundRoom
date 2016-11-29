@@ -24,8 +24,7 @@
       "type": "string"
     },
     "playlists": {
-      "type": "object",
-
+      "type": "object"
     }
   },
   "required": [
