@@ -87,10 +87,10 @@ export default class RoomPlaylist extends React.Component {
     playlist_N.sort(this.compareVotes.bind(this));
     var roomPlaylistSongsElements = playlist_N.map((song) =>
                                 <tr key={song} onClick={() => this.handleSongClick(this.state.playlist[song].soundcloud_url)}>
-                                  <td><button type="button" className="btn btn-secondary btn-playlist" onClick={(e)=>this.addLikeToSong(e, song)}><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
                                   <td>{this.state.playlist[song].title}</td>
                                   <td>{this.state.playlist[song].artist}</td>
                                   <td>{this.state.playlist[song].album}</td>
+                                  <td><button type="button" className="btn btn-secondary btn-playlist" onClick={(e)=>this.addLikeToSong(e, song)}><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
                                 </tr>);
     var track_url = this.state.songToPlay;
     SC.initialize({
@@ -144,10 +144,10 @@ export default class RoomPlaylist extends React.Component {
                 <table className="table room-playlist">
                 <tbody>
                   <tr>
-                    <th>Votes</th>
                     <th>Song</th>
                     <th>Artist</th>
                     <th>Album</th>
+                    <th>Votes</th>
                   </tr>
                   {roomPlaylistSongsElements}
                 </tbody>
