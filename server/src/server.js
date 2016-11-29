@@ -27,12 +27,27 @@ app.get('/user/:userId/playlists', function(req, res) {
     res.send(getUserPlaylistData(userId));
 });
 
-app.post('/room/:hostId/:roomId', function(req, res) {
+app.post('/room/:roomId/:hostId', function(req, res) {
     var hostId = parseInt(req.params.hostId);
     var roomId = parseInt(req.params.roomId);
     // Add user authentication here (getUserIdFromToken)
     rss.send(createRoom(hostId, roomId));
 });
+
+app.post('/room/:roomId/:userId/save', function(req, res) {
+    var body = req.body;
+    var userId = parseInt(req.params.userId);
+    var roomId = parseInt(req.params.userId)
+    var playlistName = body.playlistName;
+    res.send(saveSongsAsPlayist(userId, playlistName, playlistsToSave));
+})
+
+function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
+    var userData = readDocument("users", userId);
+    userData.playlists[playlistName] = playlistsToSave;
+    writeDocument('users', userData);
+}
+
 
 function createRoom(hostId, roomId) {
 
