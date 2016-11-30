@@ -51,6 +51,7 @@ export default class RoomPlaylist extends React.Component {
     var songsId = playlistsToSave.map((item) => item.track_id)
     console.log(songsId);
     saveSongsAsPlayist(this.props.userLoggedIn, playlistName, songsId);
+
   }
 
   handleSongClick(songData) {
@@ -152,7 +153,7 @@ export default class RoomPlaylist extends React.Component {
                   {roomPlaylistSongsElements}
                 </tbody>
                 </table>
-                <button type="button" className="btn btn-primary" onClick={(e)=>this.savePlaylist(e)}>Save Playlist</button>
+                <center><button type="button" className="btn btn-primary" id='savePlaylistBtn' onClick={(e)=>this.savePlaylist(e)}>Save Playlist</button></center>
             </div>
       </div>
 

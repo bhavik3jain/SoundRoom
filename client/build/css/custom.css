@@ -133,9 +133,20 @@ body {
   color:#57E4E8;
 }
 
+#savePlaylistBtn{
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #343434;
+  color:#57E4E8;
+  border: 1px solid #57E4E8;
+}
+
+#access-code{
+  color: #FE5D59 !important;
+}
+
  #btn1{
   width:40%;
-
   margin-top: 20px;
   font-size: 16px;
   background-color: #343434;
