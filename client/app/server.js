@@ -28,7 +28,7 @@ export function getPlaylistData(user, cb) {
 
 export function getMakeId(){
     var result = "";
-    var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var chars = '0123456789abcdefghijklmnopqrstuvwxyz';
     for (var i = 8; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
     return result;
 }
