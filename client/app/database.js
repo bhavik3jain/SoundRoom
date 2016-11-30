@@ -119,6 +119,10 @@ export function readAllDocuments(collection){
   return JSONClone(data[collection]);
 }
 
+export function returnInitialData(){
+
+    return JSONClone(initialData);
+}
 /**
  * Emulates writing a "document" to a NoSQL database.
  */
@@ -144,31 +148,7 @@ export function addDocument(collectionName, newDoc) {
   return newDoc;
 }
 
-/**
- * Reset our browser-local database.
- */
 export function resetDatabase() {
   localStorage.setItem(startupName, JSON.stringify(initialData));
   data = JSONClone(initialData);
 }
-
-/**
- * Reset database button.
- */
-
-class ResetDatabase extends React.Component {
-  render() {
-    return (
-      <button className="btn btn-default" type="button" onClick={() => {
-        resetDatabase();
-        window.alert("Database reset! Refreshing the page now...");
-        document.location.reload(false);
-      }}>Reset Mock DB</button>
-    );
-  }
-}
-
-ReactDOM.render(
-  <ResetDatabase />,
-  document.getElementById('db-reset')
-);
