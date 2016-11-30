@@ -21,7 +21,10 @@ var initialData = {
           "city": "Amherst",
           "roomHostID": null,
           "playlists": { // playlists hold trackID for songs
-              "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
+              "1": {
+                  "_id": 1,
+                  "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
+              }
           }
       },
       "2": {
@@ -38,7 +41,10 @@ var initialData = {
             "city": "Amherst",
             "roomHostID": null,
             "playlists": {
-                "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
+                "1": {
+                    "_id": 1,
+                    "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
+                }
             }
         },
         "3": {
@@ -156,19 +162,19 @@ export function resetDatabase() {
  * Reset database button.
  */
 
-class ResetDatabase extends React.Component {
-  render() {
-    return (
-      <button className="btn btn-default" type="button" onClick={() => {
-        resetDatabase();
-        window.alert("Database reset! Refreshing the page now...");
-        document.location.reload(false);
-      }}>Reset Mock DB</button>
-    );
-  }
-}
-
-ReactDOM.render(
-  <ResetDatabase />,
-  document.getElementById('db-reset')
-);
+// class ResetDatabase extends React.Component {
+//   render() {
+//     return (
+//       <button className="btn btn-default" type="button" onClick={() => {
+//         resetDatabase();
+//         window.alert("Database reset! Refreshing the page now...");
+//         document.location.reload(false);
+//       }}>Reset Mock DB</button>
+//     );
+//   }
+// }
+//
+// ReactDOM.render(
+//   <ResetDatabase />,
+//   document.getElementById('db-reset')
+// );

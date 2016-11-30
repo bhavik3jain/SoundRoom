@@ -16,6 +16,7 @@
     "babel-preset-react": "^6.3.13",
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.14.0",
+    "please-wait": "0.0.5",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-router": "^3.0.0",
@@ -23,6 +24,10 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "react-select": "^1.0.0-rc.2"
+    "react-dots-loader": "^2.0.0",
+    "react-select": "^1.0.0-rc.2",
+    "react-spinjs": "^3.0.0",
+    "react-spinkit": "^1.1.11",
+    "splash-screen": "^3.0.1"
   }
 }

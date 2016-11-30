@@ -123,5 +123,5 @@ function getRoomData(roomId) {
 }
 
 function validateRoom(roomId) {
-    return true;
+return true;
 }

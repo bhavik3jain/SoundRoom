@@ -6,7 +6,7 @@ export default class Navbar extends React.Component{
 
         const roomPics = {
           width: '130%',
-          height: '145%',
+          height: '145%'
         };
 
         return (

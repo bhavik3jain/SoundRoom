@@ -1,6 +1,7 @@
 import React from 'react';
 import {getRoomIds} from '../server';
 import {Link} from 'react-router';
+
 // TODO:
 // 1) Implement the getHashCode method to retrieve a hash code from the server and then display it
 // 2) Fix up the css for this webpage, this looks ugly. Please contact Justin for design help
@@ -19,7 +20,6 @@ export default class CreateRoom extends React.Component{
 
     render() {
         const code = this.createHashCode();
-        console.log(code);
         return (
             <div>
                 <div className="row">
