@@ -98,9 +98,9 @@ export default class Playlists extends React.Component{
                   <table className="table-inverse">
                       <tbody>
                         <tr>
-                          <th> Song Name </th>
-                          <th> Artist </th>
-                          <th> Album </th>
+                          <th><h2 className = 'tbHeader'> Song Name</h2> </th>
+                          <th> <h2 className = 'tbHeader'>Artist </h2> </th>
+                          <th><h2 className = 'tbHeader'> Album </h2> </th>
                         </tr>
                       </tbody>
 

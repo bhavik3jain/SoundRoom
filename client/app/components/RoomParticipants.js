@@ -42,7 +42,7 @@ export default class RoomParticipants extends React.Component {
       <table className="table room-list">
       <tbody>
         <tr>
-          <th>Participants</th>
+          <th><h2 className = 'tbHeader'>Participants</h2></th>
         </tr>
         {roomParticipantsNames}
 

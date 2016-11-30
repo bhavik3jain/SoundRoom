@@ -224,7 +224,20 @@ body {
 .panel-joinroom .panel-body button:hover{
   box-shadow: 0 5px 15px #57E4E8;
 
+
 }
+
+.tbHeader{
+  font-size: 23px !important;
+  margin-top: 0px;
+  color: #FE5D59 !important;color: #FE5D59 !important;
+}
+
+.code{
+  margin-top: 0px;
+  font-weight: bold;
+}
+
 table {
     width:100%;
 }

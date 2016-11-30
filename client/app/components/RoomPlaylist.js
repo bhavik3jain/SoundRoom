@@ -147,10 +147,10 @@ export default class RoomPlaylist extends React.Component {
                 <table className="table room-playlist">
                 <tbody>
                   <tr>
-                    <th>Song</th>
-                    <th>Artist</th>
-                    <th>Album</th>
-                    <th>Votes</th>
+                    <th><h2 className = 'tbHeader'>Song</h2></th>
+                    <th><h2 className = 'tbHeader'>Artist</h2></th>
+                    <th><h2 className = 'tbHeader'>Album</h2></th>
+                    <th><h2 className = 'tbHeader'>Votes</h2></th>
                   </tr>
                   {roomPlaylistSongsElements}
                 </tbody>
