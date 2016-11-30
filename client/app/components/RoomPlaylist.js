@@ -54,11 +54,13 @@ export default class RoomPlaylist extends React.Component {
 
   }
 
-  handleSongClick(songData) {
+  handleSongClick(e, songData) {
+    if (e.target && e.target.matches("td.notLike")){
       console.log("Playing song: ", songData);
       var oldState = this.state;
       oldState.songToPlay = songData;
       this.setState(oldState);
+    }
   }
 
   onSearch(value) {
@@ -87,10 +89,10 @@ export default class RoomPlaylist extends React.Component {
     var playlist_N = Array.apply(null, {length: N}).map(Number.call, Number);
     playlist_N.sort(this.compareVotes.bind(this));
     var roomPlaylistSongsElements = playlist_N.map((song) =>
-                                <tr key={song} onClick={() => this.handleSongClick(this.state.playlist[song].soundcloud_url)}>
-                                  <td>{this.state.playlist[song].title}</td>
-                                  <td>{this.state.playlist[song].artist}</td>
-                                  <td>{this.state.playlist[song].album}</td>
+                                <tr key={song} onClick={(e) => this.handleSongClick(e,this.state.playlist[song].soundcloud_url)}>
+                                  <td className="notLike">{this.state.playlist[song].title}</td>
+                                  <td className="notLike">{this.state.playlist[song].artist}</td>
+                                  <td className="notLike">{this.state.playlist[song].album}</td>
                                   <td><button type="button" className="btn btn-secondary btn-playlist" onClick={(e)=>this.addLikeToSong(e, song)}><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
                                 </tr>);
     var track_url = this.state.songToPlay;
