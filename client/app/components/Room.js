@@ -31,8 +31,8 @@ export default class Room extends React.Component{
                     <RoomPlaylist currentRoomId={this.state.currentRoomId} userLoggedIn={this.state.currentUser}/>
                   </div>
                       </div>
-                      <div className="col-md-3">
-                        <p>Access Code:</p>{this.state.currentRoomId}
+                      <div id='access-code' className="col-md-3">
+                        <h3> ACCESS CODE: {this.state.currentRoomId}</h3>
                         <RoomParticipants currentRoomId={this.state.currentRoomId} />
                       </div>
                     </div>

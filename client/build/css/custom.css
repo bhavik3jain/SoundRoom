@@ -141,6 +141,10 @@ body {
   border: 1px solid #57E4E8;
 }
 
+#access-code{
+  color: #FE5D59 !important;
+}
+
  #btn1{
   width:40%;
   margin-top: 20px;
