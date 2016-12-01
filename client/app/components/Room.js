@@ -29,7 +29,7 @@ export default class Room extends React.Component{
                 <div className="col-md-9">
                   <div>
                     <RoomPlaylist currentRoomId={this.state.currentRoomId} userLoggedIn={this.state.currentUser}/>
-                  </div>
+                    </div>
                       </div>
                       <div id='access-code' className="col-md-3">
                         <center><h3> ACCESS CODE:</h3><h3 className = 'code'>{this.state.currentRoomId}</h3></center>

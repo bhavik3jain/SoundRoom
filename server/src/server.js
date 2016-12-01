@@ -39,27 +39,35 @@ app.get('/user/:userId/playlists', function(req, res) {
     res.send(getUserPlaylistData(userId));
 });
 
-app.post('/createroom/:roomId/:hostId', function(req, res) {
+app.post('/createroom/:hostId', function(req, res) {
+    var body = req.body;
     var hostId = req.params.hostId,
-        roomId = parseInt(req.params.roomId);
+        roomId = body.roomId;
 
     if(!validateRoom(roomId) && !validateRoomHost(hostId)) {
         // create a new room with a host and room id
         res.send(createRoom(hostId, roomId));
-
         // redirect the host to the new room
-        res.redirect('/room/' + roomId);
+        // res.redirect('/room/' + roomId);
     }
     else {
-        res.send("You cannot create a room that already exists or you are already a host for another room");
+
+        var error = {
+            message: "You cannot create a room that already exists or you are already a host for another room",
+            success: false
+        }
+
+        res.send(error);
      }
 
 });
 
-app.post('/joinroom/:roomId/:userId', function(req, res) {
-    var roomId = parseInt(req.params.roomId),
+app.post('/joinroom/:userId', function(req, res) {
+    var body = req.body;
+    var roomId = body.roomId,
         userId = req.params.userId;
 
+    console.log("Validating", roomId);
     if(validateRoom(roomId)) {
         // validate that the room exists
         var roomData = getRoomData(roomId);
@@ -74,8 +82,9 @@ app.post('/joinroom/:roomId/:userId', function(req, res) {
     }
 });
 
-app.get("/room/:roomId", function(req, res) {
-    var roomId = parseInt(req.params.roomId),
+app.post("/room/data",function(req, res) {
+    var body = req.body;
+    var roomId = body.roomId,
         roomData = getRoomData(roomId);
 
     res.send(roomData);
@@ -91,9 +100,9 @@ app.post('/room/:roomId/:userId/save', function(req, res) {
     res.send(saveSongsAsPlayist(userId, playlistName, playlistsToSave));
 });
 
-app.post('/room/:roomId/:songId/new_song', function(req, res) {
+app.post('/room/:songId/new_song', function(req, res) {
     var body = req.body,
-        roomId = parseInt(req.params.roomId),
+        roomId = body.roomId,
         songId = parseInt(req.params.songId),
         userThatAddedSong = body.userId;
 
@@ -110,10 +119,9 @@ app.post('/room/:roomId/:songId/song_like', function(req, res) {
     res.send(addLikeToSong(roomId, userId, songId));
 });
 
-app.get('/room/:roomId/participants', function(req, res)  {
+app.post('/room/participants', function(req, res)  {
     var body = req.body,
-        roomId = parseInt(req.params.roomId);
-
+        roomId = body.roomId;
     res.send(getRoomParticipants(roomId));
 });
 
@@ -122,9 +130,11 @@ app.get('/song/:songId', function(req, res) {
         songId = parseInt(req.params.songId);
 
     res.send(getSongMetadata(songId));
-})
+});
+
 function getRoomParticipants(roomId) {
-    var roomData = getRoomData(roomId);
+    var roomData = getRoomByAccessCode(roomId);
+    console.log(roomData);
     var participantsIds = [];
     for(var id in roomData.participants) {
         participantsIds.push(roomData.participants[id]);
@@ -135,7 +145,7 @@ function getRoomParticipants(roomId) {
         return userData.firstname + " " + userData.lastname;
     });
 
-    return participants;
+    return {"participants": participants};
 }
 
 function addLikeToSong(roomId, userId, songId) {
@@ -215,7 +225,7 @@ function getSongsData(songId) {
 }
 
 function getRoomData(roomId) {
-    return readDocument('rooms', roomId);
+    return getRoomByAccessCode(roomId);
 }
 
 function addSongToRoomPlaylist(roomId, userId, songId) {
@@ -237,7 +247,7 @@ function addSongToRoomPlaylist(roomId, userId, songId) {
 
 function validateRoom(roomId) {
     var roomCollection = getCollection('rooms');
-    var roomIds = Object.keys(roomCollection).map((item) => parseInt(item));
+    var roomIds = Object.keys(roomCollection).map((item) => roomCollection[item].roomId);
     for(var id in roomIds) {
         if(roomIds[id] === roomId) return true;
     }
@@ -285,6 +295,15 @@ function validateRoomHost(hostId) {
         }
     }
     return false;
+}
+
+function getRoomByAccessCode(code) {
+    var rooms = getCollection('rooms');
+    for(var room in rooms) {
+        if(rooms[room].roomId == code) {
+            return rooms[room];
+        }
+    }
 }
 
 function getSongMetadata(songId) {

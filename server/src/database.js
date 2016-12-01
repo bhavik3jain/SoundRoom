@@ -73,12 +73,14 @@ var initialData = {
     "rooms": {
         "1": {
             "_id" : 1,
+            "roomId": "1",
             "host": "1",
             "participants": ["1"],
             "playlist": []
         },
         "2": {
             "_id" : 2,
+            "roomId": "2",
             "host": "2",
             "participants": ["2"],
             "playlist": []

@@ -1,5 +1,5 @@
 import React from 'react';
-import {getRoomData, getUserIds} from '../server';
+import {getRoomParticipants} from '../server';
 
 export default class RoomParticipants extends React.Component {
 
@@ -8,34 +8,27 @@ export default class RoomParticipants extends React.Component {
     this.state = {currentRoomId: this.props.currentRoomId, participants: {}};
   }
 
+
   componentWillMount() {
-    this.setState({currentRoomId: this.state.currentRoomId, participants: this.getRoomParticipants(this.state.currentRoomId)});
-  }
 
-  getRoomParticipants(roomId) {
-    var roomData = getRoomData(parseInt(roomId));
-    var pars = [];
 
-    for (var participant in roomData.participants) {
-      pars.push(parseInt(roomData.participants[participant]));
-    }
+      getRoomParticipants(this.state.currentRoomId, (roomParticipants) => {
+          this.setState({currentRoomId: this.state.currentRoomId, participants: roomParticipants.participants})
+      });
 
-    return pars;
+    // this.setState({currentRoomId: this.state.currentRoomId, participants: this.getRoomParticipants(this.state.currentRoomId)});
   }
 
   render() {
-    var userIds = getUserIds();
-    var roomParticipantsNames = [];
-    for (var participant in this.state.participants) {
-      for (var id in userIds){
-        if (userIds[id]._id == this.state.participants[participant]){
-          roomParticipantsNames.push(
-            <tr>
-              <td>{userIds[id].firstname + " " + userIds[id].lastname}</td>
+    // var userIds = getUserIds();
+    var roomParticipantsNames = this.state.participants;
+    var roomParticipantsRows = [];
+    for (var participant in roomParticipantsNames) {
+          roomParticipantsRows.push(
+            <tr key={participant}>
+              <td>{roomParticipantsNames[participant]}</td>
             </tr>
           );
-        }
-      }
     }
 
     return (
@@ -44,7 +37,8 @@ export default class RoomParticipants extends React.Component {
         <tr>
           <th><h2 className = 'tbHeader'>Participants</h2></th>
         </tr>
-        {roomParticipantsNames}
+
+        {roomParticipantsRows}
 
       </tbody>
       </table>

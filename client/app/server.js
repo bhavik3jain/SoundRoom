@@ -78,10 +78,10 @@ export function getUserDataNCB(user, cb) {
   return userData;
 }
 
-export function getRoomData(roomId, cb) {
-  var roomData = readDocument('rooms', roomId);
-  return roomData;
-}
+// export function getRoomData(roomId, cb) {
+//   var roomData = readDocument('rooms', roomId);
+//   return roomData;
+// }
 
 
 
@@ -173,12 +173,36 @@ export function getUserPlaylist(user, cb) {
     });
 }
 
-export function getRoomDataServer(roomId, cb) {
-    sendXHR('GET', '/room/' + roomId, undefined, (xhr) => {
+export function createRoom(room, host, cb) {
+    sendXHR('POST', '/createroom/' + host, {roomId: room}, (xhr) => {
         cb(JSON.parse(xhr.responseText));
     });
 }
 
+export function joinRoom(room, userId, cb) {
+    sendXHR('POST', '/joinroom/' + userId, {roomId: room}, (xhr) => {
+        cb(JSON.parse(xhr.responseText));
+    });
+}
+
+export function getRoomParticipants(room, cb) {
+    sendXHR('POST', 'participants', {roomId: room}, (xhr) => {
+        cb(JSON.parse(xhr.responseText));
+    });
+}
+
+export function getRoomData(room, cb) {
+    sendXHR('POST', 'data', {roomId: room}, (xhr) => {
+        cb(JSON.parse(xhr.responseText));
+    });
+}
+
+export function addSongToRoom(room, song, cb) {
+    sendXHR('POST', '/room/' + song + '/new_song', {roomId: room}, (xhr) => {
+        console.log(xhr.responseText);
+        cb(JSON.parse(xhr.responseText));
+    });
+}
 
 class ResetDatabase extends React.Component {
   render() {

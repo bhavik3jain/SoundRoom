@@ -1,5 +1,6 @@
 import React from 'react';
-import {getRoomIds} from '../server';
+import {getRoomIds, joinRoom} from '../server';
+import {writeDocument} from '../database';
 import {Link, browserHistory} from 'react-router';
 
 var input_room_number;
@@ -12,23 +13,11 @@ var input_room_number;
 
 export default class JoinRoom extends React.Component{
 
-  validateRoom(e){
-  var rooms = getRoomIds();
-  console.log("here");
-  for (var room in rooms){
-      input_room_number = document.getElementById("userInput").value;
-      if (rooms[room]._id == input_room_number){
-        input_room_number = rooms[room]._id;
-        browserHistory.push("room/?roomId=" + input_room_number + "&user_logged_in=" + this.props.location.query.user_logged_in);
-        console.log("Allowing user to join the room " + input_room_number);
-      }
-    }
-  }
-
-
   letUserJoinRoom(e) {
      var input_room_number = document.getElementById("userInput").value;
-
+     joinRoom(input_room_number, this.props.location.query.user_logged_in, (roomData) => {
+         browserHistory.push("room/?roomId=" + input_room_number + "&user_logged_in=" + this.props.location.query.user_logged_in);
+     });
   }
 
   render() {
@@ -42,7 +31,7 @@ export default class JoinRoom extends React.Component{
                          <input type="text" className="form-control" id="userInput"
                              placeholder="Enter Access Code" />
                            <center>
-                            <button type = "button" className="btn btn-default" id="btn1" onClick={(e)=>this.validateRoom(e)}>Join</button>
+                            <button type = "button" className="btn btn-default" id="btn1" onClick={(e)=>this.letUserJoinRoom(e)}>Join</button>
                            <Link to="/">
                              <button type = "button" className="btn btn-default" id="btn2" >Back</button>
 
