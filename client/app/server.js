@@ -1,4 +1,8 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {readDocument, writeDocument, addDocument,readAllDocuments} from './database.js';
+import {startupName} from './database.js';
+import {resetDatabase} from './database.js';
 
 /**
  * Emulates how a REST call is *asynchronous* -- it calls your function back
@@ -20,6 +24,13 @@ export function getPlaylistData(user, cb) {
   // emulateServerReturn will emulate an asynchronous server operation, which
   // invokes (calls) the "cb" function some time in the future.
   emulateServerReturn(userPlaylists, cb);
+}
+
+export function getMakeId(){
+    var result = "";
+    var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    for (var i = 8; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+    return result;
 }
 
 export function getSongsData(sc_track, cb) {
@@ -72,6 +83,8 @@ export function getRoomData(roomId, cb) {
   return roomData;
 }
 
+
+
 // TODO:
 // export function addPlaylistToRoom(roomID, cb) {
 //     var roomData = readDocument("room", roomID);
@@ -83,3 +96,20 @@ export function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
     userData.playlists[playlistName] = playlistsToSave;
     writeDocument('users', userData);
 }
+
+class ResetDatabase extends React.Component {
+  render() {
+    return (
+      <button className="btn btn-default" type="button" onClick={() => {
+        resetDatabase();
+        window.alert("Database reset! Refreshing the page now...");
+        document.location.reload(false);
+      }}>Reset Mock DB</button>
+    );
+  }
+}
+
+ReactDOM.render(
+  <ResetDatabase />,
+  document.getElementById('db-reset')
+);

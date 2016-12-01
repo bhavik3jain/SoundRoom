@@ -125,6 +125,10 @@ export function readAllDocuments(collection){
   return JSONClone(data[collection]);
 }
 
+export function returnInitialData(){
+
+    return JSONClone(initialData);
+}
 /**
  * Emulates writing a "document" to a NoSQL database.
  */
@@ -150,9 +154,6 @@ export function addDocument(collectionName, newDoc) {
   return newDoc;
 }
 
-/**
- * Reset our browser-local database.
- */
 export function resetDatabase() {
   localStorage.setItem(startupName, JSON.stringify(initialData));
   data = JSONClone(initialData);
