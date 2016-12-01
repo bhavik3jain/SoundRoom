@@ -16,21 +16,36 @@ var writeDocument = database.writeDocument;
 var deleteDocument = database.deleteDocument;
 
 app.get('/user/:userId/account_info', function(req, res) {
-    var userId = parseInt(req.params.userId,10);
     // Add user authentication here (getUserIdFromToken())
-    res.send(getUserData(userId));
+    var body = req.body;
+    var userAuth = getUserIdFromToken(req.get('Authorization'));
+    if(userAuth === body.userId){
+      var userId = parseInt(req.params.userId,10);
+      res.status(201);
+      res.send(getUserData(userId));
+    }
+    else{
+      res.status(401).end();
+    }
 });
 
 app.get('/user/:userId/playlists', function(req, res) {
-    var userId = parseInt(req.params.userId, 10);
     // Add user authentication here (getUserIdFromToken)
-    res.send(getUserPlaylistData(userId));
+    var body = req.body;
+    var userAuth = getUserIdFromToken(req.get('Authorization'));
+    if(userAuth === body.userId){
+      var userId = parseInt(req.params.userId, 10);
+      res.status(201);
+      res.send(getUserPlaylistData(userId));
+    }
+    else{
+      res.status(401).end();
+    }
 });
 
 app.post('/createroom/:roomId/:hostId', function(req, res) {
     var hostId = parseInt(req.params.hostId);
     var roomId = parseInt(req.params.roomId);
-    // Add user authentication here (getUserIdFromToken)
 
     // create a new room with a host and room id
     createRoom(hostId, roomId);
@@ -43,7 +58,7 @@ app.post('/createroom/:roomId/:hostId', function(req, res) {
 app.post('/joinroom/:roomId/:userId', function(req, res) {
     var roomId = parseInt(req.params.roomId),
         userId = parseInt(req.params.userId),
-        var roomData = getRoomData(roomId);
+    var roomData = getRoomData(roomId);
 
     if(validateRoom(roomId)) {
         // validate that the room exists
@@ -101,6 +116,21 @@ function createRoom(hostId, roomId) {
     return newRoom;
 }
 
+function getUserIdFromToken(authorizationLine) {
+  try {
+    var token = authorizationLine.slice(7);
+    var regularString = new Buffer(token, 'base64').toString('utf8');
+    var tokenObj = JSON.parse(regularString);
+    var id = tokenObj['id'];
+    if (typeof id === 'number') {
+      return id;
+    } else {
+      return -1;
+    }
+  } catch (e) {
+    return -1;
+  }
+}
 
 function getUserPlaylistData(userId) {
   var userPlaylists = readDocument('users', user)['playlists'];
