@@ -117,23 +117,24 @@ function sendXHR(verb, resource, body, cb) {
           // The server may have included some response text with details concerning
           // the error.
           var responseText = xhr.responseText;
-          FacebookError('Could not ' + verb + " " + resource + ": Received " +
-          statusCode + " " + statusText + ": " + responseText);
+          console.log("Error", responseText);
+        //   SoundRoomError('Could not ' + verb + " " + resource + ": Received " +
+        //   statusCode + " " + statusText + ": " + responseText);
         }
       });
       // Time out the request if it takes longer than 10,000
       // milliseconds (10 seconds)
       xhr.timeout = 10000;
       // Network failure: Could not connect to server.
-      xhr.addEventListener('error', function() {
-        FacebookError('Could not ' + verb + " " + resource +
-        ": Could not connect to the server.");
-      });
-      // Network failure: request took too long to complete.
-      xhr.addEventListener('timeout', function() {
-        FacebookError('Could not ' + verb + " " + resource +
-        ": Request timed out.");
-      });
+    //   xhr.addEventListener('error', function() {
+    //     SoundRoomError('Could not ' + verb + " " + resource +
+    //     ": Could not connect to the server.");
+    //   });
+    //   // Network failure: request took too long to complete.
+    //   xhr.addEventListener('timeout', function() {
+    //     SoundRoomError(Could not ' + verb + " " + resource +
+    //     ": Request timed out.");
+    //   });
       switch (typeof(body)) {
         case 'undefined':
         // No body to send.
@@ -154,6 +155,20 @@ function sendXHR(verb, resource, body, cb) {
         default:
         throw new Error('Unknown body type: ' + typeof(body));
       }
+}
+
+export function getUserInfo(user, cb) {
+    // We don't need to send a body, so pass in 'undefined' for the body.
+    sendXHR('GET', '/user/' + user + '/account_info', undefined, (xhr) => {
+        // Call the callback with the data.
+        cb(JSON.parse(xhr.responseText));
+    });
+}
+
+export function getUserPlaylist(user, cb) {
+    sendXHR('GET', '/user/' + user + '/playlists', undefined, (xhr) => {
+        cb(JSON.parse(xhr.reponseText));
+    });
 }
 
 class ResetDatabase extends React.Component {

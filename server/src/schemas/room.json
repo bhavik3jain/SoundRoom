@@ -1,44 +1,44 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "properties": {
-    "roomId": {
-      "type": "integer"
-    },
-    "hostId": {
-      "type": "integer"
-    },
-    "participants": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "playlists": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "trackID": {
-            "type": "string"
-         },
-          "likes": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "roomId": {
             "type": "integer"
-          },
-          "userLikes": {
-            "type": "array"
-          }
         },
-        "required": [
-          "trackID",
-          "likes"
-        ]
-      }
-    }
-},
-  "required": [
-    "roomId",
-    "hostId",
-    "participants"
-  ]
+        "hostId": {
+            "type": "integer"
+        },
+        "participants": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "playlists": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "trackID": {
+                        "type": "string"
+                    },
+                    "likes": {
+                        "type": "integer"
+                    },
+                    "userLikes": {
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "trackID",
+                    "likes"
+                ]
+            }
+        }
+    },
+    "required": [
+        "roomId",
+        "hostId",
+        "participants"
+    ]
 }
