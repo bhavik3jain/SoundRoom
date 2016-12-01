@@ -29,10 +29,24 @@ export default class RoomPlaylist extends React.Component {
     return songs;
   }
 
+  getHighestVotedSong(playlist) {
+    var max = playlist[0];
+    for (var song in playlist) {
+      if (playlist[song].likes > max.likes) {
+        max = playlist[song];
+      }
+    }
+    return max;
+  }
+
   addLikeToSong(e, song) {
+    var oldState = this.state;
     var modifiedPlayList = this.state.playlist;
     modifiedPlayList[song].likes += 1;
-    this.setState({currentRoomId: this.state.currentRoomId, playlist: modifiedPlayList});
+    oldState.playlist = modifiedPlayList;
+    oldState.songToPlay = this.getHighestVotedSong(oldState.playlist).soundcloud_url;
+    console.log("oldState", oldState.songToPlay);
+    this.setState(oldState);
   }
 
   compareVotes(a, b) {
@@ -138,7 +152,7 @@ export default class RoomPlaylist extends React.Component {
       <div class="row">
             <div class="col-md-4">
                 <div className="media" id="room_sound_player">
-                    <SoundCloudPlayer track_url={track_url} maxHeight={100} autoplay={true}/>
+                    <SoundCloudPlayer track_url={this.state.songToPlay} maxHeight={100} autoplay={true}/>
                 </div>
                 <Select.Async name="search_tracks" value={this.state.track_to_search} onChange={onChange.bind(this)} loadOptions={getOptions} onValueClick={gotoContributor.bind(this)} valueKey="uri" labelKey="title" placeholder="Search Tracks"/>
             </div>

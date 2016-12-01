@@ -103,10 +103,9 @@ export default class Playlists extends React.Component{
                           <th><h2 className = 'tbHeader'> Album </h2> </th>
                         </tr>
                       </tbody>
-
                       { playlistTableData }
-
                   </table>
+                  
                  </div>
               </div>
               <div className="col-md-6">
