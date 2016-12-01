@@ -167,6 +167,14 @@ export function getUserInfo(user, cb) {
     });
 }
 
+export function createInfo(user, roomId, cb) {
+    // We don't need to send a body, so pass in 'undefined' for the body.
+    sendXHR('POST', '/createroom/' + roomId + '/' + user, undefined, (xhr) => {
+        // Call the callback with the data.
+        cb(JSON.parse(xhr.responseText));
+    });
+}
+
 export function getUserPlaylist(user, cb) {
     sendXHR('GET', '/user/' + user + '/playlists', undefined, (xhr) => {
         cb(JSON.parse(xhr.responseText));
@@ -197,8 +205,8 @@ export function getRoomData(room, cb) {
     });
 }
 
-export function addSongToRoom(room, song, cb) {
-    sendXHR('POST', '/room/' + song + '/new_song', {roomId: room}, (xhr) => {
+export function addSongToRoom(room, song, user_id, cb) {
+    sendXHR('POST', '/room/' + song + '/new_song', {roomId: room, userId: user_id}, (xhr) => {
         console.log(xhr.responseText);
         cb(JSON.parse(xhr.responseText));
     });

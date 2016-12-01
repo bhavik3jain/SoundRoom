@@ -144,7 +144,7 @@ export default class RoomPlaylist extends React.Component {
 
     var gotoContributor = function(value, event) {
 
-        addSongToRoom(this.state.currentRoomId, value.id, (roomData) => {
+        addSongToRoom(this.state.currentRoomId, value.id, this.props.userLoggedIn, (roomData) => {
 
             var new_song = {
             "_id": 13,

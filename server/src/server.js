@@ -238,7 +238,7 @@ function addSongToRoomPlaylist(roomId, userId, songId) {
         }
         roomData.playlist.push(songDocument);
         writeDocument('rooms', roomData);
-        return roomData;
+        return songDocument;
     }
     else {
         return "Song already in the playlist";
