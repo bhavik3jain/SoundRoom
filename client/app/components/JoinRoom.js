@@ -1,5 +1,6 @@
 import React from 'react';
 import {getRoomIds} from '../server';
+import {writeDocument} from '../database';
 import {Link, browserHistory} from 'react-router';
 
 var input_room_number;
@@ -21,6 +22,15 @@ export default class JoinRoom extends React.Component{
         input_room_number = rooms[room]._id;
         browserHistory.push("room/?roomId=" + input_room_number + "&user_logged_in=" + this.props.location.query.user_logged_in);
         console.log("Allowing user to join the room " + input_room_number);
+        if (rooms[room].participants.indexOf(this.props.location.query.user_logged_in) == -1) {
+          console.log("You are not in the room");
+          console.log("participants", rooms[room].participants);
+          rooms[room].participants.push(this.props.location.query.user_logged_in);
+          writeDocument('rooms', rooms[room]);
+          console.log("participants updated", rooms[room].participants);
+        } else {
+          console.log("You are already in the room");
+        }
       }
     }
   }
