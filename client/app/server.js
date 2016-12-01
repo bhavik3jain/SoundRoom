@@ -97,6 +97,8 @@ export function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
     writeDocument('users', userData);
 }
 
+var token = "eyJpZCI6MX0=";
+
 function sendXHR(verb, resource, body, cb) {
       var xhr = new XMLHttpRequest();
       xhr.open(verb, resource);
@@ -167,7 +169,7 @@ export function getUserInfo(user, cb) {
 
 export function getUserPlaylist(user, cb) {
     sendXHR('GET', '/user/' + user + '/playlists', undefined, (xhr) => {
-        cb(JSON.parse(xhr.reponseText));
+        cb(JSON.parse(xhr.responseText));
     });
 }
 

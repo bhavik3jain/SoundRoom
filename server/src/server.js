@@ -35,13 +35,8 @@ app.get('/user/:userId/playlists', function(req, res) {
     var body = req.body;
     // var userAuth = getUserIdFromToken(req.get('Authorization'));
     // if(userAuth === body.userId){
-    var userId = parseInt(req.params.userId, 10);
-    //   res.status(201);
+    var userId = req.params.userId;
     res.send(getUserPlaylistData(userId));
-    // }
-    // else{
-    //   res.status(401).end();
-    // }
 });
 
 app.post('/createroom/:roomId/:hostId', function(req, res) {
@@ -122,6 +117,12 @@ app.get('/room/:roomId/participants', function(req, res)  {
     res.send(getRoomParticipants(roomId));
 });
 
+app.get('/song/:songId', function(req, res) {
+    var body = req.body,
+        songId = parseInt(req.params.songId);
+
+    res.send(getSongMetadata(songId));
+})
 function getRoomParticipants(roomId) {
     var roomData = getRoomData(roomId);
     var participantsIds = [];
@@ -201,7 +202,8 @@ function getUserIdFromToken(authorizationLine) {
 }
 
 function getUserPlaylistData(userId) {
-    return readDocument('users', userId)['playlists'];
+    var playlist = readDocument('users', userId).playlists
+    return playlist;
 }
 
 function getUserData(userId) {
@@ -284,6 +286,15 @@ function validateRoomHost(hostId) {
     }
     return false;
 }
+
+function getSongMetadata(songId) {
+    SC.initialize({
+        client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'
+    });
+
+    return SC.get("tracks/" + songId);
+}
+
 // Starts the server on port 3000!
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
