@@ -8,11 +8,11 @@
     "hostId": {
       "type": "integer"
     },
-    "particpants": {
+    "participants": {
       "type": "array",
       "items": {
         "type": "string"
-      },
+      }
     },
     "playlists": {
       "type": "array",
@@ -20,10 +20,13 @@
         "type": "object",
         "properties": {
           "trackID": {
-            "type": "string",
+            "type": "string"
          },
           "likes": {
-            "type": "integer",
+            "type": "integer"
+          },
+          "userLikes": {
+            "type": "array"
           }
         },
         "required": [
@@ -36,6 +39,6 @@
   "required": [
     "roomId",
     "hostId",
-    "participants",
+    "participants"
   ]
 }
