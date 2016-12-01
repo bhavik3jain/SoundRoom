@@ -7,7 +7,6 @@ export default class Playlists extends React.Component{
   constructor(props) {
       super(props);
       this.state = {playlist: []};
-    //   #this.setupPlaylist();
    }
 
   handleSongClick(songData) {
@@ -15,13 +14,6 @@ export default class Playlists extends React.Component{
       oldState.songToPlay = songData;
       this.setState(oldState);
   }
-
-  // getUserPlaylists() {
-  //     getPlaylistData(this.props.user_id, (playlistData) => {
-  //       this.setState({"user_playlists": playlistData});
-  //     });
-  // }
-
 
   componentDidMount() {
       var playlistData = this.props.location.query.playlistData;
@@ -105,7 +97,7 @@ export default class Playlists extends React.Component{
                       </tbody>
                       { playlistTableData }
                   </table>
-                  
+
                  </div>
               </div>
               <div className="col-md-6">
