@@ -42,13 +42,12 @@ app.get('/user/:userId/playlists', function(req, res) {
 app.post('/createroom/:roomId/:hostId', function(req, res) {
     var hostId = req.params.hostId,
         roomId = parseInt(req.params.roomId);
-
+    console.log("createRoom");
     if(!validateRoom(roomId) && !validateRoomHost(hostId)) {
         // create a new room with a host and room id
         res.send(createRoom(hostId, roomId));
-
         // redirect the host to the new room
-        res.redirect('/room/' + roomId);
+        // res.redirect('/room/' + roomId);
     }
     else {
         res.send("You cannot create a room that already exists or you are already a host for another room");

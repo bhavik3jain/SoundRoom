@@ -173,6 +173,13 @@ export function getUserPlaylist(user, cb) {
     });
 }
 
+export function createRoom(room, host, cb) {
+    
+    sendXHR('POST', '/createroom/' + room + '/' + host, undefined, (xhr) => {
+        cb(JSON.parse(xhr.responseText));
+    });
+}
+
 class ResetDatabase extends React.Component {
   render() {
     return (
