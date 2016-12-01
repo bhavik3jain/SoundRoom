@@ -33,19 +33,19 @@ export default class AccountInfo extends React.Component{
             <div className="input-group">
               <form action="" method="post">
               <h3>First Name</h3>
-              <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.firstname} aria-describedby="basic-addon2" />
+              <input name="firstname" id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.firstname} aria-describedby="basic-addon2" />
               <br />
               <h3>Last Name</h3>
-              <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.lastname} aria-describedby="basic-addon2" />
+              <input name="lastname" id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.lastname} aria-describedby="basic-addon2" />
               <br />
               <h3>Email</h3>
-              <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.email} aria-describedby="basic-addon2" />
+              <input name="email" id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.email} aria-describedby="basic-addon2" />
               <br />
               <h3>Date of birth</h3>
-              <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.dob} aria-describedby="basic-addon2" />
+              <input name="dob" id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.dob} aria-describedby="basic-addon2" />
               <br />
               <h3>Country</h3>
-              <input id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.country} aria-describedby="basic-addon2" />
+              <input name="country "id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.country} aria-describedby="basic-addon2" />
               <button type="button" id="accountinfo-btn1" className="btn btn-primary btn-lg">Update Profile</button>
               </form>
             </div>
