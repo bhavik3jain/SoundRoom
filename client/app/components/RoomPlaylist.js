@@ -1,5 +1,5 @@
 import React from 'react';
-import {getRoomData, getSongsData, getUserDataNCB, saveSongsAsPlayist} from '../server';
+import {getRoomData, getSongsData, getUserDataNCB, saveSongsAsPlayist, getRoomDataServer} from '../server';
 import {writeDocument} from '../database';
 import SoundCloudPlayer from './SoundCloudPlayer';
 import Select from 'react-select';
@@ -13,6 +13,9 @@ export default class RoomPlaylist extends React.Component {
   }
 
   componentWillMount() {
+      getRoomDataServer(this.state.currentRoomId, (roomData) => {
+          console.log(roomData);
+      });
     this.setState({currentRoomId: this.state.currentRoomId, playlist: this.getRoomPlaylistSongs(this.state.currentRoomId)});
   }
 

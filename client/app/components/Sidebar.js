@@ -10,15 +10,14 @@ export default class Sidebar extends React.Component{
         };
 	}
 
-    getUserPlaylists() {
+    refresh() {
         getUserPlaylist(this.props.user_id, (playlistData) => {
-            console.log(playlistData);
-			this.setState({"user_playlists": playlistData});
+		    this.setState({"user_playlists": playlistData});
 		});
     }
 
     componentDidMount() {
-		this.getUserPlaylists();
+		this.refresh();
 	}
 
     render(){

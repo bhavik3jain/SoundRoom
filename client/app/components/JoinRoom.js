@@ -6,7 +6,7 @@ var input_room_number;
 
 // TODO:
 // 1) Needs to create a Rooms Table for a database of all active room
-// 2) Check to see if the room number is actually active and if its not then throw some error
+// 2) Check to see if the room number s actually active and if its not then throw some error
 // 3) Also check with Justin to make the design better for this webpage
 // 4) After successful validation of the room number, take the user into the room session (Room Component)
 
@@ -26,6 +26,10 @@ export default class JoinRoom extends React.Component{
   }
 
 
+  letUserJoinRoom(e) {
+     var input_room_number = document.getElementById("userInput").value;
+
+  }
 
   render() {
         return (

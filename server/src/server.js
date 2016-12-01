@@ -67,7 +67,7 @@ app.post('/joinroom/:roomId/:userId', function(req, res) {
         // add to the rooms document a new participant and take them to the room
         roomData.participants.push(userId);
         writeDocument('rooms', roomData);
-        res.redirect('/room/' + roomId)
+        res.status(200);
         res.send(roomData);
     } else {
         res.send("Room does not exists");
