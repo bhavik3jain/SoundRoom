@@ -10,6 +10,8 @@
     "serve": "./node_modules/.bin/webpack-dev-server --content-base build"
   },
   "devDependencies": {
+    "async": "^2.1.4",
+    "async-each-series": "^1.1.0",
     "babel": "^6.3.26",
     "babel-core": "^6.4.0",
     "babel-loader": "^6.2.0",

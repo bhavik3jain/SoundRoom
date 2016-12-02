@@ -97,6 +97,14 @@ export function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
     writeDocument('users', userData);
 }
 
+export function getSongMetadata(songId) {
+    SC.initialize({
+        client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'
+    });
+
+    return SC.get("tracks/" + songId);
+}
+
 var token = "eyJpZCI6MX0=";
 
 function sendXHR(verb, resource, body, cb) {
@@ -207,7 +215,12 @@ export function getRoomData(room, cb) {
 
 export function addSongToRoom(room, song, user_id, cb) {
     sendXHR('POST', '/room/' + song + '/new_song', {roomId: room, userId: user_id}, (xhr) => {
-        console.log(xhr.responseText);
+        cb(JSON.parse(xhr.responseText));
+    });
+}
+
+export function addLikeToSong(room, song, user_id, cb) {
+    sendXHR('POST', '/room/song_like', {roomId: room, songId: song, userId: user_id}, (xhr) => {
         cb(JSON.parse(xhr.responseText));
     });
 }

@@ -1,8 +1,11 @@
 import React from 'react';
-import {getRoomData, getSongsData, getUserDataNCB, saveSongsAsPlayist, getRoomDataServer, addSongToRoom} from '../server';
+import {getRoomData, getSongsData, getUserDataNCB, saveSongsAsPlayist, getRoomDataServer, addSongToRoom, getSongMetadata, addLikeToSong} from '../server';
 import {writeDocument} from '../database';
 import SoundCloudPlayer from './SoundCloudPlayer';
 import Select from 'react-select';
+import eachSeries from 'async/eachSeries';
+
+var each = require('async-each-series');
 
 export default class RoomPlaylist extends React.Component {
 
@@ -10,31 +13,52 @@ export default class RoomPlaylist extends React.Component {
     super(props);
     this.state = {currentRoomId: this.props.currentRoomId, playlist: [], track_to_search: ""};
     this.addLikeToSong = this.addLikeToSong.bind(this);
+
+  }
+
+  refresh() {
+
+      getRoomData(this.state.currentRoomId, (roomData) => {
+          this.getRoomPlaylistSongs(roomData)
+      });
   }
 
   componentWillMount() {
-
-      getRoomData(this.state.currentRoomId, (roomData) => {
-          console.log(roomData);
-      });
-
-    //   getRoomDataServer(this.state.currentRoomId, (roomData) => {
-    //       console.log(roomData);
-    //   });
-    // this.setState({currentRoomId: this.state.currentRoomId, playlist: this.getRoomPlaylistSongs(this.state.currentRoomId)});
+      this.refresh();
   }
 
-  getRoomPlaylistSongs(roomId) {
-    var roomData = getRoomData(parseInt(roomId));
-    var songs = [];
-
-    for (var track in roomData.playlists) {
-      var songData = getSongsData(parseInt(roomData.playlists[track].trackID));
-      songData.likes = roomData.playlists[track].likes;
-      songs.push(songData);
-    }
-
-    return songs;
+  getRoomPlaylistSongs(roomData) {
+      each(roomData.playlist, (song, next) => {
+          getSongMetadata(song.trackID).then((songData) => {
+              var songMetaData = {};
+              songMetaData.likes = song.likes;
+              songMetaData.album = "Some Album";
+              songMetaData.artist = "Some Artist";
+              songMetaData.title = songData.title;
+              songMetaData.track_id = songData.id;
+              songMetaData.soundcloud_url = songData.uri
+              var oldState = this.state;
+              oldState.playlist.push(songMetaData);
+              this.setState(oldState);
+         });
+         next();
+      });
+    //   for(var song in roomData.playlist) {
+    //       console.log("Getting metadata for", roomData.playlist[song].trackID);
+    //       getSongMetadata(roomData.playlist[song].trackID).then((songData) => {
+    //           var songMetaData = {};
+    //           console.log(roomData.playlist[song]);
+    //           songMetaData.likes = roomData.playlist[song].likes;
+    //           songMetaData.album = "Some Album";
+    //           songMetaData.artist = "Some Artist";
+    //           songMetaData.title = songData.title;
+    //           songMetaData.track_id = songData.id;
+    //           songMetaData.soundcloud_url = songData.uri
+    //           var oldState = this.state;
+    //           oldState.playlist.push(songMetaData);
+    //           this.setState(oldState);
+    //      });
+    // }
   }
 
   getHighestVotedSong(playlist) {
@@ -48,21 +72,34 @@ export default class RoomPlaylist extends React.Component {
   }
 
   addLikeToSong(e, song) {
-    var room = getRoomData(this.state.currentRoomId);
-    var indexOfUser = room.participants.indexOf(this.props.userLoggedIn);
-    console.log("indexOfUser",indexOfUser);
-    if (this.state.playlist[song].usersHaveVoted[indexOfUser] != true) {
-      this.state.playlist[song].usersHaveVoted[indexOfUser] = true
-      var oldState = this.state;
-      var modifiedPlayList = this.state.playlist;
-      modifiedPlayList[song].likes += 1;
-      oldState.playlist = modifiedPlayList;
-      oldState.songToPlay = this.getHighestVotedSong(oldState.playlist).soundcloud_url;
-      console.log("oldState", oldState.songToPlay);
-      this.setState(oldState);
-    } else {
-      alert("You have already voted on this song.");
-    }
+    // var room = getRoomData(this.state.currentRoomId);
+    var songTrackId =  this.state.playlist[song].track_id;
+    addLikeToSong(this.state.currentRoomId, songTrackId, this.props.userLoggedIn, (roomData) => {
+        if('message' in roomData) {
+            console.log(roomData['message']);
+        }
+        else {
+            this.setState({currentRoomId: this.props.currentRoomId, playlist: [], "track_to_search": ""});
+            console.log("roomData after liked song", roomData);
+            this.getRoomPlaylistSongs(roomData);
+        }
+    });
+
+    // var indexOfUser = room.participants.indexOf(this.pros.userLoggedIn);
+    // console.log("indexOfUser,indexOfUser);
+    // if (this.state.playlist[song].usersHaveVoted[indexOfUser] != true) {
+    //   this.state.playlist[song].usersHaveVoted[indexOfUser] = true
+    //   var oldState = this.state;
+    //   var modifiedPlayList = this.state.playlist;
+    //   modifiedPlayList[song].likes += 1;
+    //   oldState.playlist = modifiedPlayList;
+    //   oldState.songToPlay = this.getHighestVotedSong(oldState.playlist).soundcloud_url;
+    //   console.log("oldState", oldState.songToPlay);
+    //   this.setState(oldState);
+    // } else {
+    //   alert("You have already voted on this song.");
+    // }
+
   }
 
   compareVotes(a, b) {
@@ -79,14 +116,12 @@ export default class RoomPlaylist extends React.Component {
     var playlistName = prompt("What do you want to save this playlist as?");
     var playlistsToSave = this.state.playlist;
     var songsId = playlistsToSave.map((item) => item.track_id)
-    console.log(songsId);
     saveSongsAsPlayist(this.props.userLoggedIn, playlistName, songsId);
 
   }
 
   handleSongClick(e, songData) {
     if (e.target && e.target.matches("td.notLike")){
-      console.log("Playing song: ", songData);
       var oldState = this.state;
       oldState.songToPlay = songData;
       this.setState(oldState);
@@ -108,11 +143,11 @@ export default class RoomPlaylist extends React.Component {
       var tracks = SC.get('/tracks', {
           q: value,limit:page_size
       }).then(function(tracks) {
-          console.log(tracks);
       });
   }
 
   render() {
+
     var roomPlaylistSongsElements = [];
     var currentSongToPlay = this.state.playlist[0];
     var N = this.state.playlist.length;
@@ -144,34 +179,24 @@ export default class RoomPlaylist extends React.Component {
 
     var gotoContributor = function(value, event) {
 
-        addSongToRoom(this.state.currentRoomId, value.id, this.props.userLoggedIn, (roomData) => {
+        addSongToRoom(this.state.currentRoomId, value.id, this.props.userLoggedIn, (songData) => {
 
             var new_song = {
-            "_id": 13,
-            album : "Some Album",
-            artist: "Some Artist",
-            likes: 0,
-            usersHaveVoted: [],
-            track_id : "tracks/" + value.id,
-            soundcloud_url: value.uri,
-            title : value.title};
+                "_id": 13,
+                album : "Some Album",
+                artist: "Some Artist",
+                likes: songData.likes,
+                usersHaveVoted: [],
+                track_id : value.id,
+                soundcloud_url: value.uri,
+                title : value.title
+            };
 
             var oldState = this.state;
-            console.log(oldState);
             oldState.playlist.push(new_song);
             this.setState(oldState);
 
         });
-
-        // var participants = getRoomData(this.state.currentRoomId).participants;
-        // console.log("participants", participants);
-        //
-        // for (var i in participants) {
-        //   new_song.usersHaveVoted.push(false);
-        // }
-        //
-        // console.log(new_song.usersHaveVoted);
-
     }
 
     var onChange = function(value) {
