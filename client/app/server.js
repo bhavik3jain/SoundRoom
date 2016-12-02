@@ -4,6 +4,8 @@ import {readDocument, writeDocument, addDocument,readAllDocuments} from './datab
 import {startupName} from './database.js';
 import {resetDatabase} from './database.js';
 
+
+
 /**
  * Emulates how a REST call is *asynchronous* -- it calls your function back
  * some time in the future with data.
@@ -95,7 +97,7 @@ function sendXHR(verb, resource, body, cb) {
       xhr.setRequestHeader('Authorization', 'Bearer ' + token);
       // Otherwise, ESLint would complain about it! (See what happens in Atom if
       // you remove the comment...)
-      /* global FacebookError */
+      /* global SoundRoomError */
       // Response received from server. It could be a failure, though!
       xhr.addEventListener('load', function() {
         var statusCode = xhr.status;
@@ -110,24 +112,25 @@ function sendXHR(verb, resource, body, cb) {
           // the error.
           var responseText = xhr.responseText;
           console.log("Error", responseText);
-        //   SoundRoomError('Could not ' + verb + " " + resource + ": Received " +
-        //   statusCode + " " + statusText + ": " + responseText);
+          SoundRoomError('Could not ' + verb + " " + resource + ": Received " +
+          statusCode + " " + statusText + ": " + responseText);
         }
       });
       // Time out the request if it takes longer than 10,000
       // milliseconds (10 seconds)
       xhr.timeout = 10000;
-      // Network failure: Could not connect to server.
-    //   xhr.addEventListener('error', function() {
-    //     SoundRoomError('Could not ' + verb + " " + resource +
-    //     ": Could not connect to the server.");
-    //   });
+      //Network failure: Could not connect to server.
+      xhr.addEventListener('error', function() {
+        SoundRoomError('Could not ' + verb + " " + resource +
+        ": Could not connect to the server.");
+      });
     //   // Network failure: request took too long to complete.
-    //   xhr.addEventListener('timeout', function() {
-    //     SoundRoomError(Could not ' + verb + " " + resource +
-    //     ": Request timed out.");
-    //   });
-      switch (typeof(body)) {
+      xhr.addEventListener('timeout', function() {
+        SoundRoomError('Could not ' + verb + " " + resource +
+        ": Request timed out.");
+      });
+
+        switch (typeof(body)) {
         case 'undefined':
         // No body to send.
         xhr.send();
@@ -213,16 +216,24 @@ export function saveSongsAsPlayist(userId, roomId, playlistName, cb) {
     });
 }
 
-class ResetDatabase extends React.Component {
-  render() {
-    return (
-      <button className="btn btn-default" type="button" onClick={() => {
-        resetDatabase();
-        window.alert("Database reset! Refreshing the page now...");
-        document.location.reload(false);
-      }}>Reset Mock DB</button>
-    );
-  }
+/**
+* Reset database button.
+*/
+export class ResetDatabase extends React.Component {
+    render() {
+      return (
+        <button className="btn btn-default" type="button" onClick={() => {
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', '/resetdb');
+          xhr.addEventListener('load', function() {
+            window.alert("Database reset! Refreshing the page now...");
+            document.location.reload(false);
+          });
+        xhr.send();
+        }}>Reset Mock DB
+      </button>
+      );
+    }
 }
 
 ReactDOM.render(

@@ -163,6 +163,15 @@ app.get('/song/:songId', function(req, res) {
     res.send(getSongMetadata(songId));
 });
 
+// Reset database.
+app.post('/resetdb', function(req, res) {
+  console.log("Resetting database...");
+  // This is a debug route, so don't do any validation.
+  database.resetDatabase();
+  // res.send() sends an empty response with status code 200
+  res.send();
+})
+
 function getRoomParticipants(roomId) {
     var roomData = getRoomByAccessCode(roomId);
     var participantsIds = [];
