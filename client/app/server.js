@@ -78,24 +78,7 @@ export function getUserDataNCB(user, cb) {
   return userData;
 }
 
-// export function getRoomData(roomId, cb) {
-//   var roomData = readDocument('rooms', roomId);
-//   return roomData;
-// }
 
-
-
-// TODO:
-// export function addPlaylistToRoom(roomID, cb) {
-//     var roomData = readDocument("room", roomID);
-// // }
-//
-//
-export function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
-    var userData = readDocument("users", userId);
-    userData.playlists[playlistName] = playlistsToSave;
-    writeDocument('users', userData);
-}
 
 export function getSongMetadata(songId) {
     SC.initialize({
@@ -221,6 +204,12 @@ export function addSongToRoom(room, song, user_id, cb) {
 
 export function addLikeToSong(room, song, user_id, cb) {
     sendXHR('POST', '/room/song_like', {roomId: room, songId: song, userId: user_id}, (xhr) => {
+        cb(JSON.parse(xhr.responseText));
+    });
+}
+
+export function saveSongsAsPlayist(userId, roomId, playlistName, cb) {
+    sendXHR('POST', '/room/save', {roomId: roomId, userId: userId, playlistName: playlistName}, (xhr) => {
         cb(JSON.parse(xhr.responseText));
     });
 }

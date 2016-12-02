@@ -30,7 +30,7 @@ app.get('/user/:userId/account_info', function(req, res) {
     // }
 });
 
-// 
+//
 // app.put('/user/:userId/account_info', function(req, res) {
 //   var body = req.body;
 //
@@ -86,7 +86,6 @@ app.post('/joinroom/:userId', function(req, res) {
     var roomId = body.roomId,
         userId = req.params.userId;
 
-    console.log("Validating", roomId);
     if(validateRoom(roomId)) {
         // validate that the room exists
         var roomData = getRoomData(roomId);
@@ -109,13 +108,14 @@ app.post("/room/data",function(req, res) {
     res.send(roomData);
 });
 
-app.post('/room/:roomId/:userId/save', function(req, res) {
+app.post('/room/save', function(req, res) {
+    console.log("Saving room playlist");
     var body = req.body,
-        userId = parseInt(req.params.userId),
-        roomId = parseInt(req.params.roomId),
+        userId = body.userId,
+        roomId = body.roomId,
         playlistName = body.playlistName,
         roomData = getRoomData(roomId).playlist,
-        playlistsToSave = roomData.map((item) => item.trackID);
+        playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
     res.send(saveSongsAsPlayist(userId, playlistName, playlistsToSave));
 });
 
@@ -129,11 +129,11 @@ app.post('/room/:songId/new_song', function(req, res) {
 
 });
 
-app.post('/room/:roomId/:songId/song_like', function(req, res) {
+app.post('/room/song_like', function(req, res) {
     var body = req.body,
         userId = body.userId,
-        roomId = parseInt(req.params.roomId),
-        songId = parseInt(req.params.songId);
+        roomId = body.roomId,
+        songId = body.songId;
 
     res.send(addLikeToSong(roomId, userId, songId));
 });
@@ -153,7 +153,6 @@ app.get('/song/:songId', function(req, res) {
 
 function getRoomParticipants(roomId) {
     var roomData = getRoomByAccessCode(roomId);
-    console.log(roomData);
     var participantsIds = [];
     for(var id in roomData.participants) {
         participantsIds.push(roomData.participants[id]);
@@ -177,10 +176,13 @@ function addLikeToSong(roomId, userId, songId) {
                 roomData.playlist[song].userLikes.push(userId);
             }
         }
+        writeDocument('rooms', roomData);
+        return roomData;
+    }
+    else {
+        return {message: "You can't like the same song more than once", success: false};
     }
 
-    writeDocument('rooms', roomData);
-    return roomData;
 }
 
 function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
@@ -191,7 +193,7 @@ function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
         return userData;
     }
     else {
-        return "Playlist already exists";
+        return {message: "Playlist already exists", success: false};
     }
 }
 
@@ -335,5 +337,5 @@ function getSongMetadata(songId) {
 
 // Starts the server on port 3000!
 app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+    console.log('Soundroom app listening on port 3000!');
 });

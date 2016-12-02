@@ -43,22 +43,6 @@ export default class RoomPlaylist extends React.Component {
          });
          next();
       });
-    //   for(var song in roomData.playlist) {
-    //       console.log("Getting metadata for", roomData.playlist[song].trackID);
-    //       getSongMetadata(roomData.playlist[song].trackID).then((songData) => {
-    //           var songMetaData = {};
-    //           console.log(roomData.playlist[song]);
-    //           songMetaData.likes = roomData.playlist[song].likes;
-    //           songMetaData.album = "Some Album";
-    //           songMetaData.artist = "Some Artist";
-    //           songMetaData.title = songData.title;
-    //           songMetaData.track_id = songData.id;
-    //           songMetaData.soundcloud_url = songData.uri
-    //           var oldState = this.state;
-    //           oldState.playlist.push(songMetaData);
-    //           this.setState(oldState);
-    //      });
-    // }
   }
 
   getHighestVotedSong(playlist) {
@@ -72,7 +56,6 @@ export default class RoomPlaylist extends React.Component {
   }
 
   addLikeToSong(e, song) {
-    // var room = getRoomData(this.state.currentRoomId);
     var songTrackId =  this.state.playlist[song].track_id;
     addLikeToSong(this.state.currentRoomId, songTrackId, this.props.userLoggedIn, (roomData) => {
         if('message' in roomData) {
@@ -114,11 +97,15 @@ export default class RoomPlaylist extends React.Component {
 
   savePlaylist() {
     var playlistName = prompt("What do you want to save this playlist as?");
-    var playlistsToSave = this.state.playlist;
-    var songsId = playlistsToSave.map((item) => item.track_id)
-    saveSongsAsPlayist(this.props.userLoggedIn, playlistName, songsId);
-
-  }
+    saveSongsAsPlayist(this.props.userLoggedIn, this.state.currentRoomId, playlistName, (userInfo) => {
+        if('message' in userInfo) {
+            console.log(userInfo['message']);
+        }
+         else {
+            console.log(userInfo);
+        }
+    });
+ }
 
   handleSongClick(e, songData) {
     if (e.target && e.target.matches("td.notLike")){
@@ -126,24 +113,6 @@ export default class RoomPlaylist extends React.Component {
       oldState.songToPlay = songData;
       this.setState(oldState);
     }
-  }
-
-  onSearch(value) {
-      this.setState({
-        value: value,
-    });
-  }
-
-  printSong(value) {
-      SC.initialize({
-          client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'
-      });
-
-      var page_size = 100;
-      var tracks = SC.get('/tracks', {
-          q: value,limit:page_size
-      }).then(function(tracks) {
-      });
   }
 
   render() {
