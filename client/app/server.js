@@ -79,7 +79,6 @@ export function getUserDataNCB(user, cb) {
 }
 
 
-
 export function getSongMetadata(songId) {
     SC.initialize({
         client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'

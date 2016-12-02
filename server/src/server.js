@@ -91,10 +91,23 @@ app.post('/joinroom/:userId', function(req, res) {
         var roomData = getRoomData(roomId);
 
         // add to the rooms document a new participant and take them to the room
-        roomData.participants.push(userId);
-        writeDocument('rooms', roomData);
+        var userInRoom = false;
+        for(var participant in roomData.participants) {
+            if(userId == roomData.participants[participant]) {
+                userInRoom = true;
+            }
+        }
+
+        // user is not in the room, add that user into the active participants
+        console.log("User " + userId + "in room: ", userInRoom);
+        if(!userInRoom) {
+            roomData.participants.push(userId);
+            writeDocument('rooms', roomData);
+        }
+
         res.status(200);
         res.send(roomData);
+
     } else {
         res.send("Room does not exists");
     }

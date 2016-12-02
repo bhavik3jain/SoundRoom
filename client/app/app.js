@@ -12,7 +12,7 @@ import Room from './components/Room';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
-const user_id_logged_in = "2";
+const user_id_logged_in = "4";
 
 class SidebarPage extends React.Component {
   render() {

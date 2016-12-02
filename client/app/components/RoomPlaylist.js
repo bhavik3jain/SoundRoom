@@ -13,7 +13,6 @@ export default class RoomPlaylist extends React.Component {
     super(props);
     this.state = {currentRoomId: this.props.currentRoomId, playlist: [], track_to_search: ""};
     this.addLikeToSong = this.addLikeToSong.bind(this);
-
   }
 
   refresh() {
