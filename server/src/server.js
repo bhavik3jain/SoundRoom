@@ -98,8 +98,6 @@ app.post('/joinroom/:userId', function(req, res) {
             }
         }
 
-        // user is not in the room, add that user into the active participants
-        console.log("User " + userId + "in room: ", userInRoom);
         if(!userInRoom) {
             roomData.participants.push(userId);
             writeDocument('rooms', roomData);
@@ -109,7 +107,8 @@ app.post('/joinroom/:userId', function(req, res) {
         res.send(roomData);
 
     } else {
-        res.send("Room does not exists");
+        res.status(400).end();
+        res.send("Room does not exist");
     }
 });
 
