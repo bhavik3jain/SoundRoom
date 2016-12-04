@@ -109,24 +109,24 @@ function sendXHR(verb, resource, body, cb) {
           // The server may have included some response text with details concerning
           // the error.
           var responseText = xhr.responseText;
-          console.log("Error", responseText);
-        //   SoundRoomError('Could not ' + verb + " " + resource + ": Received " +
-        //   statusCode + " " + statusText + ": " + responseText);
+          console.log(responseText);
+          SoundRoomError('Could not ' + verb + " " + resource + ": Received " +
+            statusCode + " " + statusText + ": " + responseText);
         }
       });
       // Time out the request if it takes longer than 10,000
       // milliseconds (10 seconds)
       xhr.timeout = 10000;
       // Network failure: Could not connect to server.
-    //   xhr.addEventListener('error', function() {
-    //     SoundRoomError('Could not ' + verb + " " + resource +
-    //     ": Could not connect to the server.");
-    //   });
+      xhr.addEventListener('error', function() {
+        SoundRoomError('Could not ' + verb + " " + resource +
+        ": Could not connect to the server.");
+      });
     //   // Network failure: request took too long to complete.
-    //   xhr.addEventListener('timeout', function() {
-    //     SoundRoomError(Could not ' + verb + " " + resource +
-    //     ": Request timed out.");
-    //   });
+      xhr.addEventListener('timeout', function() {
+        SoundRoomError('Could not ' + verb + " " + resource +
+        ": Request timed out.");
+      });
       switch (typeof(body)) {
         case 'undefined':
         // No body to send.

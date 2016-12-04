@@ -2,6 +2,7 @@ import React from 'react';
 import {getRoomIds, joinRoom} from '../server';
 import {writeDocument} from '../database';
 import {Link, browserHistory} from 'react-router';
+import ErrorBanner from './errorbanner'
 
 var input_room_number;
 
