@@ -1,9 +1,6 @@
 import React from 'react';
 import {getRoomIds, joinRoom} from '../server';
-<<<<<<< HEAD
-=======
 // import {writeDocument} from '../database';
->>>>>>> 4c4c735b6c7ac178f94cabc3ee648e5c7eb2733a
 import {Link, browserHistory} from 'react-router';
 import ErrorBanner from './errorbanner'
 

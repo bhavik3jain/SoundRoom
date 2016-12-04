@@ -1,12 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-<<<<<<< HEAD
-=======
-// import {readDocument, writeDocument, addDocument,readAllDocuments} from './database.js';
-// import {startupName} from './database.js';
-// import {resetDatabase} from './database.js';
->>>>>>> 4c4c735b6c7ac178f94cabc3ee648e5c7eb2733a
-
 var token = 'eyJpZCI6MX0=';
 
 function sendXHR(verb, resource, body, cb) {
@@ -69,32 +62,9 @@ function sendXHR(verb, resource, body, cb) {
   }
 }
 
-<<<<<<< HEAD
-=======
 
-/**
- * Emulates how a REST call is *asynchronous* -- it calls your function back
- * some time in the future with data.
- */
 
-function emulateServerReturn(data, cb) {
-    setTimeout(() => { cb(data); }, 4);
-}
 
-// export function getUserData(user, cb)  {
-//     var userData = readDocument('users', user);
-//     emulateServerReturn(userData, cb);
-// }
-
-// export function getPlaylistData(user, cb) {
-//   // Get the User object with the id "user".
-//   var userPlaylists = readDocument('users', user)['playlists'];
-//   // emulateServerReturn will emulate an asynchronous server operation, which
-//   // invokes (calls) the "cb" function some time in the future.
-//   emulateServerReturn(userPlaylists, cb);
-// }
-
->>>>>>> 4c4c735b6c7ac178f94cabc3ee648e5c7eb2733a
 export function getMakeId(){
     var result = "";
     var chars = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -102,8 +72,6 @@ export function getMakeId(){
     return result;
 }
 
-<<<<<<< HEAD
-=======
 export function getSongsData(sc_track, cb) {
 
     SC.initialize({
@@ -128,29 +96,7 @@ export function getSongsData(sc_track, cb) {
 
 }
 
-// export function getSongsForPlaylist(playlistID, cb) {
-//     var songsData = readDocument('user', user)['playlists']
-// }
-//
-// export function getRoomIds(){
-//
-//     var roomIds = readAllDocuments("rooms");
-//     return roomIds;
-// }
-//
-// export function getUserIds(){
-//
-//   var userIds = readAllDocuments("users");
-//   return userIds;
-// }
-//
-// export function getUserDataNCB(user, cb) {
-//   var userData = readDocument('users', user);
-//   return userData;
-// }
 
-
->>>>>>> 4c4c735b6c7ac178f94cabc3ee648e5c7eb2733a
 export function getSongMetadata(songId) {
     SC.initialize({
         client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'
@@ -159,69 +105,66 @@ export function getSongMetadata(songId) {
     return SC.get("tracks/" + songId);
 }
 
-<<<<<<< HEAD
-var token = "eyJpZCI6MX0=";
+// var token = "eyJpZCI6MX0=";
+//
+// function sendXHR(verb, resource, body, cb) {
+//       var xhr = new XMLHttpRequest();
+//       xhr.open(verb, resource);
+//       xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+//       // Otherwise, ESLint would complain about it! (See what happens in Atom if
+//       // you remove the comment...)
+//       /* global SoundRoomError */
+//       // Response received from server. It could be a failure, though!
+//       xhr.addEventListener('load', function() {
+//         var statusCode = xhr.status;
+//         var statusText = xhr.statusText;
+//         if (statusCode >= 200 && statusCode < 300) {
+//           // Success: Status code is in the [200, 300) range.
+//           // Call the callback with the final XHR object.
+//           cb(xhr);
+//         } else {
+//           // Client or server error.
+//           // The server may have included some response text with details concerning
+//           // the error.
+//           var responseText = xhr.responseText;
+//           SoundRoomError('Could not ' + verb + " " + resource + ": Received " +
+//             statusCode + " " + statusText + ": " + responseText);
+//         }
+//       });
+//       // Time out the request if it takes longer than 10,000
+//       // milliseconds (10 seconds)
+//       xhr.timeout = 10000;
+//       xhr.addEventListener('error', function() {
+//         SoundRoomError('Could not ' + verb + " " + resource +
+//         ": Could not connect to the server.");
+//       });
+//     //   // Network failure: request took too long to complete.
+//       xhr.addEventListener('timeout', function() {
+//         SoundRoomError('Could not ' + verb + " " + resource +
+//         ": Request timed out.");
+//       });
+//         switch (typeof(body)) {
+//         case 'undefined':
+//         // No body to send.
+//         xhr.send();
+//         break;
+//         case 'string':
+//         // Tell the server we are sending text.
+//
+//         xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+//         xhr.send(body);
+//         break;
+//         case 'object':
+//         // Tell the server we are sending JSON.
+//         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+//         // Convert body into a JSON string.
+//         xhr.send(JSON.stringify(body));
+//         break;
+//         default:
+//         throw new Error('Unknown body type: ' + typeof(body));
+//       }
+// }
 
-function sendXHR(verb, resource, body, cb) {
-      var xhr = new XMLHttpRequest();
-      xhr.open(verb, resource);
-      xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-      // Otherwise, ESLint would complain about it! (See what happens in Atom if
-      // you remove the comment...)
-      /* global SoundRoomError */
-      // Response received from server. It could be a failure, though!
-      xhr.addEventListener('load', function() {
-        var statusCode = xhr.status;
-        var statusText = xhr.statusText;
-        if (statusCode >= 200 && statusCode < 300) {
-          // Success: Status code is in the [200, 300) range.
-          // Call the callback with the final XHR object.
-          cb(xhr);
-        } else {
-          // Client or server error.
-          // The server may have included some response text with details concerning
-          // the error.
-          var responseText = xhr.responseText;
-          SoundRoomError('Could not ' + verb + " " + resource + ": Received " +
-            statusCode + " " + statusText + ": " + responseText);
-        }
-      });
-      // Time out the request if it takes longer than 10,000
-      // milliseconds (10 seconds)
-      xhr.timeout = 10000;
-      xhr.addEventListener('error', function() {
-        SoundRoomError('Could not ' + verb + " " + resource +
-        ": Could not connect to the server.");
-      });
-    //   // Network failure: request took too long to complete.
-      xhr.addEventListener('timeout', function() {
-        SoundRoomError('Could not ' + verb + " " + resource +
-        ": Request timed out.");
-      });
-        switch (typeof(body)) {
-        case 'undefined':
-        // No body to send.
-        xhr.send();
-        break;
-        case 'string':
-        // Tell the server we are sending text.
-
-        xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-        xhr.send(body);
-        break;
-        case 'object':
-        // Tell the server we are sending JSON.
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        // Convert body into a JSON string.
-        xhr.send(JSON.stringify(body));
-        break;
-        default:
-        throw new Error('Unknown body type: ' + typeof(body));
-      }
-}
-
-=======
->>>>>>> 4c4c735b6c7ac178f94cabc3ee648e5c7eb2733a
 export function getUserInfo(user, cb) {
     // We don't need to send a body, so pass in 'undefined' for the body.
     sendXHR('GET', '/user/' + user + '/account_info', undefined, (xhr) => {
