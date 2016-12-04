@@ -10,14 +10,14 @@ export default class Navbar extends React.Component{
     };
   }
 
-  getAccountData() {
-    getUserData(this.props.user_id, (accountInfo) => {
-      this.setState({"account_info": accountInfo});
-    });
-  }
+  // getAccountData() {
+  //   getUserData(this.props.user_id, (accountInfo) => {
+  //     this.setState({"account_info": accountInfo});
+  //   });
+  // }
 
   componentDidMount() {
-    this.getAccountData();
+    // this.getAccountData();
   }
 
   render(){
