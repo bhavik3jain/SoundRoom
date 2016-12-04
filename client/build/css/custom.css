@@ -136,13 +136,13 @@ body {
 #savePlaylistBtn{
   margin-top: 20px;
   font-size: 16px;
-  background-color: #343434;
-  color:#57E4E8;
+  background-color: #57E4E8;
+  color: #343434;
   border: 1px solid #57E4E8;
 }
 
 #savePlaylistBtn:hover{
-  box-shadow: 0 5px 15px #57E4E8;
+  box-shadow: 0 5px 15px black;
 }
 
 #access-code{
@@ -150,22 +150,21 @@ body {
 }
 
  #btn1{
-  width:40%;
-  margin-top: 20px;
-  font-size: 16px;
-  background-color: #343434;
-  color:#57E4E8;
-  border: 1px solid #57E4E8;
+   width: 40%;
+       margin-top: 20px;
+       font-size: 16px;
+       background-color: #57E4E8;
+       color: #343434;
+
 }
 
 #btn2{
-  width:40%;
-  margin-left:10px;
-  margin-top: 20px;
-  font-size: 16px;
-  background-color: #343434;
-  color:#57E4E8;
-  border: 1px solid #57E4E8;
+  width: 40%;
+      margin-top: 20px;
+      font-size: 16px;
+      background-color: #57E4E8;
+      color: #343434;
+
 }
 
 #accountinfo-btn1{
@@ -174,8 +173,8 @@ body {
   margin-right: 10px;
   margin-left: 15px;
   font-size: 16px;
-  background-color: #343434;
-  color:#57E4E8;
+  background-color: #57E4E8;
+  color: #343434;
   border: 1px solid #57E4E8;
 }
 
@@ -184,18 +183,18 @@ body {
   margin-bottom: 20px;
   margin-left: 15px;
   margin-right: 10px;
-  background-color: #343434;
-  color:#57E4E8;
+  background-color: #57E4E8;
+  color: #343434;
   border: 1px solid #57E4E8;
-  box-shadow: 0 5px 15px #57E4E8;
+  box-shadow: 0 5px 15px black;
 }
 
 #accountinfo-btn2{
   font-size: 16px;
 
   margin-bottom: 20px;
-  background-color: #343434;
-  color:#57E4E8;
+  background-color: #57E4E8;
+  color: #343434;
   border: 1px solid #57E4E8;
 }
 
@@ -205,7 +204,7 @@ body {
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
-  box-shadow: 0 5px 15px #57E4E8;
+  box-shadow: 0 5px 15px black;
 }
 
 
@@ -223,11 +222,11 @@ body {
   background-color: #343434;
   color:#57E4E8;
   border: 1px solid #57E4E8;
-  box-shadow: 0 5px 15px #57E4E8;
+  box-shadow: 0 5px 15px black;
 }
 
 .panel-joinroom .panel-body button:hover{
-  box-shadow: 0 5px 15px #57E4E8;
+  box-shadow: 0 5px 15px black;
 
 
 }
@@ -394,7 +393,7 @@ th, td {
     font-size: 16px;
     background-color: #FE5D59;
     color:black;
-    /*border: 2px solid black;*/
+
 }
 
 #exit-room:hover{
