@@ -387,3 +387,16 @@ th, td {
 #room_sound_player {
     padding: 10px;
 }
+
+#exit-room {
+    width:100%;
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: #FE5D59;
+    color:black;
+    /*border: 2px solid black;*/
+}
+
+#exit-room:hover{
+  box-shadow: 0 5px 15px black;
+}
