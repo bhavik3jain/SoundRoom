@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {getUserData} from '../server';
+import {getUserInfo} from '../server';
 
 export default class Navbar extends React.Component{
   constructor(props) {
@@ -10,14 +10,15 @@ export default class Navbar extends React.Component{
     };
   }
 
-  // getAccountData() {
-  //   getUserData(this.props.user_id, (accountInfo) => {
-  //     this.setState({"account_info": accountInfo});
-  //   });
-  // }
+
+  getAccountData() {
+    getUserInfo(this.props.user_id, (accountInfo) => {
+      this.setState({"account_info": accountInfo});
+    });
+  }
 
   componentDidMount() {
-    // this.getAccountData();
+    this.getAccountData();
   }
 
   render(){
