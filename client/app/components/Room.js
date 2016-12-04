@@ -23,8 +23,9 @@ export default class Room extends React.Component{
     exitRoom(e) {
       var roomId = this.state.currentRoomId;
       var userId = this.state.currentUser;
-      removeParticipant(userId, roomId, () => {
-        browserHistory.push("/");
+      removeParticipant(userId, roomId, (data) => {
+        console.log("removing participant", userId);
+        browserHistory.push('/');
       });
     }
 

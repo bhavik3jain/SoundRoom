@@ -216,7 +216,7 @@ export function saveSongsAsPlayist(userId, roomId, playlistName, cb) {
 
 export function removeParticipant(participantId, roomId, cb) {
   sendXHR('DELETE', '/room/' + roomId + '/participants/' + participantId, undefined, (xhr) => {
-    cb();
+    cb(JSON.parse(xhr.responseText));
   });
 }
 

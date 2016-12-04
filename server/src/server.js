@@ -231,14 +231,12 @@ app.delete('/room/:roomid/participants/:participantid', function(req, res) {
   var roomId = parseInt(req.params.roomid, 10);
   var participantId = req.params.participantid;
   var room = readDocument('rooms', roomId);
-  console.log(room);
   var participantIndex = room.participants.indexOf(participantId);
   if (participantIndex != -1) {
     room.participants.splice(participantIndex, 1);
     writeDocument('rooms', room);
   }
-  console.log(room);
-  res.send();
+  res.send({message: "Deleted participant from room"});
 });
 
 function getRoomParticipants(roomId) {
