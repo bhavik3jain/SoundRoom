@@ -1,6 +1,5 @@
 import React from 'react';
 import {getRoomData, getSongsData, getUserDataNCB, saveSongsAsPlayist, getRoomDataServer, addSongToRoom, getSongMetadata, addLikeToSong} from '../server';
-import {writeDocument} from '../database';
 import SoundCloudPlayer from './SoundCloudPlayer';
 import Select from 'react-select';
 import eachSeries from 'async/eachSeries';

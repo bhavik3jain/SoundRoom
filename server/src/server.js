@@ -30,25 +30,6 @@ app.get('/user/:userId/account_info', function(req, res) {
     // }
 });
 
-//
-// app.put('/user/:userId/account_info', function(req, res) {
-//   var body = req.body;
-//
-//     // Check that the body is a string, and not something like a JSON object.
-//
-//     if (typeof(req.body) !== 'string') {
-//       // 400: Bad request.
-//       res.status(400).end();
-//       return;
-//     }
-//     // Update text content of update.
-//     feedItem.contents.contents = req.body;
-//     writeDocument('database', feedItem);
-//     res.send(getFeedItemSync(feedItemId));
-//
-// });
-
-
 app.get('/user/:userId/playlists', function(req, res) {
     // Add user authentication here (getUserIdFromToken)
     var body = req.body;
@@ -162,6 +143,15 @@ app.get('/song/:songId', function(req, res) {
 
     res.send(getSongMetadata(songId));
 });
+
+// Reset database.
+app.post('/resetdb', function(req, res) {
+  console.log("Resetting database...");
+  // This is a debug route, so don't do any validation.
+  database.resetDatabase();
+  // res.send() sends an empty response with status code 200
+  res.send();
+})
 
 function getRoomParticipants(roomId) {
     var roomData = getRoomByAccessCode(roomId);

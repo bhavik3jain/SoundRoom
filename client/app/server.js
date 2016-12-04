@@ -1,30 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {readDocument, writeDocument, addDocument,readAllDocuments} from './database.js';
-import {startupName} from './database.js';
-import {resetDatabase} from './database.js';
 
-/**
- * Emulates how a REST call is *asynchronous* -- it calls your function back
- * some time in the future with data.
- */
-
-function emulateServerReturn(data, cb) {
-    setTimeout(() => { cb(data); }, 4);
-}
-
-export function getUserData(user, cb)  {
-    var userData = readDocument('users', user);
-    emulateServerReturn(userData, cb);
-}
-
-export function getPlaylistData(user, cb) {
-  // Get the User object with the id "user".
-  var userPlaylists = readDocument('users', user)['playlists'];
-  // emulateServerReturn will emulate an asynchronous server operation, which
-  // invokes (calls) the "cb" function some time in the future.
-  emulateServerReturn(userPlaylists, cb);
-}
 
 export function getMakeId(){
     var result = "";
@@ -32,52 +8,6 @@ export function getMakeId(){
     for (var i = 8; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
     return result;
 }
-
-export function getSongsData(sc_track, cb) {
-
-    SC.initialize({
-        client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'
-    });
-
-    return SC.get(sc_track).then((response) => {
-        var title = response.title;
-        var album = "Some Album";
-        var artist = "Some Artist";
-        var soundcloud_url = response.uri;
-
-        var song = {
-            "album": album,
-            "artist": artist,
-            "title": title,
-            "soundcloud_url": soundcloud_url
-        };
-
-        return song
-    });
-
-}
-
-export function getSongsForPlaylist(playlistID, cb) {
-    var songsData = readDocument('user', user)['playlists']
-}
-
-export function getRoomIds(){
-
-    var roomIds = readAllDocuments("rooms");
-    return roomIds;
-}
-
-export function getUserIds(){
-
-  var userIds = readAllDocuments("users");
-  return userIds;
-}
-
-export function getUserDataNCB(user, cb) {
-  var userData = readDocument('users', user);
-  return userData;
-}
-
 
 export function getSongMetadata(songId) {
     SC.initialize({
@@ -95,7 +25,7 @@ function sendXHR(verb, resource, body, cb) {
       xhr.setRequestHeader('Authorization', 'Bearer ' + token);
       // Otherwise, ESLint would complain about it! (See what happens in Atom if
       // you remove the comment...)
-      /* global FacebookError */
+      /* global SoundRoomError */
       // Response received from server. It could be a failure, though!
       xhr.addEventListener('load', function() {
         var statusCode = xhr.status;
@@ -109,7 +39,6 @@ function sendXHR(verb, resource, body, cb) {
           // The server may have included some response text with details concerning
           // the error.
           var responseText = xhr.responseText;
-          console.log(responseText);
           SoundRoomError('Could not ' + verb + " " + resource + ": Received " +
             statusCode + " " + statusText + ": " + responseText);
         }
@@ -117,7 +46,6 @@ function sendXHR(verb, resource, body, cb) {
       // Time out the request if it takes longer than 10,000
       // milliseconds (10 seconds)
       xhr.timeout = 10000;
-      // Network failure: Could not connect to server.
       xhr.addEventListener('error', function() {
         SoundRoomError('Could not ' + verb + " " + resource +
         ": Could not connect to the server.");
@@ -127,7 +55,7 @@ function sendXHR(verb, resource, body, cb) {
         SoundRoomError('Could not ' + verb + " " + resource +
         ": Request timed out.");
       });
-      switch (typeof(body)) {
+        switch (typeof(body)) {
         case 'undefined':
         // No body to send.
         xhr.send();
@@ -213,16 +141,24 @@ export function saveSongsAsPlayist(userId, roomId, playlistName, cb) {
     });
 }
 
-class ResetDatabase extends React.Component {
-  render() {
-    return (
-      <button className="btn btn-default" type="button" onClick={() => {
-        resetDatabase();
-        window.alert("Database reset! Refreshing the page now...");
-        document.location.reload(false);
-      }}>Reset Mock DB</button>
-    );
-  }
+/**
+* Reset database button.
+*/
+export class ResetDatabase extends React.Component {
+    render() {
+      return (
+        <button className="btn btn-default" type="button" onClick={() => {
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', '/resetdb');
+          xhr.addEventListener('load', function() {
+            window.alert("Database reset! Refreshing the page now...");
+            document.location.reload(false);
+          });
+        xhr.send();
+        }}>Reset Mock DB
+      </button>
+      );
+    }
 }
 
 ReactDOM.render(

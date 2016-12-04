@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Homepage from './components/Homepage';
@@ -8,6 +7,7 @@ import CreateRoom from './components/CreateRoom';
 import JoinRoom from './components/JoinRoom';
 import AccountInfo from './components/AccountInfo';
 import Room from './components/Room';
+import ErrorBanner from './components/errorbanner';
 
 import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
@@ -50,6 +50,11 @@ class App extends React.Component{
 
     return (
       <div>
+        <div className="row">
+          <div className="col-md-12">
+            <ErrorBanner />
+          </div>
+        </div>
         <div className="sidebar">
           <Sidebar user_id={user_id_logged_in} />
         </div>
