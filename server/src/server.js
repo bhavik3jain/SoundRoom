@@ -30,25 +30,6 @@ app.get('/user/:userId/account_info', function(req, res) {
     //}
 });
 
-//
-// app.put('/user/:userId/account_info', function(req, res) {
-//   var body = req.body;
-//
-//     // Check that the body is a string, and not something like a JSON object.
-//
-//     if (typeof(req.body) !== 'string') {
-//       // 400: Bad request.
-//       res.status(400).end();
-//       return;
-//     }
-//     // Update text content of update.
-//     feedItem.contents.contents = req.body;
-//     writeDocument('database', feedItem);
-//     res.send(getFeedItemSync(feedItemId));
-//
-// });
-
-
 app.get('/user/:userId/playlists', function(req, res) {
     // Add user authentication here (getUserIdFromToken)
     var body = req.body;
