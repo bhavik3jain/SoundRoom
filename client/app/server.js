@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {readDocument, writeDocument, addDocument,readAllDocuments} from './database.js';
-import {startupName} from './database.js';
-import {resetDatabase} from './database.js';
+// import {readDocument, writeDocument, addDocument,readAllDocuments} from './database.js';
+// import {startupName} from './database.js';
+// import {resetDatabase} from './database.js';
 
 var token = 'eyJpZCI6MX0=';
 

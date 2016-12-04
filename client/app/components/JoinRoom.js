@@ -1,6 +1,6 @@
 import React from 'react';
 import {getRoomIds, joinRoom} from '../server';
-import {writeDocument} from '../database';
+// import {writeDocument} from '../database';
 import {Link, browserHistory} from 'react-router';
 
 var input_room_number;
