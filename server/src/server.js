@@ -19,24 +19,29 @@ var getCollection = database.getCollection;
 app.get('/user/:userId/account_info', function(req, res) {
     // Add user authentication here (getUserIdFromToken())
     var body = req.body;
-    // var userAuth = getUserIdFromToken(req.get('Authorization'));
-    // if(userAuth === body.userId){
-    var userId = parseInt(req.params.userId,10);
-    // res.status(201);
-    res.send(getUserData(userId));
-    // }
-    // else{
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+      var userId = parseInt(req.params.userId,10);
+      res.status(201);
+      res.send(getUserData(userId));
+    //}
+    //else{
     //   res.status(401).end();
-    // }
+    //}
 });
 
 app.get('/user/:userId/playlists', function(req, res) {
     // Add user authentication here (getUserIdFromToken)
     var body = req.body;
-    // var userAuth = getUserIdFromToken(req.get('Authorization'));
-    // if(userAuth === body.userId){
-    var userId = req.params.userId;
-    res.send(getUserPlaylistData(userId));
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+      var userId = req.params.userId;
+      res.status(201);
+      res.send(getUserPlaylistData(userId));
+    //}
+    //else{
+    //   res.status(401).end();
+    //}
 });
 
 app.post('/createroom/:hostId', function(req, res) {
@@ -44,22 +49,27 @@ app.post('/createroom/:hostId', function(req, res) {
     var hostId = req.params.hostId,
         roomId = body.roomId;
 
-    if(!validateRoom(roomId) && !validateRoomHost(hostId)) {
-        // create a new room with a host and room id
-        res.send(createRoom(hostId, roomId));
-        // redirect the host to the new room
-        // res.redirect('/room/' + roomId);
-    }
-    else {
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+      if(!validateRoom(roomId) && !validateRoomHost(hostId)) {
+          // create a new room with a host and room id
+          res.send(createRoom(hostId, roomId));
+          // redirect the host to the new room
+          // res.redirect('/room/' + roomId);
+      }
+      else {
 
-        var error = {
-            message: "You cannot create a room that already exists or you are already a host for another room",
-            success: false
-        }
+          var error = {
+              message: "You cannot create a room that already exists or you are already a host for another room",
+              success: false
+          }
 
-        res.send(error);
-     }
-
+          res.send(error);
+      }
+    //}
+    //else{
+    //   res.status(401).end();
+    //}
 });
 
 app.post('/joinroom/:userId', function(req, res) {
@@ -67,30 +77,36 @@ app.post('/joinroom/:userId', function(req, res) {
     var roomId = body.roomId,
         userId = req.params.userId;
 
-    if(validateRoom(roomId)) {
-        // validate that the room exists
-        var roomData = getRoomData(roomId);
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+      if(validateRoom(roomId)) {
+          // validate that the room exists
+          var roomData = getRoomData(roomId);
 
-        // add to the rooms document a new participant and take them to the room
-        var userInRoom = false;
-        for(var participant in roomData.participants) {
-            if(userId == roomData.participants[participant]) {
-                userInRoom = true;
-            }
-        }
+          // add to the rooms document a new participant and take them to the room
+          var userInRoom = false;
+          for(var participant in roomData.participants) {
+              if(userId == roomData.participants[participant]) {
+                  userInRoom = true;
+              }
+          }
 
-        if(!userInRoom) {
-            roomData.participants.push(userId);
-            writeDocument('rooms', roomData);
-        }
+          if(!userInRoom) {
+              roomData.participants.push(userId);
+              writeDocument('rooms', roomData);
+          }
 
-        res.status(200);
-        res.send(roomData);
+          res.status(200);
+          res.send(roomData);
 
-    } else {
-        res.status(400).end();
-        res.send("Room does not exist");
-    }
+      } else {
+          res.status(400).end();
+          res.send("Room does not exist");
+      }
+    //}
+    //else{
+    //   res.status(401).end();
+    //}
 });
 
 app.post("/room/data",function(req, res) {
@@ -98,7 +114,14 @@ app.post("/room/data",function(req, res) {
     var roomId = body.roomId,
         roomData = getRoomData(roomId);
 
-    res.send(roomData);
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+      res.status(201);
+      res.send(roomData);
+    //}
+    //else{
+    //   res.status(401).end();
+    //}
 });
 
 app.post('/room/save', function(req, res) {
@@ -109,7 +132,14 @@ app.post('/room/save', function(req, res) {
         playlistName = body.playlistName,
         roomData = getRoomData(roomId).playlist,
         playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
-    res.send(saveSongsAsPlayist(userId, playlistName, playlistsToSave));
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+      res.status(201);
+      res.send(saveSongsAsPlayist(userId, playlistName, playlistsToSave));
+    //}
+    //else{
+    //   res.status(401).end();
+    //}
 });
 
 app.post('/room/:songId/new_song', function(req, res) {
@@ -117,9 +147,14 @@ app.post('/room/:songId/new_song', function(req, res) {
         roomId = body.roomId,
         songId = parseInt(req.params.songId),
         userThatAddedSong = body.userId;
-
-    res.send(addSongToRoomPlaylist(roomId, userThatAddedSong, songId));
-
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+      res.status(201);
+      res.send(addSongToRoomPlaylist(roomId, userThatAddedSong, songId));
+    //}
+    //else{
+    //   res.status(401).end();
+    //}
 });
 
 app.post('/room/song_like', function(req, res) {
@@ -127,21 +162,40 @@ app.post('/room/song_like', function(req, res) {
         userId = body.userId,
         roomId = body.roomId,
         songId = body.songId;
-
-    res.send(addLikeToSong(roomId, userId, songId));
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+      res.status(201);
+      res.send(addLikeToSong(roomId, userId, songId));
+    //}
+    //else{
+    //   res.status(401).end();
+    //}
 });
 
 app.post('/room/participants', function(req, res)  {
     var body = req.body,
         roomId = body.roomId;
-    res.send(getRoomParticipants(roomId));
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+      res.status(201);
+      res.send(getRoomParticipants(roomId));
+    //}
+    //else{
+    //   res.status(401).end();
+    //}
 });
 
 app.get('/song/:songId', function(req, res) {
     var body = req.body,
         songId = parseInt(req.params.songId);
-
-    res.send(getSongMetadata(songId));
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+      res.status(201);
+      res.send(getSongMetadata(songId));
+    //}
+    //else{
+    //   res.status(401).end();
+    //}
 });
 
 // Reset database.
@@ -151,7 +205,22 @@ app.post('/resetdb', function(req, res) {
   database.resetDatabase();
   // res.send() sends an empty response with status code 200
   res.send();
-})
+});
+
+app.delete('/room/:roomid/participants/:participantid', function(req, res) {
+  console.log("Deleting participant...");
+  var roomId = parseInt(req.params.roomid, 10);
+  var participantId = req.params.participantid;
+  var room = readDocument('rooms', roomId);
+  console.log(room);
+  var participantIndex = room.participants.indexOf(participantId);
+  if (participantIndex != -1) {
+    room.participants.splice(participantIndex, 1);
+    writeDocument('rooms', room);
+  }
+  console.log(room);
+  res.send();
+});
 
 function getRoomParticipants(roomId) {
     var roomData = getRoomByAccessCode(roomId);
