@@ -256,6 +256,14 @@ app.delete('/room/:roomid/participants/:participantid', function(req, res) {
   res.send({message: "Deleted participant from room"});
 });
 
+app.post('room/host', function(req, res) {
+    console.log("room host");
+    var body = req.body;
+    var roomId = body.roomId;
+    var room = getRoomData(roomId);
+    res.send({"host": room.host});
+});
+
 function getRoomParticipants(roomId) {
     var roomData = getRoomByAccessCode(roomId);
     var participantsIds = [];
@@ -439,6 +447,7 @@ function getSongMetadata(songId) {
 
     return SC.get("tracks/" + songId);
 }
+
 
 // Starts the server on port 3000!
 app.listen(3000, function () {
