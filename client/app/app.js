@@ -80,6 +80,7 @@ ReactDOM.render((
       <Route path="joinroom" components={{content: JoinRoom}}/>
       <Route path="playlists" components={{content: Playlists}} />
       <Route path="room" components={{content: Room}}/>
+      <Route path="homepage" components={{content: Homepage}}
     </Route>
   </Router>
 ), document.getElementById('wrapper'))
