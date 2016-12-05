@@ -249,6 +249,27 @@ app.delete('/room/:roomid/participants/:participantid', function(req, res) {
   res.send({message: "Deleted participant from room"});
 });
 
+app.post('/room/host', function(req, res) {
+  var roomId = req.body.roomId;
+  console.log("roomId", req.body);
+  var room = getRoomByAccessCode(roomId);
+  console.log("host", room.host);
+  res.send({"host": room.host});
+});
+
+app.delete('/room/delete', function(req, res) {
+  var roomId = req.body.roomId;
+  var rooms = getCollection('rooms');
+  for (var room in rooms) {
+    var id = rooms[room].roomId;
+    if (id === roomId) {
+      deleteDocument('rooms', parseInt(room));
+      console.log("deleted");
+    }
+  }
+  res.send({"deleted": true});
+});
+
 function getRoomParticipants(roomId) {
     var roomData = getRoomByAccessCode(roomId);
     var participantsIds = [];

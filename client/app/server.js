@@ -248,6 +248,20 @@ export function updateProfile(userId, newInfo, cb) {
         cb(JSON.parse(xhr.responseText));
     });
 }
+
+export function getRoomHost(roomId, cb) {
+  console.log("getRoomHost activate");
+  sendXHR('POST', '/room/host', {roomId: roomId}, (xhr) => {
+    cb(JSON.parse(xhr.responseText));
+  });
+}
+
+export function deleteRoom(roomId, cb) {
+  sendXHR('DELETE', '/room/delete', {roomId: roomId}, (xhr) => {
+    cb(JSON.parse(xhr.responseText));
+  });
+}
+
 /**
 * Reset database button.
 */

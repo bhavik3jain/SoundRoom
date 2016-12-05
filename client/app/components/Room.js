@@ -1,7 +1,7 @@
 import React from 'react';
 import RoomPlaylist from './RoomPlaylist';
 import RoomParticipants from './RoomParticipants';
-import {getMakeId, getRoomData, getSongsData, getUserIds, removeParticipant} from '../server';
+import {getMakeId, getRoomData, getSongsData, getUserIds, removeParticipant, getRoomHost, deleteRoom} from '../server';
 import {Link, browserHistory} from 'react-router';
 
 export default class Room extends React.Component{
@@ -16,6 +16,19 @@ export default class Room extends React.Component{
 
     componentWillMount() {
       this.setState({currentRoomId: this.state.currentRoomId});
+    }
+
+    closeRoom(e) {
+      getRoomHost(this.state.currentRoomId, (result) => {
+        if (result.host === this.state.currentUser) {
+          console.log("you are the host");
+          deleteRoom(this.state.currentRoomId, (deleted) => {});
+          browserHistory.push('/');
+        } else {
+          console.log("you are not the host");
+          alert("you are not the host");
+        }
+      });
     }
 
     // exitRoom(e) {
@@ -41,7 +54,7 @@ export default class Room extends React.Component{
                       </div>
                       <div id='access-code' className="col-md-3">
                         <center><h3> ACCESS CODE:</h3><h3 className = 'code'>{this.state.currentRoomId}</h3></center>
-                        <center><button type="button" className="btn btn-sm" id='exit-room' onClick={(e)=>this.savePlaylist(e)}>Close Room</button></center><br />
+                        <center><button type="button" className="btn btn-sm" id='exit-room' onClick={(e)=>this.closeRoom(e)}>Close Room</button></center><br />
                         <RoomParticipants currentRoomId={this.state.currentRoomId} />
                       </div>
                     </div>
