@@ -15,3 +15,11 @@ SoundRoom is a shared music platform that allows users to collaborate in creatin
 
 
 4) SoundRoom needs an algorithm to sort the songs based on the number of votes in real-time, and then queue up the song with the highest number of upvotes. This can likely be accomplished using a built-in JavaScript library function.
+
+#Contributors:
+* Aarsh Patel
+* Bhavik Jain
+* Justin Martinelli
+* Lynn Samson
+* Sidd Patel
+* Ronit Arora
