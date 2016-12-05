@@ -6,6 +6,7 @@ import eachSeries from 'async/eachSeries';
 
 var each = require('async-each-series');
 
+
 export default class RoomPlaylist extends React.Component {
 
   constructor(props) {
@@ -28,13 +29,15 @@ export default class RoomPlaylist extends React.Component {
   getRoomPlaylistSongs(roomData) {
       each(roomData.playlist, (song, next) => {
           getSongMetadata(song.trackID).then((songData) => {
+              console.log(songData);
               var songMetaData = {};
               songMetaData.likes = song.likes;
               songMetaData.album = "Some Album";
               songMetaData.artist = "Some Artist";
               songMetaData.title = songData.title;
               songMetaData.track_id = songData.id;
-              songMetaData.soundcloud_url = songData.uri
+              songMetaData.soundcloud_url = songData.uri;
+              songMetaData.artwork_url = songData.artwork_url;
               var oldState = this.state;
               oldState.playlist.push(songMetaData);
               this.setState(oldState);
@@ -115,6 +118,9 @@ export default class RoomPlaylist extends React.Component {
 
   render() {
 
+    const roomPlaylistArtwork = { width: '50px', height: '50px' };
+
+
     var roomPlaylistSongsElements = [];
     var currentSongToPlay = this.state.playlist[0];
     var N = this.state.playlist.length;
@@ -122,6 +128,7 @@ export default class RoomPlaylist extends React.Component {
     playlist_N.sort(this.compareVotes.bind(this));
     var roomPlaylistSongsElements = playlist_N.map((song) =>
                                 <tr key={song} onClick={(e) => this.handleSongClick(e,this.state.playlist[song].soundcloud_url)}>
+                                  <td className="notLike"><img src={this.state.playlist[song].artwork_url} style={roomPlaylistArtwork}/></td>
                                   <td className="notLike">{this.state.playlist[song].title}</td>
                                   <td className="notLike">{this.state.playlist[song].artist}</td>
                                   <td className="notLike">{this.state.playlist[song].album}</td>
@@ -156,6 +163,7 @@ export default class RoomPlaylist extends React.Component {
                 usersHaveVoted: [],
                 track_id : value.id,
                 soundcloud_url: value.uri,
+                artwork_url: value.artwork_url,
                 title : value.title
             };
 
@@ -187,6 +195,7 @@ export default class RoomPlaylist extends React.Component {
                 <table className="table room-playlist">
                 <tbody>
                   <tr>
+                    <th><h2 className = 'tbHeader'>Artwork</h2></th>
                     <th><h2 className = 'tbHeader'>Song</h2></th>
                     <th><h2 className = 'tbHeader'>Artist</h2></th>
                     <th><h2 className = 'tbHeader'>Album</h2></th>
