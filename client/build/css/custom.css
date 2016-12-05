@@ -251,7 +251,7 @@ table {
 table, th, td {
     border-collapse: collapse;
 }
-th, td {
+th, td, tr {
     padding: 5px;
     text-align: center;
     border-left: 0px;
@@ -406,4 +406,8 @@ th, td {
 .room-playlist-artwork {
     width: 50px;
     height: 50px;
+}
+
+#playlist-table {
+  margin-top: 30px;
 }

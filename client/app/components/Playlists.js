@@ -57,8 +57,6 @@ export default class Playlists extends React.Component{
                               <tr onClick={() => this.handleSongClick(sc_urls[title])} key={title}>
                                 <td><img src={data[title].artwork_url} style={playlistArtwork}/></td>
                                 <td>{data[title].title}</td>
-                                <td>{data[title].artist}</td>
-                                <td>{data[title].album}</td>
                               </tr>
                            </tbody>);
 
@@ -72,13 +70,11 @@ export default class Playlists extends React.Component{
                 <div className="saved-playlist">
                     <h1 id="user_playlist_name">{playlistName}</h1>
 
-                  <table className="table-inverse">
+                  <table className="table-inverse" id="playlist-table">
                       <tbody>
                         <tr>
-                          <th><h2 className ='tbHeader'>Artwork</h2></th>
-                          <th><h2 className = 'tbHeader'> Song Name</h2> </th>
-                          <th> <h2 className = 'tbHeader'>Artist </h2> </th>
-                          <th><h2 className = 'tbHeader'> Album </h2> </th>
+                          <th width="27%"><h2 className ='tbHeader'>Artwork</h2></th>
+                          <th width="73%"><h2 className = 'tbHeader' > Song Name</h2> </th>
                         </tr>
                       </tbody>
                       { playlistTableData }
