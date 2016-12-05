@@ -46,7 +46,7 @@ class PlaylistPage extends React.Component{
     )
   }
 }
-class loginpage extends React.component{
+class login extends React.component{
   render(){
     return(
       <div>
@@ -89,8 +89,8 @@ ReactDOM.render((
       <Route path="joinroom" components={{content: JoinRoom}}/>
       <Route path="playlists" components={{content: Playlists}} />
       <Route path="room" components={{content: Room}}/>
-      <Route path="homepage" components={{content: Homepage}}
-      <Route path="loginpage" components={{content:loginpage}}/>
+      <Route path="homepage" components={{content: Homepage}}/>
+      <Route path="login" components={{content: login}}/>
     </Route>
   </Router>
 ), document.getElementById('wrapper'))
