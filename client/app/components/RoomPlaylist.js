@@ -209,7 +209,7 @@ export default class RoomPlaylist extends React.Component {
                   {roomPlaylistSongsElements}
                 </tbody>
                 </table>
-                <center><button type="button" className="btn btn-primary" id='savePlaylistBtn' onClick={(e)=>this.savePlaylist(e)}>Save Playlist</button></center>
+                <button type="button" className="btn btn-primary" id='savePlaylistBtn' onClick={(e)=>this.savePlaylist(e)}>Save Playlist</button>
             </div>
       </div>
 
