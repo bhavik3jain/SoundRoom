@@ -18,9 +18,6 @@ export default class Sidebar extends React.Component{
     }
 
     componentDidMount() {
-        // create an event updateSidebar that listens for an event when a playlist is saved
-        // and updates the sidebar according
-
         window.emitter.on('updateSidebar', function (args) {
             this.refresh();
         }.bind(this));
