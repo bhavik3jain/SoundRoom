@@ -8,7 +8,7 @@ import JoinRoom from './components/JoinRoom';
 import AccountInfo from './components/AccountInfo';
 import Room from './components/Room';
 import ErrorBanner from './components/errorbanner';
-
+import loginpage from './components/loginpage';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
@@ -42,6 +42,15 @@ class PlaylistPage extends React.Component{
     return (
       <div>
         <Playlists />
+      </div>
+    )
+  }
+}
+class loginpage extends React.component{
+  render(){
+    return(
+      <div>
+      <loginpage />
       </div>
     )
   }
@@ -81,6 +90,7 @@ ReactDOM.render((
       <Route path="playlists" components={{content: Playlists}} />
       <Route path="room" components={{content: Room}}/>
       <Route path="homepage" components={{content: Homepage}}
+      <Route path="loginpage" components={{content:loginpage}}/>
     </Route>
   </Router>
 ), document.getElementById('wrapper'))
