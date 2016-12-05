@@ -1,5 +1,5 @@
 import React from 'react';
-import {getUserData, getUserInfo} from '../server';
+import {getUserData, getUserInfo, updateProfile} from '../server';
 
 export default class AccountInfo extends React.Component{
   constructor(props) {
@@ -9,11 +9,28 @@ export default class AccountInfo extends React.Component{
     };
   }
 
+  updateUserData() {
+      console.log("Updating profile");
+      var formData = $('#user-form').serializeArray();
+      var firstName = formData[0].value;
+      var lastName = formData[1].value;
+      var email = formData[2].value;
+      var dob = formData[3].value;
+      var country = formData[4].value;
+
+      var newUserInfo = {firstName: firstName, lastName: lastName, email: email, dob: dob, country: country};
+
+      updateProfile(this.props.user_id, newUserInfo, (userData) => {
+          this.getAccountData();
+      });
+  }
+
   // refresh() {
   //
-  // }
+ // }
 
   getAccountData() {
+      console.log("setting the state");
     getUserInfo(this.props.user_id, (accountInfo) => {
       this.setState({"account_info": accountInfo});
     });
@@ -31,7 +48,7 @@ export default class AccountInfo extends React.Component{
           <div className="col-md-6">
 
             <div className="input-group">
-              <form action="" method="post">
+              <form action="" method="post" id="user-form">
               <h3>First Name</h3>
               <input name="firstname" id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.firstname} aria-describedby="basic-addon2" />
               <br />
@@ -46,10 +63,9 @@ export default class AccountInfo extends React.Component{
               <br />
               <h3>Country</h3>
               <input name="country "id="account-input-box" type="text" className="form-control" placeholder={this.state.account_info.country} aria-describedby="basic-addon2" />
-              <button type="button" id="accountinfo-btn1" className="btn btn-primary btn-lg">Update Profile</button>
+              <button type="button" id="accountinfo-btn1" className="btn btn-primary btn-lg" onClick={(e) => this.updateUserData()}>Update Profile</button>
               </form>
             </div>
-            <button type="button" id="accountinfo-btn2" className="btn btn-success btn-lg">Change Password</button>
           </div>
 
 

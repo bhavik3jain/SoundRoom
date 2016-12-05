@@ -235,6 +235,11 @@ export function removeParticipant(participantId, roomId, cb) {
   });
 }
 
+export function updateProfile(userId, newInfo, cb) {
+    sendXHR('PUT', '/user/' + userId + '/account_info', {newInfo: newInfo}, (xhr) => {
+        cb(JSON.parse(xhr.responseText));
+    });
+}
 /**
 * Reset database button.
 */
