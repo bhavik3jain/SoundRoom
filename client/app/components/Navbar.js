@@ -23,8 +23,8 @@ export default class Navbar extends React.Component{
 
   render(){
     const proPicStyle = {
-      width: '60%',
-      height: '60%'
+      width: '100%',
+      height: '100%'
     };
     return (
       <div>
@@ -38,8 +38,7 @@ export default class Navbar extends React.Component{
           <div className="col-lg-1">
             <ul className="nav navbar-nav">
               <li className="dropdown top-dropdown">
-                <img src={this.state.account_info.avatar} alt="Profile pic" className="img-circle" id="account_info_pic" style={proPicStyle}/>
-                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i id="user_icon"></i><span className="caret"></span></a>
+                <input type="image" src={this.state.account_info.avatar} alt="Profile Pic" className="img-circle dropdown-toggle" data-toggle="dropdown" style={proPicStyle} id="account_info_pic" />
                 <ul className="dropdown-menu">
                   <li><Link to="account">Account Info</Link></li>
                   <li><a href="#">Sign out</a></li>
