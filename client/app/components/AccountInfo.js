@@ -21,27 +21,30 @@ export default class AccountInfo extends React.Component{
       var newUserInfo = {firstName: firstName, lastName: lastName, email: email, dob: dob, country: country};
 
       updateProfile(this.props.user_id, newUserInfo, (userData) => {
-          this.getAccountData();
+
+          $( '#user-form' ).each(function(){
+              this.reset();
+          });
+
+          this.refresh();
       });
   }
 
-  // refresh() {
-  //
- // }
+  refresh() {
+      this.getAccountData();
+  }
 
   getAccountData() {
-      console.log("setting the state");
     getUserInfo(this.props.user_id, (accountInfo) => {
       this.setState({"account_info": accountInfo});
     });
   }
 
   componentDidMount() {
-    this.getAccountData();
+    this.refresh();
   }
 
   render() {
-    console.log(this.state);
     return (
       <div>
         <div className="row" id="main_content">
