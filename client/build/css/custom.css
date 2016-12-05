@@ -174,22 +174,24 @@ body {
   margin-top: 20px;
   margin-bottom: 20px;
   margin-right: 10px;
-  margin-left: 15px;
+
   font-size: 16px;
   background-color: #57E4E8;
   color: #343434;
   border: 1px solid #57E4E8;
+  width: 100%;
 }
 
 #accountinfo-btn1:hover {
   font-size: 16px;
   margin-bottom: 20px;
-  margin-left: 15px;
+
   margin-right: 10px;
   background-color: #57E4E8;
   color: #343434;
   border: 1px solid #57E4E8;
   box-shadow: 0 5px 15px black;
+  width: 100%;
 }
 
 #accountinfo-btn2{
@@ -368,6 +370,7 @@ th, td {
 #account-input-box{
   max-width: 100%;
   min-width: 100%;
+  margin-bottom: 10px;
 }
 
 #current_song_playing_in_room {
