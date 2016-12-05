@@ -6,17 +6,25 @@ export default class Sidebar extends React.Component{
     constructor(props) {
 		super(props);
 		this.state = {
+            user_id: this.props.user_id,
             user_playlists: {}
         };
 	}
 
     refresh() {
-        getUserPlaylist(this.props.user_id, (playlistData) => {
-		    this.setState({"user_playlists": playlistData});
+        getUserPlaylist(this.state.user_id, (playlistData) => {
+		    this.setState({"user_playlists": playlistData, "user_id": this.state.user_id});
 		});
     }
 
     componentDidMount() {
+        // create an event updateSidebar that listens for an event when a playlist is saved
+        // and updates the sidebar according
+
+        window.emitter.on('updateSidebar', function (args) {
+            this.refresh();
+        }.bind(this));
+
 		this.refresh();
 	}
 

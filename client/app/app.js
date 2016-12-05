@@ -14,6 +14,10 @@ import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 const user_id_logged_in = "4";
 
+var ee = require('event-emitter');
+window.emitter = ee({});
+
+
 class SidebarPage extends React.Component {
   render() {
     return (

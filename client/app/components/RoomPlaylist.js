@@ -104,6 +104,7 @@ export default class RoomPlaylist extends React.Component {
         }
          else {
             console.log(userInfo);
+            emitter.emit('updateSidebar') // Two above listeners invoked
         }
     });
  }
