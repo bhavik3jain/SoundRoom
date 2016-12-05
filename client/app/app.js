@@ -46,7 +46,7 @@ class PlaylistPage extends React.Component{
     )
   }
 }
-class login extends React.component{
+class login extends React.Component{
   render(){
     return(
       <div>
