@@ -284,14 +284,14 @@ function addLikeToSong(roomId, userId, songId) {
 }
 
 function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
-    if(!validatePlaylistName(userId, playlistName)) {
+    if(!validatePlaylistName(userId, playlistName) && playlistsToSave.length > 0) {
         var userData = readDocument("users", userId);
         userData.playlists[playlistName] = playlistsToSave;
         writeDocument('users', userData);
         return userData;
     }
     else {
-        return {message: "Playlist already exists", success: false};
+        return {message: "Playlist already exists or there are no songs to save", success: false};
     }
 }
 

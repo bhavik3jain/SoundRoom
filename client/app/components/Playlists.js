@@ -17,13 +17,23 @@ export default class Playlists extends React.Component{
 
   componentDidMount() {
       var playlistData = this.props.location.query.playlistData;
-      for(var song in playlistData) {
-          getSongsData(playlistData[song]).then(function(d) {
+      console.log(playlistData);
+      if(Array.isArray(playlistData)) {
+          for(var song in playlistData) {
+              getSongsData(playlistData[song]).then(function(d) {
+                  var arrayvar = this.state.playlist.slice();
+                  arrayvar.push(d);
+                  this.setState({playlist: arrayvar});
+              }.bind(this));
+          }
+      } else {
+          getSongsData(playlistData).then(function(d) {
               var arrayvar = this.state.playlist.slice();
               arrayvar.push(d);
               this.setState({playlist: arrayvar});
           }.bind(this));
       }
+
   }
 
   componentWillReceiveProps(nextProps) {
