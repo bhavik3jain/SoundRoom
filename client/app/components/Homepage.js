@@ -12,6 +12,7 @@ export default class Navbar extends React.Component{
                 console.log(roomId.message);
             }
             else {
+                emitter.emit('updateSidebar'); // Two above listeners invoked
                 console.log("creating a new room", accessCode, this.props.user_id);
                 browserHistory.push("room/?roomId=" + accessCode + "&user_logged_in=" + this.props.user_id);
             }

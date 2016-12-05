@@ -1,5 +1,5 @@
 import React from 'react';
-import {getPlaylistData, getUserPlaylist} from '../server';
+import {getPlaylistData, getUserPlaylist, getUserInfo} from '../server';
 import {Link} from 'react-router';
 
 export default class Sidebar extends React.Component{
@@ -12,9 +12,16 @@ export default class Sidebar extends React.Component{
 	}
 
     refresh() {
+
         getUserPlaylist(this.state.user_id, (playlistData) => {
 		    this.setState({"user_playlists": playlistData, "user_id": this.state.user_id});
 		});
+
+        getUserInfo(this.state.user_id, (userData) => {
+            console.log(userData);
+            this.setState({"userRoomHost": userData.roomHostID});
+        });
+
     }
 
     componentDidMount() {
@@ -34,6 +41,11 @@ export default class Sidebar extends React.Component{
             i++;
         }
 
+        var roomHost = "None";
+        if(this.state.userRoomHost !== null) {
+            roomHost = this.state.userRoomHost;
+        }
+
         return (
             <div id="sidebar-wrapper">
                 <ul className="sidebar-nav">
@@ -41,6 +53,12 @@ export default class Sidebar extends React.Component{
                         <Link to="/" id="soundroom_title">
                             <img src="img/SR_logo.png" alt="SoundRoom Logo" id="soundroom_logo"/>
                         </Link>
+                    </li>
+
+                    <li id="currently_hosting">
+                        <h3 > Hosting Room: </h3>
+                        <p> {roomHost} </p>
+
                     </li>
 
                     <li id ="user_playlists">

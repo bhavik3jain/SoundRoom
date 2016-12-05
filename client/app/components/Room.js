@@ -17,13 +17,14 @@ export default class Room extends React.Component{
     componentWillMount() {
       this.setState({currentRoomId: this.state.currentRoomId});
     }
-    
+
     closeRoom(e) {
       getRoomHost(this.state.currentRoomId, (result) => {
         if (result.host === this.state.currentUser) {
           console.log("you are the host");
           deleteRoom(this.state.currentRoomId, (deleted) => {});
           browserHistory.push('/');
+          emitter.emit('updateSidebar'); // Two above listeners invoke
         } else {
           console.log("you are not the host");
           alert("you are not the host");

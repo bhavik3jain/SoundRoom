@@ -258,9 +258,7 @@ app.delete('/room/:roomid/participants/:participantid', function(req, res) {
 
 app.post('/room/host', function(req, res) {
   var roomId = req.body.roomId;
-  console.log("roomId", req.body);
   var room = getRoomByAccessCode(roomId);
-  console.log("host", room.host);
   res.send({"host": room.host});
 });
 
@@ -269,9 +267,12 @@ app.delete('/room/delete', function(req, res) {
   var rooms = getCollection('rooms');
   for (var room in rooms) {
     var id = rooms[room].roomId;
+    var hostId = rooms[room].host;
     if (id === roomId) {
+      var userData = getUserData(hostId);
+      userData.roomHostID = null;
+      writeDocument('users', userData);
       deleteDocument('rooms', parseInt(room));
-      console.log("deleted");
     }
   }
   res.send({"deleted": true});
