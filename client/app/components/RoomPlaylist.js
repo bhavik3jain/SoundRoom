@@ -130,8 +130,6 @@ export default class RoomPlaylist extends React.Component {
                                 <tr key={song} onClick={(e) => this.handleSongClick(e,this.state.playlist[song].soundcloud_url)}>
                                   <td className="notLike"><img src={this.state.playlist[song].artwork_url} style={roomPlaylistArtwork}/></td>
                                   <td className="notLike">{this.state.playlist[song].title}</td>
-                                  <td className="notLike">{this.state.playlist[song].artist}</td>
-                                  <td className="notLike">{this.state.playlist[song].album}</td>
                                   <td><button type="button" className="btn btn-secondary btn-playlist" onClick={(e)=>this.addLikeToSong(e, song)}><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
                                 </tr>);
     var track_url = this.state.songToPlay;
@@ -205,8 +203,6 @@ export default class RoomPlaylist extends React.Component {
                   <tr>
                     <th><h2 className = 'tbHeader'>Artwork</h2></th>
                     <th><h2 className = 'tbHeader'>Song</h2></th>
-                    <th><h2 className = 'tbHeader'>Artist</h2></th>
-                    <th><h2 className = 'tbHeader'>Album</h2></th>
                     <th><h2 className = 'tbHeader'>Votes</h2></th>
                   </tr>
                   {roomPlaylistSongsElements}

@@ -80,8 +80,8 @@ app.post('/createroom/:hostId', function(req, res) {
               message: "You cannot create a room that already exists or you are already a host for another room",
               success: false
           }
-
-          res.send(error);
+          res.status(400)
+          res.send(error.message);
       }
     //}
     //else{
@@ -117,8 +117,8 @@ app.post('/joinroom/:userId', function(req, res) {
           res.send(roomData);
 
       } else {
-          res.status(400).end();
-          res.send("Room does not exist");
+          res.status(400);
+          res.send("Room " + roomId + " does not exist");
       }
     //}
     //else{
@@ -151,9 +151,15 @@ app.post('/room/save', function(req, res) {
         playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
     //var userAuth = getUserIdFromToken(req.get('Authorization'));
     //if(userAuth === body.userId){
-      res.status(201);
-      res.send(saveSongsAsPlayist(userId, playlistName, playlistsToSave));
-    //}
+    var songs = saveSongsAsPlayist(userId, playlistName, playlistsToSave);
+    if('message' in songs) {
+        res.status(400);
+        res.send(songs['message']);
+    } else {
+        res.status(201);
+        res.send(songs);
+    }
+          //}
     //else{
     //   res.status(401).end();
     //}

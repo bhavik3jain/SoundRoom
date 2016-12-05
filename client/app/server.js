@@ -23,8 +23,7 @@ function sendXHR(verb, resource, body, cb) {
         // the error.
         var responseText = xhr.responseText;
         console.log("Error", responseText);
-        SoundRoomError('Could not ' + verb + " " + resource + ": Received " +
-        statusCode + " " + statusText + ": " + responseText);
+        SoundRoomError(responseText);
       }
     });
   // Time out the request if it takes longer than 10,000

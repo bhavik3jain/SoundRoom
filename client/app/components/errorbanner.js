@@ -24,7 +24,8 @@ export default class ErrorBanner extends React.Component {
   render() {
     return (
       <div className={"alert alert-warning " + hideElement(!this.state.active)} role="alert">
-        SoundRoom was unable to complete a recent request: {this.state.error}
+        SoundRoom was unable to complete a recent request: {this.state.error} <br />
+        Please <a onClick={() => window.location.reload()}>refresh the web page</a> and try again.
       </div>
     );
   }

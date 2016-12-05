@@ -50,16 +50,16 @@ class App extends React.Component{
 
     return (
       <div>
-        <div className="row">
-          <div className="col-md-12">
-            <ErrorBanner />
-          </div>
-        </div>
         <div className="sidebar">
           <Sidebar user_id={user_id_logged_in} />
         </div>
         <div className="navbar">
           <Navbar user_id={user_id_logged_in} />
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <ErrorBanner />
+          </div>
         </div>
         <div className="content">
           {content || <Homepage user_id={user_id_logged_in}/>}
