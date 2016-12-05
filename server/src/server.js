@@ -30,6 +30,23 @@ app.get('/user/:userId/account_info', function(req, res) {
     //}
 });
 
+app.put('/user/:userId/account_info', function(req, res) {
+    console.log("Updating Profile");
+    var body = req.body;
+    var userId = parseInt(req.params.userId, 10);
+    var user = getUserData(userId);
+
+    user.firstname = body.newInfo.firstName;
+    user.lastname = body.newInfo.lastName;
+    user.email = body.newInfo.email;
+    user.country = body.newInfo.country;
+    user.dob = body.newInfo.dob;
+
+    writeDocument('users', user);
+    res.send(user);
+});
+
+
 app.get('/user/:userId/playlists', function(req, res) {
     // Add user authentication here (getUserIdFromToken)
     var body = req.body;
