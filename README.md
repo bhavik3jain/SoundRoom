@@ -4,7 +4,7 @@ SoundRoom is a shared music platform that allows users to collaborate in creatin
 
 
 #Technical Challenges:
----
+
 1) SoundRoom needs an API that provides songs for the users to play, such as the Spotify or Soundcloud API. We have played around with the Soundcloud API and have decided to use it due to its ease-of-use.
 2) Soundcloud free members can only get a 30 second preview of a song. Therefore, we have to figure out how to differentiate between free and premium users when playing back songs. This can be accomplished by setting a boolean flag, which would indicate whether a user has a premium or free account.
 3) SoundRoom needs to use real-time event based communication for adding songs, voting songs, and playback. This can be accomplished with the use of websockets, which a member of our team is familiar with.
