@@ -16,6 +16,13 @@ var writeDocument = database.writeDocument;
 var deleteDocument = database.deleteDocument;
 var getCollection = database.getCollection;
 
+//schemas
+var roomSchema = require('./schemas/room.json');
+var songSchema = require('./schemas/song.json');
+var userInfoSchema = require('./schemas/userInfo.json');
+var playlistSchema = require('./schemas/playlist.json');
+var validate = require('express-jsonschema').validate;
+
 app.get('/user/:userId/account_info', function(req, res) {
     // Add user authentication here (getUserIdFromToken())
     var body = req.body;
@@ -30,7 +37,7 @@ app.get('/user/:userId/account_info', function(req, res) {
     //}
 });
 
-app.put('/user/:userId/account_info', function(req, res) {
+app.put('/user/:userId/account_info', validate({userInfoSchema}), function(req, res) {
     console.log("Updating Profile");
     var body = req.body;
     var userId = parseInt(req.params.userId, 10);
@@ -46,7 +53,6 @@ app.put('/user/:userId/account_info', function(req, res) {
     res.send(user);
 });
 
-
 app.get('/user/:userId/playlists', function(req, res) {
     // Add user authentication here (getUserIdFromToken)
     var body = req.body;
@@ -61,7 +67,7 @@ app.get('/user/:userId/playlists', function(req, res) {
     //}
 });
 
-app.post('/createroom/:hostId', function(req, res) {
+app.post('/createroom/:hostId', validate({roomSchema}), function(req, res) {
     var body = req.body;
     var hostId = req.params.hostId,
         roomId = body.roomId;
@@ -89,7 +95,7 @@ app.post('/createroom/:hostId', function(req, res) {
     //}
 });
 
-app.post('/joinroom/:userId', function(req, res) {
+app.post('/joinroom/:userId', validate({roomSchema}), function(req, res) {
     var body = req.body;
     var roomId = body.roomId,
         userId = req.params.userId;
@@ -126,7 +132,7 @@ app.post('/joinroom/:userId', function(req, res) {
     //}
 });
 
-app.post("/room/data",function(req, res) {
+app.post("/room/data", validate({roomSchema}), function(req, res) {
     var body = req.body;
     var roomId = body.roomId,
         roomData = getRoomData(roomId);
@@ -141,7 +147,7 @@ app.post("/room/data",function(req, res) {
     //}
 });
 
-app.post('/room/save', function(req, res) {
+app.post('/room/save', validate({playlistSchema}), function(req, res) {
     console.log("Saving room playlist");
     var body = req.body,
         userId = body.userId,
@@ -165,7 +171,7 @@ app.post('/room/save', function(req, res) {
     //}
 });
 
-app.post('/room/:songId/new_song', function(req, res) {
+app.post('/room/:songId/new_song', validate({songSchema}), function(req, res) {
     var body = req.body,
         roomId = body.roomId,
         songId = parseInt(req.params.songId),
@@ -180,7 +186,7 @@ app.post('/room/:songId/new_song', function(req, res) {
     //}
 });
 
-app.post('/room/song_like', function(req, res) {
+app.post('/room/song_like', validate({songSchema}), function(req, res) {
     var body = req.body,
         userId = body.userId,
         roomId = body.roomId,
@@ -195,7 +201,7 @@ app.post('/room/song_like', function(req, res) {
     //}
 });
 
-app.post('/room/participants', function(req, res)  {
+app.post('/room/participants', validate({roomSchema}), function(req, res)  {
     var body = req.body,
         roomId = body.roomId;
     //var userAuth = getUserIdFromToken(req.get('Authorization'));
