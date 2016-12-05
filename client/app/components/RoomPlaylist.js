@@ -154,6 +154,14 @@ export default class RoomPlaylist extends React.Component {
     var gotoContributor = function(value, event) {
 
         addSongToRoom(this.state.currentRoomId, value.id, this.props.userLoggedIn, (songData) => {
+            console.log(value);
+            var artwork_url = ""
+            if(value.artwork_url === null) {
+                artwork_url = "https://screenshots.en.sftcdn.net/en/scrn/6649000/6649766/soundcloud-555ac7e90a986-100x100.png";
+            }
+            else {
+                artwork_url = value.artwork_url;
+            }
 
             var new_song = {
                 "_id": 13,
@@ -163,7 +171,7 @@ export default class RoomPlaylist extends React.Component {
                 usersHaveVoted: [],
                 track_id : value.id,
                 soundcloud_url: value.uri,
-                artwork_url: value.artwork_url,
+                artwork_url: artwork_url,
                 title : value.title
             };
 
@@ -192,7 +200,7 @@ export default class RoomPlaylist extends React.Component {
             </div>
             <div class="col-md-8">
 
-                <table className="table room-playlist">
+                <table className="table-inverse room-playlist">
                 <tbody>
                   <tr>
                     <th><h2 className = 'tbHeader'>Artwork</h2></th>

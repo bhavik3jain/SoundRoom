@@ -46,24 +46,8 @@ export default class Playlists extends React.Component{
 
 
   render() {
-    //   var playlistData = this.props.location.query.playlistData;
-    //   playlistData.map((song) => {
-    //       getSongsData(song).then(function(d) {
-    //           var arrayvar = this.state.playlist.slice();
-    //           arrayvar.push(<tbody key={song}>
-    //                             <tr onClick={() => this.handleSongClick(d.soundcloud_url)} key={song}>
-    //                               <td>{d.title}</td>
-    //                               <td>{d.artist}</td>
-    //                               <td>{d.album}</td>
-    //                             </tr>
-    //                         </tbody>);
-    //          this.setState({playlist: arrayvar});
-    //       }.bind(this));
-    //   });
-
-
+    const playlistArtwork = { width: '50px', height: '50px' };
     var data = this.state.playlist;
-    // console.log("Data", data);
     var sc_urls = data.map((song) => song.soundcloud_url);
     var playlistTableData = [];
     var playlistName = this.props.location.query.playlistName;
@@ -71,6 +55,7 @@ export default class Playlists extends React.Component{
     var songlist_N = Array.apply(null, {length: N}).map(Number.call, Number)
     var playlistTableData = songlist_N.map((title) => <tbody key={title}>
                               <tr onClick={() => this.handleSongClick(sc_urls[title])} key={title}>
+                                <td><img src={data[title].artwork_url} style={playlistArtwork}/></td>
                                 <td>{data[title].title}</td>
                                 <td>{data[title].artist}</td>
                                 <td>{data[title].album}</td>
@@ -90,6 +75,7 @@ export default class Playlists extends React.Component{
                   <table className="table-inverse">
                       <tbody>
                         <tr>
+                          <th><h2 className ='tbHeader'>Artwork</h2></th>
                           <th><h2 className = 'tbHeader'> Song Name</h2> </th>
                           <th> <h2 className = 'tbHeader'>Artist </h2> </th>
                           <th><h2 className = 'tbHeader'> Album </h2> </th>

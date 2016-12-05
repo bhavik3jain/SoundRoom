@@ -295,7 +295,7 @@ function createRoom(hostId, roomId) {
         "roomId": roomId,
         "host": hostId,
         "participants": [hostId],
-        "playlists": []
+        "playlist": []
     };
     var newRoom = addDocument('rooms', newRoomDocument);
 

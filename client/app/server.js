@@ -83,12 +83,20 @@ export function getSongsData(sc_track, cb) {
         var album = "Some Album";
         var artist = "Some Artist";
         var soundcloud_url = response.uri;
+        var artwork_url = "";
+        if(response.artwork_url === null) {
+            artwork_url = "https://screenshots.en.sftcdn.net/en/scrn/6649000/6649766/soundcloud-555ac7e90a986-100x100.png"
+        } else {
+            artwork_url = response.artwork_url;
+        }
+
 
         var song = {
             "album": album,
             "artist": artist,
             "title": title,
-            "soundcloud_url": soundcloud_url
+            "soundcloud_url": soundcloud_url,
+            "artwork_url": artwork_url
         };
 
         return song
@@ -236,6 +244,7 @@ export function removeParticipant(participantId, roomId, cb) {
 }
 
 export function updateProfile(userId, newInfo, cb) {
+
     sendXHR('PUT', '/user/' + userId + '/account_info', {newInfo: newInfo}, (xhr) => {
         cb(JSON.parse(xhr.responseText));
     });
