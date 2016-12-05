@@ -5,7 +5,7 @@ export default class SoundCloudPlayer extends React.Component {
         super(props);
 
         this.state = {
-            "soundPlayerIframe": undefined
+            "soundPlayerIframe": undefined,
         }
 
     }
@@ -16,8 +16,6 @@ export default class SoundCloudPlayer extends React.Component {
         SC.initialize({
           client_id: '20c77541bd6ca84e8d987789d0bc4b8d'
         });
-
-        console.log("setting up player");
 
         SC.oEmbed(track_url, {auto_play: autoplay, maxheight: maxHeight, show_comments: false, sharing: false, downloadable:false}).then(function(oEmbed) {
             var oldState = this.state;
@@ -37,8 +35,7 @@ export default class SoundCloudPlayer extends React.Component {
 
     render() {
         return (
-            <div dangerouslySetInnerHTML={{__html: this.state.soundPlayerIframe}} >
-            </div>
+            <div dangerouslySetInnerHTML={{__html: this.state.soundPlayerIframe}}></div>
         )
     }
 }

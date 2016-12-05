@@ -1,5 +1,5 @@
 import React from 'react';
-import {getRoomParticipants, removeParticipant} from '../server';
+import {getRoomParticipants, removeParticipant, getRoomData} from '../server';
 import {Link, browserHistory} from 'react-router';
 
 export default class RoomParticipants extends React.Component {
@@ -28,7 +28,6 @@ export default class RoomParticipants extends React.Component {
   }
 
   render() {
-    // var userIds = getUserIds();
     var roomParticipantsNames = this.state.participants;
     var roomParticipantsRows = [];
     for (var participant in roomParticipantsNames) {

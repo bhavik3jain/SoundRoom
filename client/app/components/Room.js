@@ -17,7 +17,7 @@ export default class Room extends React.Component{
     componentWillMount() {
       this.setState({currentRoomId: this.state.currentRoomId});
     }
-
+    
     closeRoom(e) {
       getRoomHost(this.state.currentRoomId, (result) => {
         if (result.host === this.state.currentUser) {
@@ -41,7 +41,6 @@ export default class Room extends React.Component{
     // }
 
     render() {
-        console.log(this.props.location.query);
         return (
             <div>
             <div>

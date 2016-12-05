@@ -1,5 +1,5 @@
 import React from 'react';
-import {getRoomData, getSongsData, getUserDataNCB, saveSongsAsPlayist, getRoomDataServer, addSongToRoom, getSongMetadata, addLikeToSong} from '../server';
+import {getRoomHostId, getRoomData, getSongsData, getUserDataNCB, saveSongsAsPlayist, getRoomDataServer, addSongToRoom, getSongMetadata, addLikeToSong} from '../server';
 import SoundCloudPlayer from './SoundCloudPlayer';
 import Select from 'react-select';
 import eachSeries from 'async/eachSeries';
@@ -18,6 +18,7 @@ export default class RoomPlaylist extends React.Component {
   refresh() {
 
       getRoomData(this.state.currentRoomId, (roomData) => {
+          this.setState({hostId: roomData.host});
           this.getRoomPlaylistSongs(roomData)
       });
   }
@@ -110,10 +111,13 @@ export default class RoomPlaylist extends React.Component {
  }
 
   handleSongClick(e, songData) {
-    if (e.target && e.target.matches("td.notLike")){
-      var oldState = this.state;
-      oldState.songToPlay = songData;
-      this.setState(oldState);
+      if(this.state.hostId == this.props.userLoggedIn) {
+          console.log("handle song click");
+        if (e.target && e.target.matches("td.notLike")){
+          var oldState = this.state;
+          oldState.songToPlay = songData;
+          this.setState(oldState);
+        }
     }
   }
 
@@ -187,13 +191,21 @@ export default class RoomPlaylist extends React.Component {
 		});
 	}
 
+    var soundCloudPlayer;
+    if(this.state.hostId == this.props.userLoggedIn) {
+        soundCloudPlayer =  <SoundCloudPlayer track_url={this.state.songToPlay} maxHeight={100} autoplay={true} shouldHide={true} />
+    } else {
+        soundCloudPlayer = <div></div>;
+    }
+
     return (
+
       <div>
 
       <div class="row">
             <div class="col-md-4">
                 <div className="media" id="room_sound_player">
-                    <SoundCloudPlayer track_url={this.state.songToPlay} maxHeight={100} autoplay={true}/>
+                    {soundCloudPlayer}
                 </div>
                 <Select.Async name="search_tracks" value={this.state.track_to_search} onChange={onChange.bind(this)} loadOptions={getOptions} onValueClick={gotoContributor.bind(this)} valueKey="uri" labelKey="title" placeholder="Search Tracks"/>
             </div>

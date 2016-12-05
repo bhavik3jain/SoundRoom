@@ -262,6 +262,12 @@ export function deleteRoom(roomId, cb) {
   });
 }
 
+export function getRoomHostId(roomId, cb) {
+    sendXHR('GET', '/room/host', {roomId: roomId}, (xhr) => {
+        cb(JSON.parse(xhr.responseText));
+    });
+}
+
 /**
 * Reset database button.
 */

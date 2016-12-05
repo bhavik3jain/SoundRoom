@@ -12,11 +12,10 @@ import ErrorBanner from './components/errorbanner';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
-const user_id_logged_in = "4";
+const user_id_logged_in = "1";
 
 var ee = require('event-emitter');
 window.emitter = ee({});
-
 
 class SidebarPage extends React.Component {
   render() {

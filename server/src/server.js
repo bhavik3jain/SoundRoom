@@ -178,8 +178,15 @@ app.post('/room/:songId/new_song', validate({songSchema}), function(req, res) {
         userThatAddedSong = body.userId;
     //var userAuth = getUserIdFromToken(req.get('Authorization'));
     //if(userAuth === body.userId){
+    var songAdded = addSongToRoomPlaylist(roomId, userThatAddedSong, songId);
+    if('message' in songAdded) {
+        res.status(400);
+        res.send(songAdded['message'])
+    }
+    else {
       res.status(201);
-      res.send(addSongToRoomPlaylist(roomId, userThatAddedSong, songId));
+      res.send(songAdded);
+    }
     //}
     //else{
     //   res.status(401).end();
@@ -381,7 +388,7 @@ function addSongToRoomPlaylist(roomId, userId, songId) {
         return songDocument;
     }
     else {
-        return "Song already in the playlist";
+        return {message:"Song already in the playlist"};
     }
 }
 
@@ -453,6 +460,7 @@ function getSongMetadata(songId) {
 
     return SC.get("tracks/" + songId);
 }
+
 
 // Starts the server on port 3000!
 app.listen(3000, function () {

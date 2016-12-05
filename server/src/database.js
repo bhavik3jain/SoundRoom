@@ -13,7 +13,7 @@ var initialData = {
           "state": "MA",
           "dob": "08/06/1996",
           "city": "Amherst",
-          "roomHostID": null,
+          "roomHostID": "1",
           "playlists": { // playlists hold trackID for songs
               "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
           }
@@ -30,7 +30,7 @@ var initialData = {
             "state": "MA",
             "dob": "04/10/1996",
             "city": "Amherst",
-            "roomHostID": null,
+            "roomHostID": "1",
             "playlists": {
                   "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
             }
