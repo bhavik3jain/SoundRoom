@@ -6,7 +6,7 @@ export default class RoomParticipants extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {currentRoomId: this.props.currentRoomId, participants: {}};
+    this.state = {currentRoomId: this.props.currentRoomId, currentUser: this.props.currentUser, participants: {}};
   }
 
   exitRoom(e) {
@@ -22,7 +22,7 @@ export default class RoomParticipants extends React.Component {
   componentWillMount() {
 
       getRoomParticipants(this.state.currentRoomId, (roomParticipants) => {
-          this.setState({currentRoomId: this.state.currentRoomId, participants: roomParticipants.participants})
+          this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})
       });
 
   }
