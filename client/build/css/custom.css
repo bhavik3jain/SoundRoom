@@ -453,3 +453,7 @@ th, td {
   border: 0px !important;
   margin-left: 10px;
 }
+
+.hidden {
+  display: 'none';
+}
