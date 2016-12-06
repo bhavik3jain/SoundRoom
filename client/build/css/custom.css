@@ -31,12 +31,12 @@ body {
 
 #user_playlists{
   color: white;
-
+  margin-top: -50px;
 }
 
 #user_playlists h3{
   color: white;
-  margin-top: 120px;
+  margin-top: 100px;
 }
 
 #user_playlists a{
@@ -429,3 +429,13 @@ th, td {
 }
 
  .hidden { display:none; }
+
+#currently_hosting {
+    margin-top: 120px;
+    color: white;
+}
+
+#currently_hosting h3{
+  color: white;
+  margin-top: 100px;
+}

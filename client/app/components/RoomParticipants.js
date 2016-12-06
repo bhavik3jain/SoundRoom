@@ -1,5 +1,5 @@
 import React from 'react';
-import {getRoomParticipants, removeParticipant, getRoomData} from '../server';
+import {getRoomParticipants, removeParticipant, getRoomData, getUserInfo} from '../server';
 import {Link, browserHistory} from 'react-router';
 
 export default class RoomParticipants extends React.Component {
@@ -25,17 +25,33 @@ export default class RoomParticipants extends React.Component {
           this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})
       });
 
+
   }
+
+  componentWillReceiveProps(nextProps) {
+      getUserInfo(nextProps.hostId, (user) => {
+          this.setState({hostFullName: user.firstname + " " + user.lastname});
+      });
+  }
+
 
   render() {
     var roomParticipantsNames = this.state.participants;
     var roomParticipantsRows = [];
     for (var participant in roomParticipantsNames) {
+        if(roomParticipantsNames[participant] === this.state.hostFullName) {
+            roomParticipantsRows.push(
+              <tr key={participant}>
+                <td>{roomParticipantsNames[participant]} (Host) </td>
+              </tr>
+            );
+        } else {
           roomParticipantsRows.push(
             <tr key={participant}>
-              <td>{roomParticipantsNames[participant]}</td>
+              <td><span className="glyphicon glyphicon-user" aria-hidden="true"></span> {roomParticipantsNames[participant]} </td>
             </tr>
           );
+      }
     }
 
     return (

@@ -214,7 +214,7 @@ export default class RoomPlaylist extends React.Component {
                 <table className="table-inverse room-playlist">
                 <tbody>
                   <tr>
-                    <th><h2 className = 'tbHeader'>Artwork</h2></th>
+                    <th><h2 className = 'tbHeader'></h2></th>
                     <th><h2 className = 'tbHeader'>Song</h2></th>
                     <th><h2 className = 'tbHeader'>Votes</h2></th>
                   </tr>
