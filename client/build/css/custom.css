@@ -406,6 +406,19 @@ th, td {
   box-shadow: 0 5px 15px black;
 }
 
+#close-banner {
+    width: 10%;
+    font-size: 16px;
+    background-color: rgb(255, 117, 24);
+    color: white;
+    text-align: center;
+    margin: auto;
+}
+
+#close-banner:hover{
+  box-shadow: 0 3px 3px black;
+}
+
 .room-playlist-artwork {
     width: 50px;
     height: 50px;
