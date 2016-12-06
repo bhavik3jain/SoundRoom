@@ -84,12 +84,10 @@ export default class Room extends React.Component{
                       <h2><i className="fa fa-envelope"></i> Share Access Code - {this.state.currentRoomId}</h2>
 
                               <form action="" method="post">
-                                  <div className="input-group">
-                                    <span className="input-group-addon">
-                                      <i className="fa fa-phone"></i>
-                                    </span>
-                                    <input type="phone" id="phone_number_to_share" className="form-control" placeholder="xxxxxxxxxx" />
-                                  </div>
+                                <div className="input-group">
+                                    <span className= "input-group-addon">#</span>
+                                    <input type="text" id="phone_number_to_share" className="form-control" placeholder="xxxxxxxxxx" aria-describedby="basic-addon1" />
+                                </div>
                                   <br />
                                   <button type="button" value="sub" name="sub" className="btn btn-primary" onClick={(e) => this.shareAccessCode(e)}><i className="fa fa-share"></i> Share!</button>
                             </form>
