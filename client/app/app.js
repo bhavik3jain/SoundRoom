@@ -17,6 +17,7 @@ const user_id_logged_in = "3";
 var ee = require('event-emitter');
 window.emitter = ee({});
 
+
 class SidebarPage extends React.Component {
   render() {
     return (

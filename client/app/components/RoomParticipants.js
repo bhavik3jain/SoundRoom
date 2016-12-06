@@ -55,11 +55,11 @@ export default class RoomParticipants extends React.Component {
     }
 
     return (
-      <div>
+  <div>
           <table className="table room-list">
           <tbody>
             <tr>
-              <th><h2 className = 'tbHeader'>Participants</h2></th>
+              <th><h2 className = 'tbHeader'><strong>Participants</strong></h2></th>
             </tr>
 
             {roomParticipantsRows}

@@ -61,7 +61,10 @@ export default class RoomPlaylist extends React.Component {
     var songTrackId =  this.state.playlist[song].track_id;
     addLikeToSong(this.state.currentRoomId, songTrackId, this.props.userLoggedIn, (roomData) => {
         if('message' in roomData) {
-            console.log(roomData['message']);
+            bootbox.alert({
+                message: roomData['message'],
+                backdrop: true
+            });
         }
         else {
             this.setState({currentRoomId: this.props.currentRoomId, playlist: [], "track_to_search": ""});

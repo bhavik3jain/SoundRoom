@@ -37,7 +37,7 @@ export default class Sidebar extends React.Component{
         var i = 1
         for (var playlist in this.state.user_playlists) {
             console.log(this.state.user_playlists[playlist]);
-            playlists.push(<Link to={{pathname: 'playlists', query: {playlistData:this.state.user_playlists[playlist], playlistName: playlist, setSongToPlay: undefined}}} key={i}><strong>{playlist}</strong></Link>);
+            playlists.push(<Link to={{pathname: 'playlists', query: {playlistData:this.state.user_playlists[playlist], playlistName: playlist, setSongToPlay: undefined}}} key={i}>{playlist}</Link>);
             i++;
         }
 
@@ -56,13 +56,12 @@ export default class Sidebar extends React.Component{
                     </li>
 
                     <li id="currently_hosting">
-                        <h3 > Hosting Room: </h3>
-                        <strong><p className="sidebar_info"> {roomHost} </p></strong>
-
+                        <h3><strong>Hosting Room</strong></h3>
+                        <p className="sidebar_info"> {roomHost} </p>
                     </li>
 
-                    <li id ="user_playlists" className="sidebar_info">
-                      <h3>Saved Playlists</h3>
+                    <li id ="user_playlists">
+                      <h3><strong>Saved Playlists</strong></h3>
                       { playlists }
                     </li>
                 </ul>
