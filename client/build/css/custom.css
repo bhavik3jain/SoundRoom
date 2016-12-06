@@ -407,7 +407,7 @@ th, td {
 }
 
 #close-banner {
-    width: 10%;
+    /*width: 10%;*/
     font-size: 16px;
     background-color: rgb(255, 117, 24);
     color: white;
@@ -415,9 +415,9 @@ th, td {
     margin: auto;
 }
 
-#close-banner:hover{
+/*#close-banner:hover{
   box-shadow: 0 3px 3px black;
-}
+}*/
 
 .room-playlist-artwork {
     width: 50px;
