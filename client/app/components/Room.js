@@ -17,7 +17,7 @@ export default class Room extends React.Component{
     componentWillMount() {
       this.setState({currentRoomId: this.state.currentRoomId});
     }
-    
+
     closeRoom(e) {
       getRoomHost(this.state.currentRoomId, (result) => {
         if (result.host === this.state.currentUser) {
@@ -54,7 +54,7 @@ export default class Room extends React.Component{
                       <div id='access-code' className="col-md-3">
                         <center><h3> ACCESS CODE:</h3><h3 className = 'code'>{this.state.currentRoomId}</h3></center>
                         <center><button type="button" className="btn btn-sm" id='exit-room' onClick={(e)=>this.closeRoom(e)}>Close Room</button></center><br />
-                        <RoomParticipants currentRoomId={this.state.currentRoomId} />
+                        <RoomParticipants currentRoomId={this.state.currentRoomId} currentUser={this.state.currentUser}/>
                       </div>
                     </div>
                   </div>
