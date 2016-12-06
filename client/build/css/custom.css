@@ -17,6 +17,12 @@ body {
     text-align: center;
 }
 
+#home_page_navbar_landing {
+        background-color: #343434;
+    text-align: center;
+        padding-top: 0px;
+}
+
 #soundroom_logo{
     max-height: 150px;
     max-width: 150px;
@@ -105,7 +111,7 @@ body {
   margin-top: 20px;
   font-size: 16px;
   background-color: #FE5D59;
-  color: #343434;
+  color: white;
   margin-right: 2px;
 
 }
@@ -121,6 +127,12 @@ body {
   margin-top: 20px;
   font-size: 16px;
   background-color: #FE5D59;
+  margin-left: 2px;
+}
+
+#sign-up:hover{
+  box-shadow: 0 5px 15px black;
+}
   color: #343434;
   margin-left: 2px;
 }
