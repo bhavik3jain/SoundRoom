@@ -20,6 +20,7 @@ export default class Playlists extends React.Component{
       console.log(playlistData);
       if(Array.isArray(playlistData)) {
           for(var song in playlistData) {
+            console.log("song",playlistData[song]);
               getSongsData(playlistData[song]).then(function(d) {
                   var arrayvar = this.state.playlist.slice();
                   arrayvar.push(d);
@@ -37,8 +38,8 @@ export default class Playlists extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
-      var playlistData = this.props.location.query.playlistData;
-      console.log(playlistData);
+      var playlistData = nextProps.location.query.playlistData;
+      console.log("updated playlist",playlistData);
       this.setState({playlist: []});
       for(var song in playlistData) {
           getSongsData(playlistData[song]).then(function(d) {
