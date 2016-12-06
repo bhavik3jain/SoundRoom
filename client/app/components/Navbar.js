@@ -41,7 +41,7 @@ export default class Navbar extends React.Component{
                 <input type="image" src={this.state.account_info.avatar} alt="Profile Pic" className="img-circle dropdown-toggle" data-toggle="dropdown" style={proPicStyle} id="account_info_pic" />
                 <ul className="dropdown-menu">
                   <li><Link to="account">Account Info</Link></li>
-                  <li><a href="#">Sign out</a></li>
+                  <li><Link to="login">Sign out</Link></li>
                 </ul>
               </li>
             </ul>
