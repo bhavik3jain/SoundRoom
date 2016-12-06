@@ -48,7 +48,7 @@ export default class RoomParticipants extends React.Component {
         } else {
           roomParticipantsRows.push(
             <tr key={participant}>
-              <td>{roomParticipantsNames[participant]}</td>
+              <td><span className="glyphicon glyphicon-user" aria-hidden="true"></span> {roomParticipantsNames[participant]} </td>
             </tr>
           );
       }
