@@ -268,6 +268,12 @@ export function getRoomHostId(roomId, cb) {
     });
 }
 
+export function textAccessCode(code, phonenumber, cb) {
+  sendXHR('POST', '/room/sharecode/', {code: code, phonenumber: phonenumber}, (xhr) => {
+      cb(JSON.parse(xhr.responseText));
+  });
+}
+
 /**
 * Reset database button.
 */

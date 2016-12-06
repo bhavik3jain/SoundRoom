@@ -447,3 +447,9 @@ th, td {
 .sidebar_info {
   font-size: 20px;
 }
+
+#share-button {
+  background-color: #343434 !important;
+  border: 0px !important;
+  margin-left: 10px;
+}

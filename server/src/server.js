@@ -2,6 +2,9 @@
 // We should be able to run your server with node src/server.js
 var express = require('express');
 var app = express();
+var twilio = require('twilio');
+
+var client = twilio('ACa1c9c14903d2f008379e589ffe5ac411', '6a7fbad6cf389a25894ebf421df5a4a0');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -276,6 +279,25 @@ app.delete('/room/delete', function(req, res) {
     }
   }
   res.send({"deleted": true});
+});
+
+
+app.post('/room/sharecode/', function(req, res) {
+  var body = req.body,
+      code = body.code,
+      phonenumber = body.phonenumber;
+
+  client.sendMessage({
+    to: phonenumber,
+    from: '7745411238',
+    body: 'Access Code: ' + code
+  }, function(err, responseData) {
+    if(!err) {
+      res.send({"message": "Access Code sent to " + phonenumber, "success": true});
+    } else {
+      console.log(err);
+    }
+  });
 });
 
 function getRoomParticipants(roomId) {
