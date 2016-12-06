@@ -20,7 +20,6 @@ export default class ErrorBanner extends React.Component {
     };
   }
 
-
   removeBanner(e) {
     this.setState({ active: false });
   }
