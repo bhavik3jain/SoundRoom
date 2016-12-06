@@ -42,13 +42,13 @@ export default class RoomParticipants extends React.Component {
         if(roomParticipantsNames[participant] === this.state.hostFullName) {
             roomParticipantsRows.push(
               <tr key={participant}>
-                <td>{roomParticipantsNames[participant]} (Host) </td>
+                <td><span className="glyphicon glyphicon-star room-participants-icon" aria-hidden="true"></span>{roomParticipantsNames[participant]}</td>
               </tr>
             );
         } else {
           roomParticipantsRows.push(
             <tr key={participant}>
-              <td><span className="glyphicon glyphicon-user" aria-hidden="true"></span> {roomParticipantsNames[participant]} </td>
+              <td><span className="glyphicon glyphicon-user room-participants-icon" aria-hidden="true"></span> {roomParticipantsNames[participant]} </td>
             </tr>
           );
       }

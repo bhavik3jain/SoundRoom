@@ -439,3 +439,7 @@ th, td {
   color: white;
   margin-top: 100px;
 }
+
+.room-participants-icon {
+  margin-right: 10px;
+}
