@@ -83,7 +83,7 @@ export default class Playlists extends React.Component{
                   <table className="table-inverse" id="playlist-table">
                       <tbody>
                         <tr>
-                          <th width="27%"><h2 className ='tbHeader'>Artwork</h2></th>
+                          <th width="27%"><h2 className ='tbHeader'></h2></th>
                           <th width="73%"><h2 className = 'tbHeader' > Song Name</h2> </th>
                         </tr>
                       </tbody>
