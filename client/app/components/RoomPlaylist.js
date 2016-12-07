@@ -104,7 +104,10 @@ export default class RoomPlaylist extends React.Component {
     var playlistName = prompt("What do you want to save this playlist as?");
     saveSongsAsPlayist(this.props.userLoggedIn, this.state.currentRoomId, playlistName, (userInfo) => {
         if('message' in userInfo) {
-            console.log(userInfo['message']);
+            bootbox.alert({
+                message: userInfo['message'],
+                backdrop: true
+            });
         }
          else {
             console.log(userInfo);
@@ -145,6 +148,14 @@ export default class RoomPlaylist extends React.Component {
     SC.initialize({
         client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'
     });
+
+    var shouldHidePlaylist = function(length) {
+      if (length > 0) {
+        return '';
+      } else {
+        return 'hidden';
+      }
+    }
 
 
     var getOptions = function(input, callback) {
@@ -224,7 +235,7 @@ export default class RoomPlaylist extends React.Component {
                   {roomPlaylistSongsElements}
                 </tbody>
                 </table>
-                <button type="button" className="btn btn-primary" id='savePlaylistBtn' onClick={(e)=>this.savePlaylist(e)}>Save Playlist</button>
+                <button type="button" className={"btn btn-primary " + shouldHidePlaylist(this.state.playlist.length)} id='savePlaylistBtn' onClick={(e)=>this.savePlaylist(e)}>Save Playlist</button>
             </div>
       </div>
 

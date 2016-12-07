@@ -162,7 +162,6 @@ app.post('/room/save', validate({playlistSchema}), function(req, res) {
     //if(userAuth === body.userId){
     var songs = saveSongsAsPlayist(userId, playlistName, playlistsToSave);
     if('message' in songs) {
-        res.status(400);
         res.send(songs['message']);
     } else {
         res.status(201);

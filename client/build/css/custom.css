@@ -67,16 +67,66 @@ body {
   text-transform: uppercase;
 }
 
+#title_home{
+  color: #FE5D59;
+  font-family: 'BenchNine', sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 #title h3{
   margin-bottom: 0px;
   font-family: 'BenchNine', sans-serif;
   font-size: 300%;
 }
 
+#title_home h3{
+  margin-bottom: 0px;
+  font-family: 'BenchNine', sans-serif;
+  font-size: 500%;
+}
+
 #title h1{
   margin-top: 0px;
   font-family: 'BenchNine', sans-serif;
   font-size: 500%;
+}
+
+#title_home h1{
+  margin-top: 0px;
+  font-family: 'BenchNine', sans-serif;
+  font-size: 700%;
+}
+
+
+#log-in {
+
+  width: 40%;
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #FE5D59;
+  color: #343434;
+  margin-right: 2px;
+
+}
+
+#log-in:hover{
+  box-shadow: 0 5px 15px black;
+}
+
+
+#sign-up {
+
+  width: 40%;
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #FE5D59;
+  color: #343434;
+  margin-left: 2px;
+}
+
+#sign-up:hover{
+  box-shadow: 0 5px 15px black;
 }
 
 #user_icon {
@@ -472,4 +522,8 @@ th, td {
 
 .modal-footer {
     border-top: 0px !important;
+}
+
+.hidden {
+  display: 'none';
 }
