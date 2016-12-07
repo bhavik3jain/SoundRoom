@@ -56,8 +56,14 @@ export default class Sidebar extends React.Component{
                     </li>
 
                     <li id="currently_hosting">
+<<<<<<< HEAD
                         <h3><strong>Hosting Room</strong></h3>
                         <p className="sidebar_info"> {roomHost} </p>
+=======
+                        <h3 > Hosting Room: </h3>
+                        <p className="sidebar_info"> {roomHost} </p>
+
+>>>>>>> fecfeb3335a02707fa30689e1d3098d03a44ae2f
                     </li>
 
                     <li id ="user_playlists">

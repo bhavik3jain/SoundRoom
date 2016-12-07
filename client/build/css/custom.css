@@ -108,7 +108,7 @@ body {
 #log-in {
 
   width: 40%;
-  margin-top: 20px;
+margin-top: 10px;
   font-size: 16px;
   background-color: #FE5D59;
   color: black;
@@ -124,7 +124,7 @@ body {
 #sign-up {
 
   width: 40%;
-  margin-top: 20px;
+margin-top: 10px;
   font-size: 16px;
   color: black;
   background-color: #FE5D59;
@@ -135,6 +135,14 @@ body {
   box-shadow: 0 5px 15px black;
 }
 
+.navbar{
+  background-color: #343434;
+  padding-bottom: 5px;
+}
+
+#explanation{
+width: 60em;
+}
 
 #subheading{
   color: #FE5D59;
@@ -149,6 +157,11 @@ body {
 }
 #how_it_works{
   background-color: #FE5D59;
+}
+#how_it_works h3{
+  margin-bottom: 0px;
+  font-family: 'BenchNine', sans-serif;
+  font-size: 500%;
 }
 
 #user_icon {
