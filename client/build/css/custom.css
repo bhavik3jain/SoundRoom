@@ -1,38 +1,37 @@
 body {
-    background-color: #343434;
-    padding: 0px 100px;
+  background-color: #343434;
+  padding: 0px 100px;
 }
 
 #sidebar-wrapper {
-    background: #FE5D59 !important;
-    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.2);
+  background: #FE5D59 !important;
+  box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
 #sidebar-brand {
-    color: white !important;
+  color: white !important;
 }
 
 #home_page_navbar {
-    border-bottom: 1px solid #57E4E8 !important;
-    text-align: center;
+  border-bottom: 1px solid #57E4E8 !important;
+  text-align: center;
 }
 
 #home_page_navbar_landing {
-        background-color: #343434;
-    text-align: center;
-        padding-top: 0px;
+  background-color: #343434;
+  text-align: center;
 }
 
 #soundroom_logo{
-    max-height: 150px;
-    max-width: 150px;
-    padding-top: 20px;
-    margin-right: 50px;
-    margin-left: 50px;
+  max-height: 150px;
+  max-width: 150px;
+  padding-top: 20px;
+  margin-right: 50px;
+  margin-left: 50px;
 }
 
 #soundroom_title{
-    color: white;
+  color: white;
 }
 
 #user_playlists{
@@ -50,7 +49,7 @@ body {
 }
 
 #home_page_navbar{
-    text-align: center;
+  text-align: center;
 }
 
 .dropdown-toggle{
@@ -58,11 +57,11 @@ body {
 }
 
 .top-dropdown{
-    padding-top: 30px;
+  padding-top: 30px;
 }
 
 .top-dropdown a{
-    color: #FE5D59 !important;
+  color: #FE5D59 !important;
 }
 
 
@@ -74,6 +73,7 @@ body {
 }
 
 #title_home{
+  margin-top: 100px;
   color: #FE5D59;
   font-family: 'BenchNine', sans-serif;
   text-align: center;
@@ -111,7 +111,7 @@ body {
   margin-top: 20px;
   font-size: 16px;
   background-color: #FE5D59;
-  color: white;
+  color: black;
   margin-right: 2px;
 
 }
@@ -126,6 +126,7 @@ body {
   width: 40%;
   margin-top: 20px;
   font-size: 16px;
+  color: black;
   background-color: #FE5D59;
   margin-left: 2px;
 }
@@ -133,20 +134,29 @@ body {
 #sign-up:hover{
   box-shadow: 0 5px 15px black;
 }
-  color: #343434;
-  margin-left: 2px;
+
+
+#subheading{
+  color: #FE5D59;
+  font-family: 'BenchNine', sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 41px;
 }
 
-#sign-up:hover{
-  box-shadow: 0 5px 15px black;
+#landing-body{
+  padding: 0px;
+}
+#how_it_works{
+  background-color: #FE5D59;
 }
 
 #user_icon {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 #home_content{
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .left_button{
@@ -165,13 +175,13 @@ body {
 }
 
 #nav-item {
-    text-align: center;
-    display: inline;
+  text-align: center;
+  display: inline;
 }
 
 .well {
-    border: 2px solid #e3e3e3 !important;
-    border-radius: 7px !important;
+  border: 2px solid #e3e3e3 !important;
+  border-radius: 7px !important;
 }
 
 .panel-joinroom{
@@ -212,23 +222,23 @@ body {
   color: #FE5D59 !important;
 }
 
- #btn1{
-   width: 40%;
-       margin-top: 20px;
-       font-size: 16px;
-       background-color: #57E4E8;
-       color: #343434;
-       margin-right: 2px;
+#btn1{
+  width: 40%;
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #57E4E8;
+  color: #343434;
+  margin-right: 2px;
 
 }
 
 #btn2{
   width: 40%;
-      margin-top: 20px;
-      font-size: 16px;
-      background-color: #57E4E8;
-      color: #343434;
-      margin-left: 2px;
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #57E4E8;
+  color: #343434;
+  margin-left: 2px;
 
 }
 
@@ -310,19 +320,19 @@ body {
 }
 
 table {
-    width:100%;
+  width:100%;
 }
 table, th, td {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 th, td, tr {
-    padding: 5px;
-    text-align: center;
-    border-left: 0px;
-    border-right: 0px;
+  padding: 5px;
+  text-align: center;
+  border-left: 0px;
+  border-right: 0px;
 }
 table tr{
-    background-color: #343434;
+  background-color: #343434;
 }
 
 tr:hover {
@@ -334,7 +344,7 @@ tr:hover .btn-playlist {
 }
 
 table th {
-    background-color: #343434;
+  background-color: #343434;
 }
 
 th, td {
@@ -370,9 +380,9 @@ th, td {
 }
 
 #account_info_pic {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #update_pic_button{
@@ -405,28 +415,28 @@ th, td {
 }
 
 #imaginary_container{
-    margin-bottom: 137px;
+  margin-bottom: 137px;
 }
 .stylish-input-group .input-group-addon{
-    background: white !important;
+  background: white !important;
 }
 .stylish-input-group .form-control{
-	border-right:0;
-	box-shadow:0 0 0;
-	border-color:#ccc;
+  border-right:0;
+  box-shadow:0 0 0;
+  border-color:#ccc;
 }
 .stylish-input-group button{
-    border:0;
-    background:transparent;
+  border:0;
+  background:transparent;
 }
 
 .input-group h3{
   color:#57E4E8;
-      margin-top: 0px;
+  margin-top: 0px;
 }
 
 #account_info_name{
-    color:#57E4E8;
+  color:#57E4E8;
 }
 
 #account-input-box{
@@ -436,7 +446,7 @@ th, td {
 }
 
 #current_song_playing_in_room {
-    color: white;
+  color: white;
 }
 
 .btn-playlist {
@@ -448,19 +458,19 @@ th, td {
 
 
 #user_playlist_name {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 #room_sound_player {
-    padding: 10px;
+  padding: 10px;
 }
 
 #exit-room {
-    width:100%;
-    margin-top: 20px;
-    font-size: 16px;
-    background-color: #FE5D59;
-    color:black;
+  width:100%;
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #FE5D59;
+  color:black;
 
 }
 
@@ -469,32 +479,32 @@ th, td {
 }
 
 #close-banner {
-    /*width: 10%;*/
-    font-size: 16px;
-    background-color: rgb(255, 117, 24);
-    color: white;
-    text-align: center;
-    margin: auto;
+  /*width: 10%;*/
+  font-size: 16px;
+  background-color: rgb(255, 117, 24);
+  color: white;
+  text-align: center;
+  margin: auto;
 }
 
 /*#close-banner:hover{
-  box-shadow: 0 3px 3px black;
+box-shadow: 0 3px 3px black;
 }*/
 
 .room-playlist-artwork {
-    width: 50px;
-    height: 50px;
+  width: 50px;
+  height: 50px;
 }
 
 #playlist-table {
   margin-top: 30px;
 }
 
- .hidden { display:none; }
+.hidden { display:none; }
 
 #currently_hosting {
-    margin-top: 120px;
-    color: white;
+  margin-top: 120px;
+  color: white;
 }
 
 #currently_hosting h3{
