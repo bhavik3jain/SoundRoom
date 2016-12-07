@@ -377,6 +377,10 @@ th, td {
   font-size: 20px;
 }
 
+#login_room_panel h3{
+  color:#57E4E8;
+}
+
 
 #join_room_panel {
   padding: 20px;
