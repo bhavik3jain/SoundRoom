@@ -17,10 +17,10 @@ export default class Playlists extends React.Component{
 
   componentDidMount() {
       var playlistData = this.props.location.query.playlistData;
-      console.log(playlistData);
+      //console.log(playlistData);
       if(Array.isArray(playlistData)) {
           for(var song in playlistData) {
-            console.log("song",playlistData[song]);
+              console.log("song",playlistData[song]);
               getSongsData(playlistData[song]).then(function(d) {
                   var arrayvar = this.state.playlist.slice();
                   arrayvar.push(d);
@@ -28,6 +28,7 @@ export default class Playlists extends React.Component{
               }.bind(this));
           }
       } else {
+        console.log("initial");
           getSongsData(playlistData).then(function(d) {
               var arrayvar = this.state.playlist.slice();
               arrayvar.push(d);
@@ -38,16 +39,28 @@ export default class Playlists extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
       var playlistData = nextProps.location.query.playlistData;
-      console.log("updated playlist",playlistData);
+      console.log("playlist data on re-render:", playlistData);
       this.setState({playlist: []});
-      for(var song in playlistData) {
-          getSongsData(playlistData[song]).then(function(d) {
-              var arrayvar = this.state.playlist.slice();
-              arrayvar.push(d);
-              this.setState({playlist: arrayvar});
-          }.bind(this));
+      if (Array.isArray(playlistData)) {
+        console.log("array");
+        for(var song in playlistData) {
+            getSongsData(playlistData[song]).then(function(d) {
+                var arrayvar = this.state.playlist.slice();
+                arrayvar.push(d);
+                this.setState({playlist: arrayvar});
+            }.bind(this));
+        }
+      } else {
+        console.log("string");
+        getSongsData(playlistData).then(function(d) {
+          var arrayvar = this.state.playlist.slice();
+          arrayvar.push(d);
+          this.setState({playlist: arrayvar});
+        }.bind(this));
       }
+    }
   }
 
   componentWillUnmount() {
