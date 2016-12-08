@@ -26,6 +26,23 @@ var userInfoSchema = require('./schemas/userInfo.json');
 var playlistSchema = require('./schemas/playlist.json');
 var validate = require('express-jsonschema').validate;
 
+
+// Starts the server on port 3000!
+const server = app.listen(3001, function () {
+    console.log('Soundroom app listening on port 3001!');
+});
+
+const io = require("socket.io")(server);
+
+io.on('connection', (socket) => {
+    console.log("a user connected");
+
+    socket.on("disconnect", () => {
+        console.log("user disconnected");
+    });
+});
+
+
 app.get('/user/:userId/account_info', function(req, res) {
     // Add user authentication here (getUserIdFromToken())
     var body = req.body;
@@ -118,12 +135,14 @@ app.post('/joinroom/:userId', validate({roomSchema}), function(req, res) {
           }
 
           if(!userInRoom) {
+              console.log("User Id: ", userId);
               roomData.participants.push(userId);
               writeDocument('rooms', roomData);
           }
 
           res.status(200);
-          res.send(roomData);
+          res.send({"success": true});
+          io.emit("joinroom", roomData);
 
       } else {
           res.status(400);
@@ -187,8 +206,9 @@ app.post('/room/:songId/new_song', validate({songSchema}), function(req, res) {
         res.send(songAdded['message'])
     }
     else {
-      res.status(201);
+      res.status(200);
       res.send(songAdded);
+      io.emit("add song to room", songAdded);
     }
     //}
     //else{
@@ -203,8 +223,9 @@ app.post('/room/song_like', validate({songSchema}), function(req, res) {
         songId = body.songId;
     //var userAuth = getUserIdFromToken(req.get('Authorization'));
     //if(userAuth === body.userId){
-      res.status(201);
+      res.status(200);
       res.send(addLikeToSong(roomId, userId, songId));
+      io.emit("song like", {"message": "Song liked", success: true});
     //}
     //else{
     //   res.status(401).end();
@@ -253,11 +274,15 @@ app.delete('/room/:roomid/participants/:participantid', function(req, res) {
   var room = readDocument('rooms', roomId);
   var participantIndex = room.participants.indexOf(participantId);
   if (participantIndex != -1) {
+    console.log(room.participants);
     room.participants.splice(participantIndex, 1);
+    console.log("After splice", room.participants);
     writeDocument('rooms', room);
   }
+  io.emit("remove participant", {"message": "Deleted participant from room"});
   res.send({message: "Deleted participant from room"});
-});
+
+  });
 
 app.post('/room/host', function(req, res) {
   var roomId = req.body.roomId;
@@ -278,7 +303,9 @@ app.delete('/room/delete', function(req, res) {
       deleteDocument('rooms', parseInt(room));
     }
   }
+
   res.send({"deleted": true});
+  io.emit("delete room", {"deleted": true, "message": "Room is being deleted. Taking you back to the home page"});
 });
 
 
@@ -483,9 +510,3 @@ function getSongMetadata(songId) {
 
     return SC.get("tracks/" + songId);
 }
-
-
-// Starts the server on port 3000!
-app.listen(3000, function () {
-    console.log('Soundroom app listening on port 3000!');
-});

@@ -543,6 +543,26 @@ box-shadow: 0 3px 3px black;
   margin-left: 10px;
 }
 
+.search_sc_tracks {
+    background: none;
+    color: red;
+    border: none;
+}
+
+.Select-placeholder {
+    background: #343434 !important;
+    color: white !important;
+}
+
+.modal-content {
+    background-color: #FE5D59 !important;
+    color: white !important;
+}
+
+.modal-footer {
+    border-top: 0px !important;
+}
+
 .hidden {
   display: 'none';
 }

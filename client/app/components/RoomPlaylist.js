@@ -13,10 +13,24 @@ export default class RoomPlaylist extends React.Component {
     super(props);
     this.state = {currentRoomId: this.props.currentRoomId, playlist: [], track_to_search: ""};
     this.addLikeToSong = this.addLikeToSong.bind(this);
+    var socket = io();
+
+    socket.on("add song to room", function(songData) {
+        console.log("add song to room");
+        this.setState({playlist: []});
+        this.refresh();
+    }.bind(this));
+
+
+    socket.on("song like", function(res) {
+        console.log("song like: update the state");
+        this.setState({playlist: []});
+        this.refresh();
+    }.bind(this));
+
   }
 
   refresh() {
-
       getRoomData(this.state.currentRoomId, (roomData) => {
           this.setState({hostId: roomData.host});
           this.getRoomPlaylistSongs(roomData)
@@ -61,12 +75,15 @@ export default class RoomPlaylist extends React.Component {
     var songTrackId =  this.state.playlist[song].track_id;
     addLikeToSong(this.state.currentRoomId, songTrackId, this.props.userLoggedIn, (roomData) => {
         if('message' in roomData) {
-            console.log(roomData['message']);
+            bootbox.alert({
+                message: roomData['message'],
+                backdrop: true
+            });
         }
         else {
             this.setState({currentRoomId: this.props.currentRoomId, playlist: [], "track_to_search": ""});
             console.log("roomData after liked song", roomData);
-            this.getRoomPlaylistSongs(roomData);
+            // this.getRoomPlaylistSongs(roomData);
         }
     });
 
@@ -101,7 +118,10 @@ export default class RoomPlaylist extends React.Component {
     var playlistName = prompt("What do you want to save this playlist as?");
     saveSongsAsPlayist(this.props.userLoggedIn, this.state.currentRoomId, playlistName, (userInfo) => {
         if('message' in userInfo) {
-            console.log(userInfo['message']);
+            bootbox.alert({
+                message: userInfo['message'],
+                backdrop: true
+            });
         }
          else {
             console.log(userInfo);
@@ -165,7 +185,7 @@ export default class RoomPlaylist extends React.Component {
     var gotoContributor = function(value, event) {
 
         addSongToRoom(this.state.currentRoomId, value.id, this.props.userLoggedIn, (songData) => {
-            console.log(value);
+            console.log("Adding song to Room");
             var artwork_url = ""
             if(value.artwork_url === null) {
                 artwork_url = "https://screenshots.en.sftcdn.net/en/scrn/6649000/6649766/soundcloud-555ac7e90a986-100x100.png";
@@ -173,6 +193,8 @@ export default class RoomPlaylist extends React.Component {
             else {
                 artwork_url = value.artwork_url;
             }
+
+            console.log("Artwork url", artwork_url);
 
             var new_song = {
                 "_id": 13,

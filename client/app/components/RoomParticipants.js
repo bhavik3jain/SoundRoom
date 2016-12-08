@@ -10,6 +10,24 @@ export default class RoomParticipants extends React.Component {
   constructor(props) {
     super(props);
     this.state = {currentRoomId: this.props.currentRoomId, currentUser: this.props.currentUser, participants: {}};
+
+    var socket = io();
+
+    socket.on("joinroom", function(data) {
+        this.setState({});
+        getRoomParticipants(this.state.currentRoomId, (roomParticipants) => {
+            this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})
+        });
+    }.bind(this));
+
+    socket.on("remove participant", function(data) {
+        /// error here: it trys to post afte
+        this.setState({});
+        getRoomParticipants(this.state.currentRoomId, (roomParticipants) => {
+            this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})
+        });
+    }.bind(this));
+
   }
 
   exitRoom(e) {
@@ -17,7 +35,7 @@ export default class RoomParticipants extends React.Component {
     var userId = this.state.currentUser;
     removeParticipant(userId, roomId, (data) => {
       console.log("removing participant", userId);
-      browserHistory.push('/');
+      browserHistory.push('/?user_id=' + this.state.currentUser);
     });
   }
 
@@ -70,11 +88,11 @@ export default class RoomParticipants extends React.Component {
 
 
     return (
-      <div>
+  <div>
           <table className="table room-list">
           <tbody>
             <tr>
-              <th><h2 className = 'tbHeader'>Participants</h2></th>
+              <th><h2 className = 'tbHeader'><strong>Participants</strong></h2></th>
             </tr>
 
             {roomParticipantsRows}

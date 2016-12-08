@@ -50,19 +50,18 @@ export default class Sidebar extends React.Component{
             <div id="sidebar-wrapper">
                 <ul className="sidebar-nav">
                     <li className="sidebar-brand">
-                        <Link to="/" id="soundroom_title">
+                        <Link to={"/?user_id=" + this.state.user_id} id="soundroom_title">
                             <img src="img/SR_logo.png" alt="SoundRoom Logo" id="soundroom_logo"/>
                         </Link>
                     </li>
 
                     <li id="currently_hosting">
-                        <h3 > Hosting Room: </h3>
+                        <h3><strong>Hosting Room</strong></h3>
                         <p className="sidebar_info"> {roomHost} </p>
-
                     </li>
 
-                    <li id ="user_playlists" className="sidebar_info">
-                      <h3>Saved Playlists</h3>
+                    <li id ="user_playlists">
+                      <h3><strong>Saved Playlists</strong></h3>
                       { playlists }
                     </li>
                 </ul>

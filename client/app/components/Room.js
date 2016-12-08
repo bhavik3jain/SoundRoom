@@ -15,6 +15,18 @@ export default class Room extends React.Component{
           currentRoomId: this.props.location.query.roomId,
           currentUser: this.props.location.query.user_logged_in
       }
+
+      var socket = io();
+      socket.on("delete room", (data) => {
+          bootbox.alert({
+              message: data.message,
+              backdrop: true,
+              className: 'soundroom_error_modal'
+          });
+
+          browserHistory.push('/');
+          emitter.emit('updateSidebar'); // Two above listeners invoke
+      });
     }
 
     componentWillMount() {
@@ -28,11 +40,13 @@ export default class Room extends React.Component{
         if (result.host === this.state.currentUser) {
           console.log("you are the host");
           deleteRoom(this.state.currentRoomId, (deleted) => {});
-          browserHistory.push('/');
           emitter.emit('updateSidebar'); // Two above listeners invoke
         } else {
-          console.log("you are not the host");
-          alert("you are not the host");
+            bootbox.alert({
+                message: "You cannot close the room because you aren't the host",
+                backdrop: true,
+                className: 'soundroom_error_modal'
+            });
         }
       });
     }
@@ -72,7 +86,7 @@ export default class Room extends React.Component{
                     </div>
                       </div>
                       <div id='access-code' className="col-md-3">
-                        <center><h3> ACCESS CODE:</h3><h3 className = 'code'>{this.state.currentRoomId}
+                        <center><h3><strong>ACCESS CODE:</strong></h3><h3 className = 'code'>{this.state.currentRoomId}
 
                         <button id="share-button" type="button" className="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModal">
                           <span className="glyphicon glyphicon-share" aria-hidden="true"></span>
@@ -98,7 +112,9 @@ export default class Room extends React.Component{
 
                               <form action="" method="post">
                                 <div className="input-group">
-                                    <span className= "input-group-addon">#</span>
+                                    <span className="input-group-addon">
+                                        <span className="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                                    </span>
                                     <input type="text" id="phone_number_to_share" className="form-control" placeholder="xxxxxxxxxx" aria-describedby="basic-addon1" />
                                 </div>
                                   <br />
