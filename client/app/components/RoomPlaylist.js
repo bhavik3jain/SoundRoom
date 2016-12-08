@@ -143,6 +143,14 @@ export default class RoomPlaylist extends React.Component {
         client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'
     });
 
+    var shouldHidePlaylist = function(length) {
+      if (length > 0) {
+        return '';
+      } else {
+        return 'hidden';
+      }
+    }
+
 
     var getOptions = function(input, callback) {
         var page_size = 100;
@@ -221,7 +229,7 @@ export default class RoomPlaylist extends React.Component {
                   {roomPlaylistSongsElements}
                 </tbody>
                 </table>
-                <button type="button" className="btn btn-primary" id='savePlaylistBtn' onClick={(e)=>this.savePlaylist(e)}>Save Playlist</button>
+                <button type="button" className={"btn btn-primary " + shouldHidePlaylist(this.state.playlist.length)} id='savePlaylistBtn' onClick={(e)=>this.savePlaylist(e)}>Save Playlist</button>
             </div>
       </div>
 
