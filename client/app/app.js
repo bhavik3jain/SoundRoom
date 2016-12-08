@@ -12,8 +12,6 @@ import Login from './components/LoginPage';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
-// const user_id_logged_in = "1";
-
 var ee = require('event-emitter');
 window.emitter = ee({});
 
@@ -32,7 +30,7 @@ class AccountPage extends React.Component {
   render() {
     return (
       <div>
-        <AccountInfo user_id={user_id_logged_in} />
+        <AccountInfo  />
       </div>
     )
   }
@@ -59,7 +57,8 @@ class LoginPage extends React.Component{
 
 class App extends React.Component{
   render(){
-      var user_id_logged_in = this.props.location.query.user_id;
+
+    const user_id_logged_in = this.props.location.query.user_id;
     const { navbar, sidebar, content, player } = this.props
 
     return (
@@ -86,7 +85,7 @@ class App extends React.Component{
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="account" components={{content: AccountPage}}/>
+      <Route path="account" components={{content: AccountInfo}}/>
       <Route path="createroom" components={{content: CreateRoom}}/>
       <Route path="joinroom" components={{content: JoinRoom}}/>
       <Route path="playlists" components={{content: Playlists}} />

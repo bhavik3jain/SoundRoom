@@ -28,6 +28,19 @@ export default class Room extends React.Component{
       });
     }
 
+    shouldHideExitButton() {
+        getRoomHost(this.state.currentRoomId, (result) => {
+          if (result.host === this.state.currentUser){
+            return 'hidden';
+
+          } else {
+            return '';
+          }
+        });
+      }
+
+
+
     componentWillMount() {
         getRoomHost(this.state.currentRoomId, (result) => {
             this.setState({currentRoomId: this.state.currentRoomId, hostId: result.host});
