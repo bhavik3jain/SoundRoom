@@ -135,6 +135,7 @@ app.post('/joinroom/:userId', validate({roomSchema}), function(req, res) {
           }
 
           if(!userInRoom) {
+              console.log("User Id: ", userId);
               roomData.participants.push(userId);
               writeDocument('rooms', roomData);
           }
@@ -273,12 +274,15 @@ app.delete('/room/:roomid/participants/:participantid', function(req, res) {
   var room = readDocument('rooms', roomId);
   var participantIndex = room.participants.indexOf(participantId);
   if (participantIndex != -1) {
+    console.log(room.participants);
     room.participants.splice(participantIndex, 1);
+    console.log("After splice", room.participants);
     writeDocument('rooms', room);
   }
-  res.send({message: "Deleted participant from room"});
   io.emit("remove participant", {"message": "Deleted participant from room"});
-});
+  res.send({message: "Deleted participant from room"});
+
+  });
 
 app.post('/room/host', function(req, res) {
   var roomId = req.body.roomId;

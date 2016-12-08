@@ -97,8 +97,8 @@ export default class Playlists extends React.Component{
                   <table className="table-inverse" id="playlist-table">
                       <tbody>
                         <tr>
-                          <th width="27%"><h2 className ='tbHeader'></h2></th>
-                          <th width="73%"><h2 className = 'tbHeader' > Song Name</h2> </th>
+                          <th width=""><h2 className ='tbHeader'></h2></th>
+                          <th width=""><h2 className = 'tbHeader'>Song</h2> </th>
                         </tr>
                       </tbody>
                       { playlistTableData }
@@ -107,7 +107,7 @@ export default class Playlists extends React.Component{
                  </div>
               </div>
               <div className="col-md-6">
-                 <SoundCloudPlayer track_url={track_url} maxHeight={350} />
+                 <SoundCloudPlayer track_url={track_url} maxHeight={350} autoplay={true}/>
               </div>
             </div>
 

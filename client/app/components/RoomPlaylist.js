@@ -194,6 +194,8 @@ export default class RoomPlaylist extends React.Component {
                 artwork_url = value.artwork_url;
             }
 
+            console.log("Artwork url", artwork_url);
+
             var new_song = {
                 "_id": 13,
                 album : "Some Album",

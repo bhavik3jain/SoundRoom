@@ -50,7 +50,7 @@ export default class Sidebar extends React.Component{
             <div id="sidebar-wrapper">
                 <ul className="sidebar-nav">
                     <li className="sidebar-brand">
-                        <Link to="/" id="soundroom_title">
+                        <Link to={"/?user_id=" + this.state.user_id} id="soundroom_title">
                             <img src="img/SR_logo.png" alt="SoundRoom Logo" id="soundroom_logo"/>
                         </Link>
                     </li>
