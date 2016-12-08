@@ -26,6 +26,23 @@ var userInfoSchema = require('./schemas/userInfo.json');
 var playlistSchema = require('./schemas/playlist.json');
 var validate = require('express-jsonschema').validate;
 
+
+// Starts the server on port 3000!
+const server = app.listen(3001, function () {
+    console.log('Soundroom app listening on port 3001!');
+});
+
+const io = require("socket.io")(server);
+
+io.on('connection', (socket) => {
+    console.log("a user connected");
+
+    socket.on("disconnect", () => {
+        console.log("user disconnected");
+    });
+});
+
+
 app.get('/user/:userId/account_info', function(req, res) {
     // Add user authentication here (getUserIdFromToken())
     var body = req.body;
@@ -123,7 +140,8 @@ app.post('/joinroom/:userId', validate({roomSchema}), function(req, res) {
           }
 
           res.status(200);
-          res.send(roomData);
+          res.send({"success": true});
+          io.emit("joinroom", roomData);
 
       } else {
           res.status(400);
@@ -162,6 +180,7 @@ app.post('/room/save', validate({playlistSchema}), function(req, res) {
     //if(userAuth === body.userId){
     var songs = saveSongsAsPlayist(userId, playlistName, playlistsToSave);
     if('message' in songs) {
+        res.status(400);
         res.send(songs['message']);
     } else {
         res.status(201);
@@ -186,8 +205,9 @@ app.post('/room/:songId/new_song', validate({songSchema}), function(req, res) {
         res.send(songAdded['message'])
     }
     else {
-      res.status(201);
+      res.status(200);
       res.send(songAdded);
+      io.emit("add song to room", songAdded);
     }
     //}
     //else{
@@ -277,7 +297,9 @@ app.delete('/room/delete', function(req, res) {
       deleteDocument('rooms', parseInt(room));
     }
   }
+
   res.send({"deleted": true});
+  io.emit("delete room", {"deleted": true, "message": "Room is being deleted. Taking you back to the home page"});
 });
 
 
@@ -482,9 +504,3 @@ function getSongMetadata(songId) {
 
     return SC.get("tracks/" + songId);
 }
-
-
-// Starts the server on port 3000!
-app.listen(3001, function () {
-    console.log('Soundroom app listening on port 3001!');
-});

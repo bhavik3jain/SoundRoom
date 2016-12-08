@@ -13,10 +13,17 @@ export default class RoomPlaylist extends React.Component {
     super(props);
     this.state = {currentRoomId: this.props.currentRoomId, playlist: [], track_to_search: ""};
     this.addLikeToSong = this.addLikeToSong.bind(this);
+    var socket = io();
+
+    socket.on("add song to room", function(songData) {
+        console.log("add song to room");
+        this.setState({playlist: []});
+        this.refresh();
+    }.bind(this));
+
   }
 
   refresh() {
-
       getRoomData(this.state.currentRoomId, (roomData) => {
           this.setState({hostId: roomData.host});
           this.getRoomPlaylistSongs(roomData)
@@ -171,7 +178,7 @@ export default class RoomPlaylist extends React.Component {
     var gotoContributor = function(value, event) {
 
         addSongToRoom(this.state.currentRoomId, value.id, this.props.userLoggedIn, (songData) => {
-            console.log(value);
+            console.log("Adding song to Room");
             var artwork_url = ""
             if(value.artwork_url === null) {
                 artwork_url = "https://screenshots.en.sftcdn.net/en/scrn/6649000/6649766/soundcloud-555ac7e90a986-100x100.png";

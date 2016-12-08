@@ -21,6 +21,12 @@ export default class RoomParticipants extends React.Component {
 
   componentWillMount() {
 
+      var socket = io();
+
+      socket.on("joinroom", function(data) {
+          console.log("new user joined the room refresh the state and add info");
+      });
+
       getRoomParticipants(this.state.currentRoomId, (roomParticipants) => {
           this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})
       });

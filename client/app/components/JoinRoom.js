@@ -15,10 +15,13 @@ var input_room_number;
 export default class JoinRoom extends React.Component{
 
   letUserJoinRoom(e) {
-     var input_room_number = document.getElementById("userInput").value;
-     joinRoom(input_room_number, this.props.location.query.user_logged_in, (roomData) => {
-         browserHistory.push("room/?roomId=" + input_room_number + "&user_logged_in=" + this.props.location.query.user_logged_in);
-     });
+
+      var input_room_number = document.getElementById("userInput").value;
+
+      joinRoom(input_room_number, this.props.location.query.user_logged_in, (success) => {
+          browserHistory.push("room/?roomId=" + input_room_number + "&user_logged_in=" + this.props.location.query.user_logged_in);
+      });
+
   }
 
   render() {

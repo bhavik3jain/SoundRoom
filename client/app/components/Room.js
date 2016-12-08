@@ -14,6 +14,18 @@ export default class Room extends React.Component{
           currentRoomId: this.props.location.query.roomId,
           currentUser: this.props.location.query.user_logged_in
       }
+
+      var socket = io();
+      socket.on("delete room", (data) => {
+          bootbox.alert({
+              message: data.message,
+              backdrop: true,
+              className: 'soundroom_error_modal'
+          });
+
+          browserHistory.push('/');
+          emitter.emit('updateSidebar'); // Two above listeners invoke
+      });
     }
 
     componentWillMount() {
@@ -27,7 +39,6 @@ export default class Room extends React.Component{
         if (result.host === this.state.currentUser) {
           console.log("you are the host");
           deleteRoom(this.state.currentRoomId, (deleted) => {});
-          browserHistory.push('/');
           emitter.emit('updateSidebar'); // Two above listeners invoke
         } else {
             bootbox.alert({
