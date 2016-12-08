@@ -222,8 +222,9 @@ app.post('/room/song_like', validate({songSchema}), function(req, res) {
         songId = body.songId;
     //var userAuth = getUserIdFromToken(req.get('Authorization'));
     //if(userAuth === body.userId){
-      res.status(201);
+      res.status(200);
       res.send(addLikeToSong(roomId, userId, songId));
+      io.emit("song like", {"message": "Song liked", success: true});
     //}
     //else{
     //   res.status(401).end();
@@ -276,6 +277,7 @@ app.delete('/room/:roomid/participants/:participantid', function(req, res) {
     writeDocument('rooms', room);
   }
   res.send({message: "Deleted participant from room"});
+  io.emit("remove participant", {"message": "Deleted participant from room"});
 });
 
 app.post('/room/host', function(req, res) {

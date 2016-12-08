@@ -7,6 +7,24 @@ export default class RoomParticipants extends React.Component {
   constructor(props) {
     super(props);
     this.state = {currentRoomId: this.props.currentRoomId, currentUser: this.props.currentUser, participants: {}};
+
+    var socket = io();
+
+    socket.on("joinroom", function(data) {
+        this.setState({});
+        getRoomParticipants(this.state.currentRoomId, (roomParticipants) => {
+            this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})
+        });
+    }.bind(this));
+
+    socket.on("remove participant", function(data) {
+        this.setState({});
+        getRoomParticipants(this.state.currentRoomId, (roomParticipants) => {
+            this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})
+        });
+    }.bind(this));
+
+
   }
 
   exitRoom(e) {
@@ -20,12 +38,6 @@ export default class RoomParticipants extends React.Component {
 
 
   componentWillMount() {
-
-      var socket = io();
-
-      socket.on("joinroom", function(data) {
-          console.log("new user joined the room refresh the state and add info");
-      });
 
       getRoomParticipants(this.state.currentRoomId, (roomParticipants) => {
           this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})

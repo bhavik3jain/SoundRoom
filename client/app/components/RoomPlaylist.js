@@ -21,6 +21,13 @@ export default class RoomPlaylist extends React.Component {
         this.refresh();
     }.bind(this));
 
+
+    socket.on("song like", function(res) {
+        console.log("song like: update the state");
+        this.setState({playlist: []});
+        this.refresh();
+    }.bind(this));
+
   }
 
   refresh() {
@@ -76,7 +83,7 @@ export default class RoomPlaylist extends React.Component {
         else {
             this.setState({currentRoomId: this.props.currentRoomId, playlist: [], "track_to_search": ""});
             console.log("roomData after liked song", roomData);
-            this.getRoomPlaylistSongs(roomData);
+            // this.getRoomPlaylistSongs(roomData);
         }
     });
 
