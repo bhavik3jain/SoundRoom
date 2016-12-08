@@ -6,6 +6,7 @@ import {Link, browserHistory} from 'react-router';
 import ReactDOM from 'react-dom';
 
 
+
 export default class Room extends React.Component{
 
     constructor(props) {
@@ -47,7 +48,19 @@ export default class Room extends React.Component{
       });
     }
 
+
+
     render() {
+
+      var shouldHideCloseButton = function(value){
+          if (this.state.hostId === this.state.currentUser){
+            value = '';
+          } else {
+            value = 'hidden';
+          }
+          return value;
+      }.bind(this);
+
         return (
             <div>
             <div>
@@ -67,7 +80,7 @@ export default class Room extends React.Component{
                         </h3>
 
                         </center>
-                        <center><button type="button" className="btn btn-sm" id='exit-room' onClick={(e)=>this.closeRoom(e)}>Close Room</button></center><br />
+                        <center><button type="button" className={"btn btn-sm " + shouldHideCloseButton('')} id='exit-room' onClick={(e)=>this.closeRoom(e)}>Close Room</button></center><br />
                         <RoomParticipants currentRoomId={this.state.currentRoomId} currentUser={this.state.currentUser} hostId={this.state.hostId}/>
                       </div>
                     </div>

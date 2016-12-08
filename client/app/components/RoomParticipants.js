@@ -1,6 +1,9 @@
 import React from 'react';
-import {getRoomParticipants, removeParticipant, getRoomData, getUserInfo} from '../server';
+import {getRoomParticipants, removeParticipant, getRoomData, getUserInfo, getRoomHost} from '../server';
 import {Link, browserHistory} from 'react-router';
+
+
+
 
 export default class RoomParticipants extends React.Component {
 
@@ -54,6 +57,18 @@ export default class RoomParticipants extends React.Component {
       }
     }
 
+
+    var shouldHideExitButton = function(value){
+        console.log(this.props.hostId === this.state.currentUser);
+        if (this.props.hostId === this.state.currentUser){
+          value = 'hidden';
+        } else {
+          value = '';
+        }
+        return value;
+    }.bind(this);
+
+
     return (
       <div>
           <table className="table room-list">
@@ -67,7 +82,7 @@ export default class RoomParticipants extends React.Component {
           </tbody>
           </table>
 
-          <button type = "button" className="btn btn-default" id="exit-room" onClick={(e)=>this.exitRoom(e)}>Exit Room</button>
+          <button type = "button" className={"btn btn-default " + shouldHideExitButton('')} id="exit-room" onClick={(e)=>this.exitRoom(e)}>Exit Room</button>
       </div>
 
     );
