@@ -9,7 +9,9 @@ import AccountInfo from './components/AccountInfo';
 import Room from './components/Room';
 import ErrorBanner from './components/errorbanner';
 import Login from './components/LoginPage';
+import Landingpage from './components/Landingpage';
 import ReactDOM from 'react-dom';
+
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 // const user_id_logged_in = "1";
@@ -57,6 +59,16 @@ class LoginPage extends React.Component{
   }
 }
 
+class LandingPage extends React.Component{
+  render(){
+    return(
+      <div>
+        <Landingpage />
+      </div>
+    )
+  }
+}
+
 class App extends React.Component{
   render(){
       var user_id_logged_in = this.props.location.query.user_id;
@@ -85,7 +97,7 @@ class App extends React.Component{
 
 ReactDOM.render((
   <Router history={browserHistory}>
-    <Route path="/" component={App}>
+    <Route path="/" component={LandingPage}>
       <Route path="account" components={{content: AccountPage}}/>
       <Route path="createroom" components={{content: CreateRoom}}/>
       <Route path="joinroom" components={{content: JoinRoom}}/>
