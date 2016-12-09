@@ -9,7 +9,9 @@ import AccountInfo from './components/AccountInfo';
 import Room from './components/Room';
 import ErrorBanner from './components/errorbanner';
 import Login from './components/LoginPage';
+import Landingpage from './components/Landingpage';
 import ReactDOM from 'react-dom';
+
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 var ee = require('event-emitter');
@@ -55,6 +57,15 @@ class LoginPage extends React.Component{
   }
 }
 
+class LandingPage extends React.Component{
+  render(){
+    return(
+      <div>
+        <Landingpage />
+      </div>
+    )
+  }
+}
 
 class App extends React.Component{
 
@@ -86,8 +97,8 @@ class App extends React.Component{
 
 ReactDOM.render((
   <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <Route path="account" components={{content: AccountInfo}}/>
+    <Route path="/" component={LandingPage}>
+      <Route path="account" components={{content: AccountPage}}/>
       <Route path="createroom" components={{content: CreateRoom}}/>
       <Route path="joinroom" components={{content: JoinRoom}}/>
       <Route path="playlists" components={{content: Playlists}} />
