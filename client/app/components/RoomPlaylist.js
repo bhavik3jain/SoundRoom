@@ -182,7 +182,7 @@ export default class RoomPlaylist extends React.Component {
         });
     };
 
-    var gotoContributor = function(value, event) {
+    var addSongThroughSearch = function(value, event) {
 
         addSongToRoom(this.state.currentRoomId, value.id, this.props.userLoggedIn, (songData) => {
             console.log("Adding song to Room");
@@ -237,7 +237,7 @@ export default class RoomPlaylist extends React.Component {
                 <div className="media" id="room_sound_player">
                     {soundCloudPlayer}
                 </div>
-                <Select.Async name="search_tracks" value={this.state.track_to_search} onChange={onChange.bind(this)} loadOptions={getOptions} onValueClick={gotoContributor.bind(this)} valueKey="uri" labelKey="title" placeholder="Search Tracks"/>
+                <Select.Async name="search_tracks" value={this.state.track_to_search} onChange={onChange.bind(this)} loadOptions={getOptions} onValueClick={addSongThroughSearch.bind(this)} valueKey="uri" labelKey="title" placeholder="Search Tracks"/>
             </div>
             <div class="col-md-8">
 

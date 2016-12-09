@@ -5,7 +5,8 @@ export default class AccountInfo extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      account_info: {}
+      account_info: {},
+      user_id: this.props.location.query.user_id
     };
   }
 
@@ -20,7 +21,7 @@ export default class AccountInfo extends React.Component{
 
       var newUserInfo = {firstName: firstName, lastName: lastName, email: email, dob: dob, country: country};
 
-      updateProfile(this.props.user_id, newUserInfo, (userData) => {
+      updateProfile(this.state.user_id, newUserInfo, (userData) => {
 
           $( '#user-form' ).each(function(){
               this.reset();
@@ -35,7 +36,7 @@ export default class AccountInfo extends React.Component{
   }
 
   getAccountData() {
-    getUserInfo(this.props.user_id, (accountInfo) => {
+    getUserInfo(this.state.user_id, (accountInfo) => {
       this.setState({"account_info": accountInfo});
     });
   }

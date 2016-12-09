@@ -29,6 +29,19 @@ export default class Room extends React.Component{
       });
     }
 
+    shouldHideExitButton() {
+        getRoomHost(this.state.currentRoomId, (result) => {
+          if (result.host === this.state.currentUser){
+            return 'hidden';
+
+          } else {
+            return '';
+          }
+        });
+      }
+
+
+
     componentWillMount() {
         getRoomHost(this.state.currentRoomId, (result) => {
             this.setState({currentRoomId: this.state.currentRoomId, hostId: result.host});
@@ -118,7 +131,7 @@ export default class Room extends React.Component{
                                     <input type="text" id="phone_number_to_share" className="form-control" placeholder="xxxxxxxxxx" aria-describedby="basic-addon1" />
                                 </div>
                                   <br />
-                                  <button type="button" value="sub" name="sub" className="btn btn-primary" onClick={(e) => this.shareAccessCode(e)}><i className="fa fa-share"></i> Share!</button>
+                                  <button type="button" value="sub" name="sub" className="btn btn-default" onClick={(e) => this.shareAccessCode(e)}><i className="fa fa-share"></i> Share!</button>
                             </form>
                     </div>
                     <div className="modal-footer">

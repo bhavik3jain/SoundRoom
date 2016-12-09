@@ -6,7 +6,8 @@ export default class Navbar extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      account_info: {}
+      account_info: {},
+      user_id: this.props.user_id
     };
   }
 
@@ -40,7 +41,7 @@ export default class Navbar extends React.Component{
               <li className="dropdown top-dropdown">
                 <input type="image" src={this.state.account_info.avatar} alt="Profile Pic" className="img-circle dropdown-toggle" data-toggle="dropdown" style={proPicStyle} id="account_info_pic" />
                 <ul className="dropdown-menu">
-                  <li><Link to="account">Account Info</Link></li>
+                  <li><Link to={{pathname: 'account', query: {user_id:this.state.user_id}}}>Account Info</Link></li>
                   <li><Link to="login">Sign out</Link></li>
                 </ul>
               </li>
