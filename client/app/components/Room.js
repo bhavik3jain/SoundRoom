@@ -71,6 +71,7 @@ export default class Room extends React.Component{
         if(response.success) {
           console.log(response.message);
           $("#close_modal").click();
+          $("#phone_number_to_share").val("");
         }
       });
     }

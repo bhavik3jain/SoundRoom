@@ -55,7 +55,9 @@ class LoginPage extends React.Component{
   }
 }
 
+
 class App extends React.Component{
+
   render(){
 
     const user_id_logged_in = this.props.location.query.user_id;
