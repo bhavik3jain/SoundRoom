@@ -98,7 +98,7 @@ class App extends React.Component{
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="account" components={{content: AccountPage}}/>
+      <Route path="account" components={{content: AccountInfo}}/>
       <Route path="createroom" components={{content: CreateRoom}}/>
       <Route path="joinroom" components={{content: JoinRoom}}/>
       <Route path="playlists" components={{content: Playlists}} />
