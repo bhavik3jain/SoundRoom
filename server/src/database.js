@@ -77,14 +77,14 @@ var initialData = {
             "_id" : new ObjectID("000000000000000000000001"),
             "roomId": "1",
             "host": "1",
-            "participants": ["1"],
+            "participants": [new ObjectID("000000000000000000000001")],
             "playlist": []
         },
         "2": {
             "_id" : new ObjectID("000000000000000000000002"),
             "roomId": "2",
             "host": "2",
-            "participants": ["2"],
+            "participants": [new ObjectID("000000000000000000000002")],
             "playlist": []
         }
     }
