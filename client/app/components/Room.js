@@ -24,7 +24,7 @@ export default class Room extends React.Component{
               className: 'soundroom_error_modal'
           });
 
-          browserHistory.push('/');
+          browserHistory.push('/?user_id=' + this.state.currentUser);
           emitter.emit('updateSidebar'); // Two above listeners invoke
       });
     }
