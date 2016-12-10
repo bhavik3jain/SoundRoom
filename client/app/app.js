@@ -104,6 +104,7 @@ ReactDOM.render((
       <Route path="playlists" components={{content: Playlists}} />
       <Route path="room" components={{content: Room}}/>
       <Route path="homepage" components={{content: Homepage}}/>
+      <Route path="login" components={{content: Login}}/>
     </Route>
   </Router>
 ), document.getElementById('wrapper'))

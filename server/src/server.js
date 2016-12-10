@@ -65,27 +65,34 @@ MongoClient.connect(url, function(err, db) {
 
 
   app.get('/user/:userId/account_info', function(req, res) {
-      // Add user authentication here (getUserIdFromToken())
-      var body = req.body;
-      //var userAuth = getUserIdFromToken(req.get('Authorization'));
-      //if(userAuth === body.userId){
-        var userId = parseInt(req.params.userId,10);
-        res.status(201);
+        var body = req.body;
+        var userId = req.params.userId;
+        var userAuth = getUserIdFromToken(req.get('Authorization'));
 
-        getUserData(userId, function(err, userData) {
-            if(err) {
-                res.status(400).send("Could not find user: " + userId);
-            } else {
-                res.send(userData);
-            }
-        });
-    });
+        console.log(userId);
+        console.log(userAuth);
+
+        if(userAuth === userId){
+             getUserData(userId, function(err, userData) {
+                 if(err) {
+                     res.status(400).send("Could not find user: " + userId);
+                 } else {
+                     res.send(userData);
+                 }
+             });
+        }
+        else{
+           res.status(401).end();
+        }
+
+  });
 
   app.put('/user/:userId/account_info', validate({userInfoSchema}), function(req, res) {
       console.log("Updating Profile");
       var body = req.body;
-      var userId = parseInt(req.params.userId, 10);
+      var userId = req.params.userId;
       var user = getUserData(userId);
+      var userAuth = getUserIdFromToken(req.get('Authorization'));
 
       user.firstname = body.newInfo.firstName;
       user.lastname = body.newInfo.lastName;
@@ -93,18 +100,33 @@ MongoClient.connect(url, function(err, db) {
       user.country = body.newInfo.country;
       user.dob = body.newInfo.dob;
 
-      writeDocument('users', user);
-      res.send(user);
-  });
+      if(userAuth === userId) {
+          updateUserProfile(userId, user, function(err, data) {
+              if(err) {
+                  res.status(400).send("Could not update user");
+              } else {
+                  res.status(200).send(data);
+              }
+          });
+      } else {
+          res.status(401).end();
+      }
+    });
 
   app.get('/user/:userId/playlists', function(req, res) {
       // Add user authentication here (getUserIdFromToken)
       var body = req.body;
-      //var userAuth = getUserIdFromToken(req.get('Authorization'));
-      //if(userAuth === body.userId){
-        var userId = req.params.userId;
-        res.status(201);
-        res.send(getUserPlaylistData(userId));
+      var userId = req.params.userId;
+      var userAuth = getUserIdFromToken(req.get('Authorization'));
+      if(userAuth === userId) {
+          var userId = req.params.userId;
+          getUserPlaylistData(userId, function(err, playlistData) {
+              res.send(playlistData);
+          });
+      } else {
+          res.status(401).end();
+      }
+
       //}
       //else{
       //   res.status(401).end();
@@ -138,6 +160,43 @@ MongoClient.connect(url, function(err, db) {
       //   res.status(401).end();
       //}
   });
+
+
+app.put('/user/:userId/account_info', validate({userInfoSchema}), function(req, res) {
+    console.log("Updating Profile");
+    var body   = req.body;
+        params = req.params;
+    var userAuth = getUserIdFromToken(req.get('Authorization'));
+    if(userAuth === parseInt(params.userId, 10)){
+      var userId = parseInt(req.params.userId, 10);
+      var user = getUserData(userId);
+      user.firstname = body.newInfo.firstName;
+      user.lastname = body.newInfo.lastName;
+      user.email = body.newInfo.email;
+      user.country = body.newInfo.country;
+      user.dob = body.newInfo.dob;
+
+      writeDocument('users', user);
+      res.send(user);
+    }
+    else{
+       res.status(401).end();
+    }
+});
+
+app.get('/user/:userId/playlists', function(req, res) {
+    // Add user authentication here (getUserIdFromToken)
+    var body = req.body;
+    var userAuth = getUserIdFromToken(req.get('Authorization'));
+    if(userAuth === parseInt(params.userId, 10)){
+      var userId = parseInt(req.params.userId, 10);
+      res.status(201);
+      res.send(ylistData(userId));
+    }
+    else{
+      res.status(401).end();
+    }
+});
 
   app.post('/joinroom/:userId', validate({roomSchema}), function(req, res) {
       var body = req.body;
@@ -416,31 +475,52 @@ MongoClient.connect(url, function(err, db) {
       return newRoom;
   }
 
+
   function getUserIdFromToken(authorizationLine) {
-    try {
-      var token = authorizationLine.slice(7);
-      var regularString = new Buffer(token, 'base64').toString('utf8');
-      var tokenObj = JSON.parse(regularString);
-      var id = tokenObj['id'];
-      if (typeof id === 'number') {
-        return id;
-      } else {
-        return -1;
-      }
-    } catch (e) {
-      return -1;
-    }
+   try {
+     // Cut off "Bearer " from the header value.
+     var token = authorizationLine.slice(7);
+     // Convert the base64 string to a UTF-8 string.
+     var regularString = new Buffer(token, 'base64').toString('utf8');
+     // Convert the UTF-8 string into a JavaScript object.
+     var tokenObj = JSON.parse(regularString);
+     var id = tokenObj['id'];
+     // Check that id is a number.
+     if (typeof id === 'string') {
+       return id;
+     } else {
+       // Not a number. Return -1, an invalid ID.
+       return "";
+     }
+   } catch (e) {
+     // Return an invalid ID.
+     return -1;
+   }
+ }
+
+  function getUserPlaylistData(userId, cb) {
+      db.collection('users').findOne({"_id": new ObjectID(userId)}, function(err, userData) {
+          if(err) return cb(err);
+          else return cb(null, userData.playlists);
+      });
   }
 
-  function getUserPlaylistData(userId) {
-      var playlist = readDocument('users', userId).playlists
-      return playlist;
-  }
-
-  function getUserData(userId) {
-      return db.collection('users').findOne({_id: userId}, function(err, userData) {
+  function getUserData(userId, cb) {
+      db.collection('users').findOne({"_id": new ObjectID(userId)}, function(err, userData) {
           if(err) return cb(err);
           else return cb(null, userData);
+      });
+  }
+
+  function updateUserProfile(userId, newUserData, cb) {
+      db.collection('users').updateOne({
+          _id: userId
+      }, newUserData, function(err, updateResult) {
+          if(err) {
+              return cb(err);
+          } else {
+              return cb(null, updateResult);
+          }
       });
   }
 

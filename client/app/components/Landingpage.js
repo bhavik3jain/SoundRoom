@@ -14,7 +14,9 @@ export default class Landingpage extends React.Component{
             <div className="col-lg-6"></div>
             <div className="col-lg-3">
               <center>
-                <button type = "button" className="btn btn-default" id="log-in"> Log In</button>
+                <Link to="/login">
+                  <button type = "button" className="btn btn-default" id="log-in"> Log In</button>
+                </Link>
                 <button type = "button" className="btn btn-default" id="sign-up"> Sign Up</button>
               </center>
             </div>
