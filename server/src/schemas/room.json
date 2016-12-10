@@ -3,10 +3,10 @@
     "type": "object",
     "properties": {
         "roomId": {
-            "type": "integer"
+            "type": "string"
         },
         "hostId": {
-            "type": "integer"
+            "type": "string"
         },
         "participants": {
             "type": "array",
