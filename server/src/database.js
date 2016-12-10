@@ -1,8 +1,10 @@
 // Your startup's initial mock objects go here
+
+var ObjectID = require('mongodb').ObjectID;
 var initialData = {
     "users":{
         "1": {
-          "_id":1,
+          "_id": new ObjectID("000000000000000000000001"),
           "firstname": "Aarsh",
           "lastname": "Patel",
           "email": "aarshpatel@umass.edu",
@@ -19,7 +21,7 @@ var initialData = {
           }
       },
       "2": {
-            "_id":2,
+            "_id":new ObjectID("000000000000000000000002"),
             "firstname": "Bhavik",
             "lastname": "Jain",
             "email": "bjain@umass.edu",
@@ -36,7 +38,7 @@ var initialData = {
             }
         },
         "3": {
-              "_id":3,
+              "_id": new ObjectID("000000000000000000000003"),
               "firstname": "Siddarth",
               "lastname": "Patel",
               "email": "siddarthpate@umass.edu",
@@ -53,7 +55,7 @@ var initialData = {
               }
           },
           "4": {
-                "_id":4,
+                "_id":new ObjectID("000000000000000000000004"),
                 "firstname": "Justin",
                 "lastname": "Martinelli",
                 "email": "justinmartinelli@umass.edu",
@@ -72,14 +74,14 @@ var initialData = {
     },
     "rooms": {
         "1": {
-            "_id" : 1,
+            "_id" : new ObjectID("000000000000000000000001"),
             "roomId": "1",
             "host": "1",
             "participants": ["1"],
             "playlist": []
         },
         "2": {
-            "_id" : 2,
+            "_id" : new ObjectID("000000000000000000000002"),
             "roomId": "2",
             "host": "2",
             "participants": ["2"],
