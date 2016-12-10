@@ -27,6 +27,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "mongodb": "^2.2.15",
     "react-dots-loader": "^2.0.0",
     "react-select": "^1.0.0-rc.2",
     "react-spinjs": "^3.0.0",
