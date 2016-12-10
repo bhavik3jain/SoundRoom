@@ -377,10 +377,15 @@ th, td {
   font-size: 20px;
 }
 
-#login_room_panel h3{
-  color:#57E4E8;
+#login_room_panel{
+  border-bottom-color: #57E4E8;
 }
 
+#no-account{
+  padding-top: 30px;
+  color: grey;
+  padding-bottom: 30px;
+}
 
 #join_room_panel {
   padding: 20px;
@@ -390,6 +395,15 @@ th, td {
   text-align: center;
   margin-bottom: 25px;
 }
+
+#no-account-sign-up{
+  color: grey;
+}
+
+#no-account-sign-up:hover{
+  color: #57E4E8;
+}
+
 
 #account_info_name {
   text-align: center;

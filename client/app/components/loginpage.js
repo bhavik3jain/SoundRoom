@@ -15,15 +15,17 @@ export default class LoginPage extends React.Component{
             <div id="login_room_panel" className="panel panel-default panel-joinroom">
               <div className="panel-body">
                 <form action="" method="post" id="user-form">
-                  <h3>Username</h3>
-                  <input name="username" id="account-input-box" type="text" className="form-control" placeholder="Account Username here" aria-describedby="basic-addon2" />
+                  <input name="username" id="account-input-box" type="text" className="form-control" placeholder="Username" aria-describedby="basic-addon2" />
 
-                  <h3>Password</h3>
-                  <input name="password" id="account-input-box" type="text" className="form-control" placeholder="Account Password" aria-describedby="basic-addon2" />
+                  <input name="password" id="account-input-box" type="text" className="form-control" placeholder="Password" aria-describedby="basic-addon2" />
                   <center>
                     <button type = "button" className="btn btn-default" id="btn1">Login</button>
                   </center>
                 </form>
+
+                <center>
+                  <p id ="no-account">Don't have an account? <a id="no-account-sign-up" href="#">Sign Up</a></p>
+                </center>
               </div>
             </div>
           </div>
