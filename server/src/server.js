@@ -45,46 +45,53 @@ io.on('connection', (socket) => {
 
 app.get('/user/:userId/account_info', function(req, res) {
     // Add user authentication here (getUserIdFromToken())
-    var body = req.body;
-    //var userAuth = getUserIdFromToken(req.get('Authorization'));
-    //if(userAuth === body.userId){
+    var body   = req.body;
+        params = req.params;
+    var userAuth = getUserIdFromToken(req.get('Authorization'));
+    if(userAuth === parseInt(params.userId, 10)){
       var userId = parseInt(req.params.userId,10);
       res.status(201);
       res.send(getUserData(userId));
-    //}
-    //else{
-    //   res.status(401).end();
-    //}
+    }
+    else{
+       res.status(401).end();
+    }
 });
 
 app.put('/user/:userId/account_info', validate({userInfoSchema}), function(req, res) {
     console.log("Updating Profile");
-    var body = req.body;
-    var userId = parseInt(req.params.userId, 10);
-    var user = getUserData(userId);
+    var body   = req.body;
+        params = req.params;
+    var userAuth = getUserIdFromToken(req.get('Authorization'));
+    if(userAuth === parseInt(params.userId, 10)){
+      var userId = parseInt(req.params.userId, 10);
+      var user = getUserData(userId);
+      user.firstname = body.newInfo.firstName;
+      user.lastname = body.newInfo.lastName;
+      user.email = body.newInfo.email;
+      user.country = body.newInfo.country;
+      user.dob = body.newInfo.dob;
 
-    user.firstname = body.newInfo.firstName;
-    user.lastname = body.newInfo.lastName;
-    user.email = body.newInfo.email;
-    user.country = body.newInfo.country;
-    user.dob = body.newInfo.dob;
-
-    writeDocument('users', user);
-    res.send(user);
+      writeDocument('users', user);
+      res.send(user);
+    }
+    else{
+       res.status(401).end();
+    }
 });
 
 app.get('/user/:userId/playlists', function(req, res) {
     // Add user authentication here (getUserIdFromToken)
     var body = req.body;
-    //var userAuth = getUserIdFromToken(req.get('Authorization'));
-    //if(userAuth === body.userId){
-      var userId = req.params.userId;
+    var userAuth = getUserIdFromToken(req.get('Authorization'));
+    if(userAuth === parseInt(params.userId, 10)){
+      var userId = parseInt(req.params.userId, 10);
       res.status(201);
       res.send(getUserPlaylistData(userId));
-    //}
-    //else{
-    //   res.status(401).end();
-    //}
+    }
+    else{
+      res.status(401).end();
+    }
 });
 
 app.post('/createroom/:hostId', validate({roomSchema}), function(req, res) {
