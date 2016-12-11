@@ -192,23 +192,37 @@ MongoClient.connect(url, function(err, db) {
             userId = body.userId,
             roomId = body.roomId,
             playlistName = body.playlistName,
-            roomData = getRoomData(roomId).playlist,
+            getRoomData(new ObjectID(roomId),function(err,roomdata){
+              if(err)
+                res.status(500).send("A database error occured :" +err);
+              else{
+              roomData=roomdata.playlist
             playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
         //if(userAuth === body.userId){
-        var songs = saveSongsAsPlayist(userId, playlistName, playlistsToSave);
-        if('message' in songs) {
-            res.status(400);
-            res.send(songs['message']);
-        } else {
-            res.status(201);
-            res.send(songs);
-        }
+         saveSongsAsPlayist(userId, playlistName, playlistsToSave,function(err,songs) {
+          if(err)
+              res.status(500).send("A database error occured :" +err);
+            else
+            { if('message' in songs){
+              res.status(400);
+              res.send(songs['message']);
+            }
+            else
+            {
+              res.status(201);
+              res.send(songs);
+            }
+
+            }
+          // body...
+        });
+        }});
               //}
         //else{
         //   res.status(401).end();
         //}
-    });
+    }
 
     app.post('/room/:songId/new_song', validate({songSchema}), function(req, res) {
         var body = req.body,
