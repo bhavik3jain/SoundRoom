@@ -191,13 +191,13 @@ MongoClient.connect(url, function(err, db) {
         var body = req.body,
             userId = body.userId,
             roomId = body.roomId,
-            playlistName = body.playlistName,
+            playlistName = body.playlistName;
             getRoomData(new ObjectID(roomId),function(err,roomdata){
               if(err)
                 res.status(500).send("A database error occured :" +err);
               else{
-              roomData=roomdata.playlist
-            playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
+              var roomData=roomdata.playlist;
+            var playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
         //if(userAuth === body.userId){
          saveSongsAsPlayist(userId, playlistName, playlistsToSave,function(err,songs) {
@@ -210,7 +210,7 @@ MongoClient.connect(url, function(err, db) {
             }
             else
             {
-              res.status(201);
+              res.status(2s01);
               res.send(songs);
             }
 
