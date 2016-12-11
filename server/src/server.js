@@ -346,6 +346,8 @@ MongoClient.connect(url, function(err, db) {
       });
     });
 
+
+    /* Gets the participants (first and last name) from the room  */
     function getRoomParticipants(roomId, cb) {
         // TODO: callback issues with arrays
         getRoomData(roomId, function(err, roomData) {
@@ -368,54 +370,102 @@ MongoClient.connect(url, function(err, db) {
 
     }
 
-    function addLikeToSong(roomId, userId, songId) {
-        var roomData = getRoomData(roomId);
-
-        if(!validateSongLikes(roomId, userId, songId)) {
-            for(var song in roomData.playlist) {
-                if(songId === roomData.playlist[song].trackID) {
-                    roomData.playlist[song].likes += 1
-                    roomData.playlist[song].userLikes.push(userId);
-                }
+    /* Adds a like to a song for a given user in a room playlist */
+    function addLikeToSong(roomId, userId, songId, cb) {
+        getRoomData(roomId, function(err, roomData) {
+            if(err) cb(err);
+            else {
+                validateSongLikes(roomId, userId, songId, function(err, userLikedSongAlready) {
+                    if(!userLikedSongAlready) {
+                        for(var song in roomData.playlist) {
+                            if(songId === roomData.playlist[song].trackID) {
+                                roomData.playlist[song].likes += 1
+                                roomData.playlist[song].userLikes.push(userId);
+                            }
+                        }
+                        db.collection("rooms", {"roomId": roomId}, roomData, function(err, newRoomData) {
+                            if(err) cb(err);
+                            else cb(null, newRoomData);
+                        });
+                    }
+                    else {
+                        cb(null, {message: "You can't like the same song more than once", success: false});
+                    }
+                })
             }
-            writeDocument('rooms', roomData);
-            return roomData;
-        }
-        else {
-            return {message: "You can't like the same song more than once", success: false};
-        }
+        });
 
     }
 
-    function saveSongsAsPlayist(userId, playlistName, playlistsToSave) {
-        if(!validatePlaylistName(userId, playlistName) && playlistsToSave.length > 0) {
-            var userData = readDocument("users", userId);
-            userData.playlists[playlistName] = playlistsToSave;
-            writeDocument('users', userData);
-            return userData;
-        }
-        else {
-            return {message: "Playlist already exists or there are no songs to save", success: false};
-        }
+    /* Save songs in the room as a playlist for a user to listen to later */
+    function saveSongsAsPlayist(userId, playlistName, playlistsToSave,  cb) {
+        validatePlaylistName(userId, playlistName, function(err, playlistExists) {
+            if(!playlistExists) {
+                getUserData(userId, function(err, userData) {
+                    if(err) cb(err);
+                    else {
+                        userData.playlists[playlistName] = playlistsToSave;
+                        savePlaylistToUserAccount(userId, userData, function(err, newUserData) {
+                            if(err) cb(err);
+                            else {
+                                cb(null, newUserData);
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                cb(null, {message: "Playlist already exists or there are no songs to save", success: false});
+            }
+        });
+    }
+
+    function savePlaylistToUserAccount(userId, userData) {
+        db.collection('users').updateOne({"_id": new ObjectID(userId)}, userData, function(err, newUserData) {
+            if(err) cb(err);
+            else {
+                cb(null, newUserData);
+            }
+        });
     }
 
     function createRoom(hostId, roomId) {
 
         // update users roomHostID key in the users table
         var userAccountInfo = readDocument('users', hostId);
-        userAccountInfo.roomHostID = roomId;
-        writeDocument('users', userAccountInfo);
+        getUserData(hostId, function(err, userData) {
+            if(err) cb(err)
+            else {
+                userData.roomHostID = roomId;
+                updateUserRoomHostId(userId, userData, function(err, newUserData) {
+                    if(err) cb(err);
+                });
 
-        // create a new empty room in the table
-        var newRoomDocument = {
-            "roomId": roomId,
-            "host": hostId,
-            "participants": [hostId],
-            "playlist": []
-        };
-        var newRoom = addDocument('rooms', newRoomDocument);
+                // create a new empty room in the table
+                var newRoomDocument = {
+                    "roomId": roomId,
+                    "host": hostId,
+                    "participants": [new ObjectID(hostId)],
+                    "playlist": []
+                };
 
-        return newRoom;
+                db.collection('rooms').insertOne(newRoomDocument, function(err, updatedRoom) {
+                    if(err) cb(err);
+                    else cb(null, updatedRoom);
+                });
+            }
+        });
+
+    }
+
+    /* Updates the room host id parameter in the User object */
+    function updateUserRoomHostId(userId, userData, cb) {
+        db.collection("users").updateOne({"_id": new ObjectID(userId)}, userData, function(err, newUserData) {
+            if(err) cb(err);
+            else {
+                cb(null, newUserData);
+            }
+        });
     }
 
     function getUserIdFromToken(authorizationLine) {
@@ -440,6 +490,7 @@ MongoClient.connect(url, function(err, db) {
         }
     }
 
+    /* Gets the users playlist from the database */
     function getUserPlaylistData(userId, cb) {
          db.collection('users').findOne({"_id": new ObjectID(userId)}, function(err, userData) {
              if(err) return cb(err);
@@ -447,6 +498,7 @@ MongoClient.connect(url, function(err, db) {
          });
      }
 
+     /* Gets the user data from the database */
      function getUserData(userId, cb) {
         db.collection('users').findOne({"_id": new ObjectID(userId)}, function(err, userData) {
             if(err) return cb(err);
@@ -454,6 +506,7 @@ MongoClient.connect(url, function(err, db) {
         });
      }
 
+     /* Updates the user's profile with new information */
     function updateUserProfile(userId, newUserData, cb) {
         db.collection('users').updateOne({
             _id: new ObjectID(userId)
@@ -466,7 +519,7 @@ MongoClient.connect(url, function(err, db) {
         });
     }
 
-
+    /* Gets the room's data (particpants, playlists, hostId) from the database */
     function getRoomData(roomId, cb) {
         db.collection('rooms').findOne({"roomId": roomId}, function(err, roomData){
             if(err) cb(err)
@@ -474,73 +527,95 @@ MongoClient.connect(url, function(err, db) {
         });
     }
 
-    function addSongToRoomPlaylist(roomId, userId, songId) {
-        var roomData = getRoomData(roomId);
-        if(!validateSongsInRoomPlaylist(roomId, songId)) {
-            var songDocument = {
-                trackID: songId,
-                likes: 1,
-                userLikes: [userId]
+    /* Adds a song to the room playlist */
+    function addSongToRoomPlaylist(roomId, userId, songId, cb) {
+        getRoomData(roomId, function(err, roomData) {
+            if(err) cb(err);
+            else {
+                validateSongsInRoomPlaylist(roomId, songId, function(err, songInRoom) {
+                    if(!songInRoom) {
+                        var songDocument = {
+                            trackID: songId,
+                            likes: 1,
+                            userLikes: [new ObjectID(userId)]
+                        }
+
+                        roomData.playlist.push(songDocument);
+                        db.collection('rooms').updateOne({"roomId": new ObjectID(roomId)}, roomData, function(err, roomDataResult) {
+                            if(err) cb(err);
+                            else cb(null, roomData);
+                        });
+                    } else {
+                        cb({"message": "Song already in the playlist"});
+                    }
+                });
             }
-            roomData.playlist.push(songDocument);
-            writeDocument('rooms', roomData);
-            return songDocument;
-        }
-        else {
-            return {message:"Song already in the playlist"};
-        }
+        });
+
     }
 
+    /* Validates the room id by checking to see if that roomId exists or not */
     function validateRoom(roomId) {
-        var roomCollection = getCollection('rooms');
-        var roomIds = Object.keys(roomCollection).map((item) => roomCollection[item].roomId);
-        for(var id in roomIds) {
-            if(roomIds[id] === roomId) return true;
-        }
-        return false;
+        return db.collection('rooms').findOne({"roomId": roomId}).count() > 0;
     }
 
-    function validateSongsInRoomPlaylist(roomId, songId) {
-        var roomData = getRoomData(roomId);
-        for(var songs in roomData.playlist) {
-            var checkSong = roomData.playlist[songs].trackID;
-            if(checkSong === songId) return true;
-        }
-        return false;
-    }
 
-    function validateSongLikes(roomId, userId, songId){
-      var roomData = getRoomData(roomId);
-      for (var song in roomData.playlist){
-        if(songId === roomData.playlist[song].trackID){
-            for(var user in roomData.playlist[song].userLikes) {
-                if(userId == roomData.playlist[song].userLikes[user]) {
-                    return true;
+    /* Checks to see if the song exists in the room or not */
+    function validateSongsInRoomPlaylist(roomId, songId, cb) {
+        getRoomData(roomId, function(err, roomData) {
+            if(err) cb(err);
+            else {
+                var songInRoom;
+                for(var songs in roomData.playlist) {
+                    var checkSong = roomData.playlist[songs].trackID;
+                    if(checkSong === songId) {songInRoom = true;}
                 }
+                songInRoom = false;
+                cb(null, songInRoom);
             }
-        }
-      }
-      return false;
+        });
+
     }
 
-    function validatePlaylistName(userId, playlistName) {
-        var userData = getUserData(userId);
-        for(var plName in userData.playlists) {
-            if(playlistName === plName) {
-                return true;
+    /* Checks to see if the user already like the song in the room's playlist or not */
+    function validateSongLikes(roomId, userId, songId){
+        getRoomData(roomId, function(err, roomData){
+            if(err) cb(err);
+            else {
+                var userLikedSongAlready = false;
+                for (var song in roomData.playlist){
+                  if(songId === roomData.playlist[song].trackID){
+                      for(var user in roomData.playlist[song].userLikes) {
+                          if(userId == roomData.playlist[song].userLikes[user]) {
+                              userLikedSongAlready = true;
+                          }
+                      }
+                  }
+                }
+                cb(null, userLikedSongAlready);
             }
-        }
-        return false;
+        });
     }
 
+    /* Checks to see if the playlist is already save to the user's account */
+    function validatePlaylistName(userId, playlistName, cb) {
+        getUserData(userId, function(err, userData) {
+            if(err) cb(err);
+            else {
+                var playlistExists = false;
+                for(var plName in userData.playlists) {
+                    if(playlistName === plName) {
+                        playlistExists = true;
+                    }
+                }
+                cb(null, playlistExists);
+            }
+        });
+    }
+
+    /* Checks to see if the user is already a host of another room */
     function validateRoomHost(hostId) {
-        var rooms = getCollection('rooms');
-        for(var room in rooms) {
-            if(rooms[room].host === hostId) {
-                return true;
-            }
-        }
-        return false;
+        return db.collection('rooms').find({"host": hostId}).count() > 0;
     }
 
     function getRoomByAccessCode(code) {
