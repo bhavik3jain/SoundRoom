@@ -210,7 +210,7 @@ MongoClient.connect(url, function(err, db) {
             }
             else
             {
-              res.status(2s01);
+              res.status(201);
               res.send(songs);
             }
 
