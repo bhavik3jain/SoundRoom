@@ -3,7 +3,7 @@
 var express = require('express');
 var app = express();
 var twilio = require('twilio');
-
+var ResetDatabase = require('./resetdatabase');
 var client = twilio('ACa1c9c14903d2f008379e589ffe5ac411', '6a7fbad6cf389a25894ebf421df5a4a0');
 
 var bodyParser = require('body-parser');
@@ -280,10 +280,9 @@ MongoClient.connect(url, function(err, db) {
     // Reset database.
     app.post('/resetdb', function(req, res) {
       console.log("Resetting database...");
-      // This is a debug route, so don't do any validation.
-      database.resetDatabase();
-      // res.send() sends an empty response with status code 200
-      res.send();
+      ResetDatabase(db, function() {
+          res.send();
+      });
     });
 
     app.delete('/room/:roomid/participants/:participantid', function(req, res) {
