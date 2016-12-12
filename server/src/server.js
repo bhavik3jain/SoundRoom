@@ -3,7 +3,7 @@
 var express = require('express');
 var app = express();
 var twilio = require('twilio');
-
+var ResetDatabase = require('./resetdatabase');
 var client = twilio('ACa1c9c14903d2f008379e589ffe5ac411', '6a7fbad6cf389a25894ebf421df5a4a0');
 
 var bodyParser = require('body-parser');
@@ -179,52 +179,46 @@ MongoClient.connect(url, function(err, db) {
         // });
     });
 
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+
     app.post('/room/save', validate({playlistSchema}), function(req, res) {
         console.log("Saving room playlist");
         var body = req.body,
             userId = body.userId,
             roomId = body.roomId,
-            playlistName = body.playlistName,
-            roomData = getRoomData(roomId).playlist,
-            playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
-        //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
-        var songs = saveSongsAsPlayist(userId, playlistName, playlistsToSave);
-        if('message' in songs) {
-            res.status(400);
-            res.send(songs['message']);
-        } else {
-            res.status(201);
-            res.send(songs);
-        }
-              //}
+            playlistName = body.playlistName;
+            getRoomData(new ObjectID(roomId),function(err,roomdata){
+              if(err)
+                res.status(500).send("A database error occured :" +err);
+              else{
+              var roomData=roomdata.playlist;
+            var playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
+
+         saveSongsAsPlayist(userId, playlistName, playlistsToSave,function(err,songs) {
+          if(err)
+              res.status(500).send("A database error occured :" +err);
+            else
+            { if('message' in songs){
+              res.status(400);
+              res.send(songs['message']);
+            }
+            else
+            {a
+              res.status(201);
+              res.send(songs);
+            }
+
+            }
+          // body...
+        });
+      };
+              });
         //else{
         //   res.status(401).end();
         //}
     });
 
-    app.post('/room/:songId/new_song', validate({songSchema}), function(req, res) {
-        var body = req.body,
-            roomId = body.roomId,
-            songId = parseInt(req.params.songId),
-            userThatAddedSong = body.userId;
-        //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
-        var songAdded = addSongToRoomPlaylist(roomId, userThatAddedSong, songId);
-        if('message' in songAdded) {
-            res.status(400);
-            res.send(songAdded['message'])
-        }
-        else {
-          res.status(200);
-          res.send(songAdded);
-          io.emit("add song to room", songAdded);
-        }
-        //}
-        //else{
-        //   res.status(401).end();
-        //}
-    });
 
     app.post('/room/song_like', validate({songSchema}), function(req, res) {
         var body = req.body,
@@ -232,10 +226,15 @@ MongoClient.connect(url, function(err, db) {
             roomId = body.roomId,
             songId = body.songId;
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
+        //if(userAuth === body.userId){res.send
           res.status(200);
-          res.send(addLikeToSong(roomId, userId, songId));
-          io.emit("song like", {"message": "Song liked", success: true});
+          addLikeToSong(roomId, userId, songId,function(err,roomData){
+            if(err)
+            {res.status(500).send("A database error occured :" +err);}
+          else
+            {res.send(roomData);
+          io.emit("song like", {"message": "Song liked", success: true});}
+        });
         //}
         //else{
         //   res.status(401).end();
@@ -273,10 +272,9 @@ MongoClient.connect(url, function(err, db) {
     // Reset database.
     app.post('/resetdb', function(req, res) {
       console.log("Resetting database...");
-      // This is a debug route, so don't do any validation.
-      database.resetDatabase();
-      // res.send() sends an empty response with status code 200
-      res.send();
+      ResetDatabase(db, function() {
+          res.send();
+      });
     });
 
     app.delete('/room/:roomid/participants/:participantid', function(req, res) {
@@ -298,8 +296,14 @@ MongoClient.connect(url, function(err, db) {
 
     app.post('/room/host', function(req, res) {
       var roomId = req.body.roomId;
-      var room = getRoomByAccessCode(roomId);
-      res.send({"host": room.host});
+      getRoomData(roomId, function(err, room){
+        if (err){
+          res.status(500).send("A database error occurred: " + err);
+        } else{
+          res.status(201);
+          res.send({"host": room.host});
+        }
+      });
     });
 
     app.delete('/room/delete', function(req, res) {
