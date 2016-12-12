@@ -109,65 +109,58 @@ MongoClient.connect(url, function(err, db) {
 
     app.post('/createroom/:hostId', validate({roomSchema}), function(req, res) {
         var body = req.body;
-        var hostId = req.params.hostId,
-            roomId = body.roomId;
+        var hostId = req.params.hostId;
+        var roomId = body.roomId;
 
-        //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
-          if(!validateRoom(roomId) && !validateRoomHost(hostId)) {
-              // create a new room with a host and room id
-              res.send(createRoom(hostId, roomId));
-              // redirect the host to the new room
-              // res.redirect('/room/' + roomId);
-          }
-          else {
-
-              var error = {
-                  message: "You cannot create a room that already exists or you are already a host for another room",
-                  success: false
-              }
-              res.status(400)
-              res.send(error.message);
-          }
-        //}
-        //else{
-        //   res.status(401).end();
-        //}
+        if (!validateRoom(roomId) && !validateRoomHost(hostId)) {
+          createRoom(hostId, roomId, function(err, roomData) {
+            if (err) res.status(500).end();
+            //send("A database error occurred: " + err);
+            else {
+              console.log("roomData", roomData);
+              res.send(roomData);
+            }
+          });
+         } else {
+          res.status(400).send("Room already exists or host already hosting room");
+         }
     });
 
     app.post('/joinroom/:userId', validate({roomSchema}), function(req, res) {
         var body = req.body;
-        var roomId = body.roomId,
-            userId = req.params.userId;
+        var roomId = body.roomId;
+        var userId = req.params.userId;
 
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
         //if(userAuth === body.userId){
-          if(validateRoom(roomId)) {
-              // validate that the room exists
-              var roomData = getRoomData(roomId);
 
-              // add to the rooms document a new participant and take them to the room
-              var userInRoom = false;
-              for(var participant in roomData.participants) {
-                  if(userId == roomData.participants[participant]) {
-                      userInRoom = true;
-                  }
-              }
+          // if(validateRoom(roomId)) {
+          //     // validate that the room exists
+          //     var roomData = getRoomData(roomId);
+          //
+          //     // add to the rooms document a new participant and take them to the room
+          //     var userInRoom = false;
+          //     for(var participant in roomData.participants) {
+          //         if(userId == roomData.participants[participant]) {
+          //             userInRoom = true;
+          //         }
+          //     }
+          //
+          //     if(!userInRoom) {
+          //         console.log("User Id: ", userId);
+          //         roomData.participants.push(userId);
+          //         writeDocument('rooms', roomData);
+          //     }
+          //
+          //     res.status(200);
+          //     res.send({"success": true});
+          //     io.emit("joinroom", roomData);
+          //
+          // } else {
+          //     res.status(400);
+          //     res.send("Room " + roomId + " does not exist");
+          // }
 
-              if(!userInRoom) {
-                  console.log("User Id: ", userId);
-                  roomData.participants.push(userId);
-                  writeDocument('rooms', roomData);
-              }
-
-              res.status(200);
-              res.send({"success": true});
-              io.emit("joinroom", roomData);
-
-          } else {
-              res.status(400);
-              res.send("Room " + roomId + " does not exist");
-          }
         //}
         //else{
         //   res.status(401).end();
@@ -429,29 +422,28 @@ MongoClient.connect(url, function(err, db) {
         });
     }
 
-    function createRoom(hostId, roomId) {
+    function createRoom(hostId, roomId, cb) {
 
         // update users roomHostID key in the users table
-        var userAccountInfo = readDocument('users', hostId);
         getUserData(hostId, function(err, userData) {
             if(err) cb(err)
             else {
                 userData.roomHostID = roomId;
-                updateUserRoomHostId(userId, userData, function(err, newUserData) {
+                updateUserRoomHostId(hostId, userData, function(err, newUserData) {
                     if(err) cb(err);
                 });
 
                 // create a new empty room in the table
                 var newRoomDocument = {
                     "roomId": roomId,
-                    "host": hostId,
+                    "hostId": hostId,
                     "participants": [new ObjectID(hostId)],
                     "playlist": []
                 };
 
                 db.collection('rooms').insertOne(newRoomDocument, function(err, updatedRoom) {
                     if(err) cb(err);
-                    else cb(null, updatedRoom);
+                    else cb(null, updatedRoom.ops[0]);
                 });
             }
         });
@@ -556,7 +548,15 @@ MongoClient.connect(url, function(err, db) {
 
     /* Validates the room id by checking to see if that roomId exists or not */
     function validateRoom(roomId) {
-        return db.collection('rooms').findOne({"roomId": roomId}).count() > 0;
+        db.collection('rooms').findOne({"roomId": roomId}, function(err, roomData) {
+          if (err) {
+            return false;
+          } else if (roomData == null) {
+            return false;
+          }
+
+          return true;
+        });
     }
 
 
