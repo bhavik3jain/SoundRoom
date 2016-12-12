@@ -186,6 +186,9 @@ MongoClient.connect(url, function(err, db) {
         // });
     });
 
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+
     app.post('/room/save', validate({playlistSchema}), function(req, res) {
         console.log("Saving room playlist");
         var body = req.body,
@@ -198,8 +201,7 @@ MongoClient.connect(url, function(err, db) {
               else{
               var roomData=roomdata.playlist;
             var playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
-        //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
+
          saveSongsAsPlayist(userId, playlistName, playlistsToSave,function(err,songs) {
           if(err)
               res.status(500).send("A database error occured :" +err);
@@ -209,7 +211,7 @@ MongoClient.connect(url, function(err, db) {
               res.send(songs['message']);
             }
             else
-            {
+            {a
               res.status(201);
               res.send(songs);
             }
@@ -217,35 +219,13 @@ MongoClient.connect(url, function(err, db) {
             }
           // body...
         });
-        }});
-              //}
-        //else{
-        //   res.status(401).end();
-        //}
-    }
-
-    app.post('/room/:songId/new_song', validate({songSchema}), function(req, res) {
-        var body = req.body,
-            roomId = body.roomId,
-            songId = parseInt(req.params.songId),
-            userThatAddedSong = body.userId;
-        //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
-        var songAdded = addSongToRoomPlaylist(roomId, userThatAddedSong, songId);
-        if('message' in songAdded) {
-            res.status(400);
-            res.send(songAdded['message'])
-        }
-        else {
-          res.status(200);
-          res.send(songAdded);
-          io.emit("add song to room", songAdded);
-        }
-        //}
+      };
+              });
         //else{
         //   res.status(401).end();
         //}
     });
+
 
     app.post('/room/song_like', validate({songSchema}), function(req, res) {
         var body = req.body,
