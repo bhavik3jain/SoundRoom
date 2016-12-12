@@ -186,52 +186,46 @@ MongoClient.connect(url, function(err, db) {
         // });
     });
 
+    //var userAuth = getUserIdFromToken(req.get('Authorization'));
+    //if(userAuth === body.userId){
+
     app.post('/room/save', validate({playlistSchema}), function(req, res) {
         console.log("Saving room playlist");
         var body = req.body,
             userId = body.userId,
             roomId = body.roomId,
-            playlistName = body.playlistName,
-            roomData = getRoomData(roomId).playlist,
-            playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
-        //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
-        var songs = saveSongsAsPlayist(userId, playlistName, playlistsToSave);
-        if('message' in songs) {
-            res.status(400);
-            res.send(songs['message']);
-        } else {
-            res.status(201);
-            res.send(songs);
-        }
-              //}
+            playlistName = body.playlistName;
+            getRoomData(new ObjectID(roomId),function(err,roomdata){
+              if(err)
+                res.status(500).send("A database error occured :" +err);
+              else{
+              var roomData=roomdata.playlist;
+            var playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
+
+         saveSongsAsPlayist(userId, playlistName, playlistsToSave,function(err,songs) {
+          if(err)
+              res.status(500).send("A database error occured :" +err);
+            else
+            { if('message' in songs){
+              res.status(400);
+              res.send(songs['message']);
+            }
+            else
+            {a
+              res.status(201);
+              res.send(songs);
+            }
+
+            }
+          // body...
+        });
+      };
+              });
         //else{
         //   res.status(401).end();
         //}
     });
 
-    app.post('/room/:songId/new_song', validate({songSchema}), function(req, res) {
-        var body = req.body,
-            roomId = body.roomId,
-            songId = parseInt(req.params.songId),
-            userThatAddedSong = body.userId;
-        //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
-        var songAdded = addSongToRoomPlaylist(roomId, userThatAddedSong, songId);
-        if('message' in songAdded) {
-            res.status(400);
-            res.send(songAdded['message'])
-        }
-        else {
-          res.status(200);
-          res.send(songAdded);
-          io.emit("add song to room", songAdded);
-        }
-        //}
-        //else{
-        //   res.status(401).end();
-        //}
-    });
 
     app.post('/room/song_like', validate({songSchema}), function(req, res) {
         var body = req.body,
@@ -239,10 +233,15 @@ MongoClient.connect(url, function(err, db) {
             roomId = body.roomId,
             songId = body.songId;
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
+        //if(userAuth === body.userId){res.send
           res.status(200);
-          res.send(addLikeToSong(roomId, userId, songId));
-          io.emit("song like", {"message": "Song liked", success: true});
+          addLikeToSong(roomId, userId, songId,function(err,roomData){
+            if(err)
+            {res.status(500).send("A database error occured :" +err);}
+          else
+            {res.send(roomData);
+          io.emit("song like", {"message": "Song liked", success: true});}
+        });
         //}
         //else{
         //   res.status(401).end();
