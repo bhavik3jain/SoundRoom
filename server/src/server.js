@@ -253,10 +253,15 @@ MongoClient.connect(url, function(err, db) {
             roomId = body.roomId,
             songId = body.songId;
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
+        //if(userAuth === body.userId){res.send
           res.status(200);
-          res.send(addLikeToSong(roomId, userId, songId));
-          io.emit("song like", {"message": "Song liked", success: true});
+          addLikeToSong(roomId, userId, songId,function(err,roomData){
+            if(err)
+            {res.status(500).send("A database error occured :" +err);}
+          else
+            {res.send(roomData);
+          io.emit("song like", {"message": "Song liked", success: true});}
+        });
         //}
         //else{
         //   res.status(401).end();
