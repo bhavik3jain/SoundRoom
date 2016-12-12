@@ -188,28 +188,27 @@ MongoClient.connect(url, function(err, db) {
     userId = body.userId,
     roomId = body.roomId,
     playlistName = body.playlistName;
-    getRoomData(new ObjectID(roomId),function(err,roomdata){
+    getRoomData(roomId,function(err,roomdata){
       if(err)
       res.status(500).send("A database error occured :" +err);
       else{
         var roomData=roomdata.playlist;
         var playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
 
-        saveSongsAsPlayist(userId, playlistName, playlistsToSave,function(err,songs) {
+        saveSongsAsPlaylist(userId, playlistName, playlistsToSave,function(err,songs) {
+          console.log("songs", songs);
           if(err)
           res.status(500).send("A database error occured :" +err);
-          else
-          { if('message' in songs){
+          else if ('message' in songs){
             res.status(400);
             res.send(songs['message']);
           }
           else
-          {a
+          {
             res.status(201);
+            console.log("songs", songs);
             res.send(songs);
           }
-
-        }
         // body...
       });
     };
@@ -415,7 +414,7 @@ app.post('/room/song_like', validate({songSchema}), function(req, res) {
   }
 
   /* Save songs in the room as a playlist for a user to listen to later */
-  function saveSongsAsPlayist(userId, playlistName, playlistsToSave,  cb) {
+  function saveSongsAsPlaylist(userId, playlistName, playlistsToSave,  cb) {
     validatePlaylistName(userId, playlistName, function(err, playlistExists) {
       if(!playlistExists) {
         getUserData(userId, function(err, userData) {
@@ -425,6 +424,7 @@ app.post('/room/song_like', validate({songSchema}), function(req, res) {
             savePlaylistToUserAccount(userId, userData, function(err, newUserData) {
               if(err) cb(err);
               else {
+                console.log("saved playlist", newUserData);
                 cb(null, newUserData);
               }
             });
@@ -437,7 +437,7 @@ app.post('/room/song_like', validate({songSchema}), function(req, res) {
     });
   }
 
-  function savePlaylistToUserAccount(userId, userData) {
+  function savePlaylistToUserAccount(userId, userData, cb) {
     db.collection('users').updateOne({"_id": new ObjectID(userId)}, userData, function(err, newUserData) {
       if(err) cb(err);
       else {

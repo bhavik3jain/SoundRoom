@@ -87,7 +87,8 @@ var initialData = {
             "roomId": "2",
             "hostId": new ObjectID("000000000000000000000002"),
             "participants": [new ObjectID("000000000000000000000002")],
-            "playlist": []
+            "playlist": [{"trackID": "91168166"},{"trackID":"158721013"}, {"trackID":"197028880"}]
+        
         }
     }
 };
