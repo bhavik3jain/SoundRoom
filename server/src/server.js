@@ -3,6 +3,7 @@
 var express = require('express');
 var app = express();
 var twilio = require('twilio');
+var async = require('async');
 
 var client = twilio('ACa1c9c14903d2f008379e589ffe5ac411', '6a7fbad6cf389a25894ebf421df5a4a0');
 
@@ -44,10 +45,9 @@ MongoClient.connect(url, function(err, db) {
     const io = require("socket.io")(server);
 
     io.on('connection', (socket) => {
-        console.log("a user connected");
-
+        console.log("A user has connected to SoundRoom");
         socket.on("disconnect", () => {
-            console.log("user disconnected");
+            console.log("A user disconnected");
         });
     });
 
@@ -59,14 +59,14 @@ MongoClient.connect(url, function(err, db) {
         var body = req.body;
         var userId = req.params.userId;
         var userAuth = getUserIdFromToken(req.get('Authorization'));
-        if(userAuth === userId){
+        // if(userAuth === userId){
             getUserData(userId, function(err, userData) {
                 res.status(200).send(userData);
             });
-        }
-        else{
-          res.status(401).end();
-        }
+        // }
+        // else{
+        //   res.status(401).end();
+        // }
 
     });
 
@@ -109,30 +109,61 @@ MongoClient.connect(url, function(err, db) {
 
     app.post('/createroom/:hostId', validate({roomSchema}), function(req, res) {
         var body = req.body;
-        var hostId = req.params.hostId,
-            roomId = body.roomId;
+        var hostId = req.params.hostId;
+        // var hostId = body.hostId;
+        var roomId = body.roomId;
 
-        //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
-          if(!validateRoom(roomId) && !validateRoomHost(hostId)) {
-              // create a new room with a host and room id
-              res.send(createRoom(hostId, roomId));
-              // redirect the host to the new room
-              // res.redirect('/room/' + roomId);
-          }
-          else {
+        validateRoom(roomId, function(err, validatedRoom) {
+            validateRoomHost(hostId, function(err, validatedHostId){
+                if(!validatedRoom && !validatedHostId) {
+                    createRoom(hostId, roomId, function(err, roomData) {
+                      if (err) {
+                        res.status(500).end();
+                      }
+                      else {
+                        res.status(200).send(roomData);
+                      }
+                    });
+                }
+                else {
+                    var error = {
+                        message: "You cannot create a room that already exists or you are already a host for another room",
+                        success: false
+                    };
+                    res.status(400).send(error.message);
+                }
+            });
+        });
+        // } else {
+        //   res.status(400).send("Room already exists or host already hosting room");
+        // }
 
-              var error = {
-                  message: "You cannot create a room that already exists or you are already a host for another room",
-                  success: false
-              }
-              res.status(400)
-              res.send(error.message);
-          }
-        //}
-        //else{
-        //   res.status(401).end();
-        //}
+
+        // var body = req.body;
+        // var hostId = req.params.hostId,
+        //     roomId = body.roomId;
+        //
+        // //var userAuth = getUserIdFromToken(req.get('Authorization'));
+        // //if(userAuth === body.userId){
+        //   if(!validateRoom(roomId) && !validateRoomHost(hostId)) {
+        //       // create a new room with a host and room id
+        //       res.send(createRoom(hostId, roomId));
+        //       // redirect the host to the new room
+        //       // res.redirect('/room/' + roomId);
+        //   }
+        //   else {
+        //
+        //       var error = {
+        //           message: "You cannot create a room that already exists or you are already a host for another room",
+        //           success: false
+        //       }
+        //       res.status(400)
+        //       res.send(error.message);
+        //   }
+        // //}
+        // //else{
+        // //   res.status(401).end();
+        // //}
     });
 
     app.post('/joinroom/:userId', validate({roomSchema}), function(req, res) {
@@ -142,32 +173,45 @@ MongoClient.connect(url, function(err, db) {
 
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
         //if(userAuth === body.userId){
-          if(validateRoom(roomId)) {
-              // validate that the room exists
-              var roomData = getRoomData(roomId);
+        validateRoom(roomId, function(err, validatedRoom) {
+            if(validatedRoom) {
+                getRoomData(roomId, function(err, roomData) {
+                    if(err) res.status(500).end();
+                    else {
+                        var userInRoom = false;
+                        for(var participant in roomData.participants) {
+                            if(userId == roomData.participants[participant]) {
+                                userInRoom = true;
+                            }
+                        }
 
-              // add to the rooms document a new participant and take them to the room
-              var userInRoom = false;
-              for(var participant in roomData.participants) {
-                  if(userId == roomData.participants[participant]) {
-                      userInRoom = true;
-                  }
-              }
-
-              if(!userInRoom) {
-                  console.log("User Id: ", userId);
-                  roomData.participants.push(userId);
-                  writeDocument('rooms', roomData);
-              }
-
-              res.status(200);
-              res.send({"success": true});
-              io.emit("joinroom", roomData);
-
-          } else {
-              res.status(400);
-              res.send("Room " + roomId + " does not exist");
-          }
+                        if(!userInRoom) {
+                            console.log("User not in the room", userId);
+                            roomData.participants.push(userId);
+                            db.collection('rooms').updateOne({"roomId": roomId}, roomData, function(err, newRoomData) {
+                                if(err) res.status(500).end();
+                                else {
+                                    db.collection('rooms').findOne({"roomId": roomId}, function(err, newRoomDataResult) {
+                                        res.status(200);
+                                        res.send({"success": true});
+                                        io.emit("joinroom", newRoomDataResult);
+                                    });
+                                }
+                            });
+                        } else {
+                            console.log("User in the room");
+                            res.status(200);
+                            res.send({"success": true});
+                            io.emit("joinroom", roomData);
+                        }
+                    }
+                });
+            }
+            else {
+                res.status(400);
+                res.send("Room " + roomId + " does not exist");
+            }
+        })
         //}
         //else{
         //   res.status(401).end();
@@ -179,11 +223,10 @@ MongoClient.connect(url, function(err, db) {
     app.post("/room/data", validate({roomSchema}), function(req, res) {
         var body = req.body;
         var roomId = body.roomId;
-
-        // getRoomData(roomId, function(err, roomData) {
-            // if(err) res.status(400).end();
-            // else res.status(200).send(roomData);
-        // });
+        getRoomData(roomId, function(err, roomData) {
+            if(err) res.status(400).end();
+            else res.status(200).send(roomData);
+        });
     });
 
     app.post('/room/save', validate({playlistSchema}), function(req, res) {
@@ -191,20 +234,24 @@ MongoClient.connect(url, function(err, db) {
         var body = req.body,
             userId = body.userId,
             roomId = body.roomId,
-            playlistName = body.playlistName,
-            roomData = getRoomData(roomId).playlist,
-            playlistsToSave = roomData.map((item) => "tracks/" + item.trackID);
+            playlistName = body.playlistName;
+
+        getRoomData(roomId, function(err, roomData) {
+            if(err) res.status(500).end();
+            else {
+                playlistsToSave = roomData.playlist.map((item) => "tracks/" + item.trackID);
+                saveSongsAsPlayist(userId, playlistName, playlistsToSave, function(err, newUserData) {
+                    if(err) res.status(500).send(err.message);
+                    else {
+                        res.status(200).send(newUserData);
+                    }
+                });
+            }
+        });
+
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
         //if(userAuth === body.userId){
-        var songs = saveSongsAsPlayist(userId, playlistName, playlistsToSave);
-        if('message' in songs) {
-            res.status(400);
-            res.send(songs['message']);
-        } else {
-            res.status(201);
-            res.send(songs);
-        }
-              //}
+
         //else{
         //   res.status(401).end();
         //}
@@ -217,16 +264,15 @@ MongoClient.connect(url, function(err, db) {
             userThatAddedSong = body.userId;
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
         //if(userAuth === body.userId){
-        var songAdded = addSongToRoomPlaylist(roomId, userThatAddedSong, songId);
-        if('message' in songAdded) {
-            res.status(400);
-            res.send(songAdded['message'])
-        }
-        else {
-          res.status(200);
-          res.send(songAdded);
-          io.emit("add song to room", songAdded);
-        }
+        addSongToRoomPlaylist(roomId, userThatAddedSong, songId, function(err, newRoomData) {
+            if(err) {
+                res.status(400).end(err.message);
+            }
+            else {
+                res.status(200).send(newRoomData);
+                io.emit("add song to room", newRoomData);
+            }
+        });
         //}
         //else{
         //   res.status(401).end();
@@ -240,9 +286,12 @@ MongoClient.connect(url, function(err, db) {
             songId = body.songId;
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
         //if(userAuth === body.userId){
-          res.status(200);
-          res.send(addLikeToSong(roomId, userId, songId));
-          io.emit("song like", {"message": "Song liked", success: true});
+          addLikeToSong(roomId, userId, songId, function(err, newRoomData) {
+              res.status(200);
+              res.send(newRoomData);
+              io.emit("song like", {"message": "Song liked", success: true});
+          });
+        //   res.send(addLikeToSong(roomId, userId, songId));
         //}
         //else{
         //   res.status(401).end();
@@ -267,14 +316,8 @@ MongoClient.connect(url, function(err, db) {
     app.get('/song/:songId', function(req, res) {
         var body = req.body,
             songId = parseInt(req.params.songId);
-        //var userAuth = getUserIdFromToken(req.get('Authorization'));
-        //if(userAuth === body.userId){
           res.status(201);
-          res.send(getSongMetadata(songId));
-        //}
-        //else{
-        //   res.status(401).end();
-        //}
+          res.status(200).send(getSongMetadata(songId));
     });
 
     // Reset database.
@@ -286,45 +329,66 @@ MongoClient.connect(url, function(err, db) {
       res.send();
     });
 
-    app.delete('/room/:roomid/participants/:participantid', function(req, res) {
-      console.log("Deleting participant...");
-      var roomId = parseInt(req.params.roomid, 10);
+    app.delete('/room/:roomId/participants/:participantid', function(req, res) {
+      var roomId = req.params.roomId;
       var participantId = req.params.participantid;
-      var room = readDocument('rooms', roomId);
-      var participantIndex = room.participants.indexOf(participantId);
-      if (participantIndex != -1) {
-        console.log(room.participants);
-        room.participants.splice(participantIndex, 1);
-        console.log("After splice", room.participants);
-        writeDocument('rooms', room);
-      }
-      io.emit("remove participant", {"message": "Deleted participant from room"});
-      res.send({message: "Deleted participant from room"});
-
+      getRoomData(roomId, function(err, roomData) {
+          if(err) res.status(500).end();
+          else {
+              var participantIndex = roomData.participants.indexOf(participantId);
+              if (participantIndex != -1) {
+                roomData.participants.splice(participantIndex, 1);
+                db.collection('rooms').updateOne({"roomId": roomId}, roomData, function(err, newRoomData) {
+                    if(err) res.status(500).end();
+                    else {
+                        io.emit("remove participant", {"message": "Deleted participant from room"});
+                        res.send({message: "Deleted participant from room"});
+                    }
+                });
+              }
+          }
       });
+    });
 
     app.post('/room/host', function(req, res) {
       var roomId = req.body.roomId;
-      var room = getRoomByAccessCode(roomId);
-      res.send({"host": room.host});
+      getRoomData(roomId, function(err, roomData) {
+          if(err) {
+              res.status(500).end();
+          }
+          else {
+              res.status(200);
+              res.send({"host": roomData.host});
+          }
+      });
     });
 
     app.delete('/room/delete', function(req, res) {
       var roomId = req.body.roomId;
-      var rooms = getCollection('rooms');
-      for (var room in rooms) {
-        var id = rooms[room].roomId;
-        var hostId = rooms[room].host;
-        if (id === roomId) {
-          var userData = getUserData(hostId);
-          userData.roomHostID = null;
-          writeDocument('users', userData);
-          deleteDocument('rooms', parseInt(room));
-        }
-      }
 
-      res.send({"deleted": true});
-      io.emit("delete room", {"deleted": true, "message": "Room is being deleted. Taking you back to the home page"});
+      getRoomData(roomId, function(err, roomData) {
+          if(err) res.status(400).end();
+          else {
+              var hostId = roomData.host;
+              getUserData(hostId, function(err, userData) {
+                  if(err) res.status(500).end();
+                  else {
+                      userData.roomHostID = null;
+                      db.collection('users').updateOne({"_id": new ObjectID(hostId)}, userData, function(err, newUserData) {
+                          if(err) res.status(400).end();
+                      });
+
+                      db.collection('rooms').deleteOne({"roomId": roomId}, function(err, newRoomData) {
+                          if(err) res.status(400).end();
+                          else {
+                              res.send({"deleted": true});
+                              io.emit("delete room", {"deleted": true, "message": "Room is being deleted. Taking you back to the home page"});
+                          }
+                      });
+                  }
+              });
+          }
+      });
     });
 
 
@@ -351,21 +415,21 @@ MongoClient.connect(url, function(err, db) {
     function getRoomParticipants(roomId, cb) {
         // TODO: callback issues with arrays
         getRoomData(roomId, function(err, roomData) {
-            console.log("RoomData", roomData);
             var participantsIds = [];
             for(var id in roomData.participants) {
                 participantsIds.push(roomData.participants[id]);
             }
 
-            var participants = participantsIds.map((id) => {
+            var participants = [];
+            async.each(participantsIds, function(id, callback) {
                 getUserData(id, function(err, userData) {
-                    console.log("UserData", userData);
-                    return userData.firstname + " " + userData.lastname;
+                    participants.push(userData.firstname + " " + userData.lastname);
+                    callback(null);
                 });
+            }, function(err) {
+                cb(null, {"participants": participants});
             });
 
-            console.log("Participants", participants);
-            cb(null, {"participants": participants});
         });
 
     }
@@ -383,9 +447,14 @@ MongoClient.connect(url, function(err, db) {
                                 roomData.playlist[song].userLikes.push(userId);
                             }
                         }
-                        db.collection("rooms", {"roomId": roomId}, roomData, function(err, newRoomData) {
+                        db.collection("rooms").updateOne({"roomId": roomId}, roomData, function(err, newRoomData) {
                             if(err) cb(err);
-                            else cb(null, newRoomData);
+                            else {
+                                getRoomData(roomId, function(err, newUpdatedRoomData) {
+                                    if(err) cb(err);
+                                    else cb(null, newUpdatedRoomData);
+                                });
+                            }
                         });
                     }
                     else {
@@ -398,7 +467,7 @@ MongoClient.connect(url, function(err, db) {
     }
 
     /* Save songs in the room as a playlist for a user to listen to later */
-    function saveSongsAsPlayist(userId, playlistName, playlistsToSave,  cb) {
+    function saveSongsAsPlayist(userId, playlistName, playlistsToSave, cb) {
         validatePlaylistName(userId, playlistName, function(err, playlistExists) {
             if(!playlistExists) {
                 getUserData(userId, function(err, userData) {
@@ -415,29 +484,33 @@ MongoClient.connect(url, function(err, db) {
                 });
             }
             else {
-                cb(null, {message: "Playlist already exists or there are no songs to save", success: false});
+                cb({message: "Playlist already exists or there are no songs to save", success: false});
             }
         });
     }
 
-    function savePlaylistToUserAccount(userId, userData) {
+    function savePlaylistToUserAccount(userId, userData, cb) {
         db.collection('users').updateOne({"_id": new ObjectID(userId)}, userData, function(err, newUserData) {
             if(err) cb(err);
             else {
-                cb(null, newUserData);
+                console.log("new user data from savePlaylistToUserAccount", newUserData);
+                getUserData(userId, function(err, newUpdatedUserData) {
+                    if(err) cb(err);
+                    else cb(null, newUpdatedUserData);
+                });
             }
         });
     }
 
-    function createRoom(hostId, roomId) {
+    function createRoom(hostId, roomId, cb) {
 
         // update users roomHostID key in the users table
-        var userAccountInfo = readDocument('users', hostId);
+        // var userAccountInfo = readDocument('users', hostId);
         getUserData(hostId, function(err, userData) {
-            if(err) cb(err)
+            if(err) cb(err);
             else {
                 userData.roomHostID = roomId;
-                updateUserRoomHostId(userId, userData, function(err, newUserData) {
+                updateUserRoomHostId(hostId, userData, function(err, newUserData) {
                     if(err) cb(err);
                 });
 
@@ -445,13 +518,15 @@ MongoClient.connect(url, function(err, db) {
                 var newRoomDocument = {
                     "roomId": roomId,
                     "host": hostId,
-                    "participants": [new ObjectID(hostId)],
+                    "participants": [hostId],
                     "playlist": []
                 };
 
+                console.log("New Room Document", newRoomDocument);
+
                 db.collection('rooms').insertOne(newRoomDocument, function(err, updatedRoom) {
                     if(err) cb(err);
-                    else cb(null, updatedRoom);
+                    else cb(null, updatedRoom.ops[0]);
                 });
             }
         });
@@ -522,8 +597,11 @@ MongoClient.connect(url, function(err, db) {
     /* Gets the room's data (particpants, playlists, hostId) from the database */
     function getRoomData(roomId, cb) {
         db.collection('rooms').findOne({"roomId": roomId}, function(err, roomData){
-            if(err) cb(err)
-            else cb(null, roomData);
+            if(err) cb(err);
+            else {
+                console.log("Room data", roomData);
+                cb(null, roomData);
+            }
         });
     }
 
@@ -537,13 +615,18 @@ MongoClient.connect(url, function(err, db) {
                         var songDocument = {
                             trackID: songId,
                             likes: 1,
-                            userLikes: [new ObjectID(userId)]
+                            userLikes: [userId]
                         }
 
                         roomData.playlist.push(songDocument);
-                        db.collection('rooms').updateOne({"roomId": new ObjectID(roomId)}, roomData, function(err, roomDataResult) {
+                        db.collection('rooms').updateOne({"roomId": roomId}, roomData, function(err, roomDataResult) {
                             if(err) cb(err);
-                            else cb(null, roomData);
+                            else {
+                                db.collection('rooms').findOne({"roomId": roomId}, function(err, newRoomData) {
+                                    if(err) cb(err);
+                                    else cb(null, newRoomData);
+                                });
+                            }
                         });
                     } else {
                         cb({"message": "Song already in the playlist"});
@@ -555,8 +638,10 @@ MongoClient.connect(url, function(err, db) {
     }
 
     /* Validates the room id by checking to see if that roomId exists or not */
-    function validateRoom(roomId) {
-        return db.collection('rooms').findOne({"roomId": roomId}).count() > 0;
+    function validateRoom(roomId, cb) {
+        db.collection('rooms').find({"roomId": roomId}).limit(1).count().then(function(result){
+            cb(null, result > 0);
+        });
     }
 
 
@@ -565,12 +650,11 @@ MongoClient.connect(url, function(err, db) {
         getRoomData(roomId, function(err, roomData) {
             if(err) cb(err);
             else {
-                var songInRoom;
+                var songInRoom = false;
                 for(var songs in roomData.playlist) {
                     var checkSong = roomData.playlist[songs].trackID;
                     if(checkSong === songId) {songInRoom = true;}
                 }
-                songInRoom = false;
                 cb(null, songInRoom);
             }
         });
@@ -578,7 +662,7 @@ MongoClient.connect(url, function(err, db) {
     }
 
     /* Checks to see if the user already like the song in the room's playlist or not */
-    function validateSongLikes(roomId, userId, songId){
+    function validateSongLikes(roomId, userId, songId, cb){
         getRoomData(roomId, function(err, roomData){
             if(err) cb(err);
             else {
@@ -614,8 +698,10 @@ MongoClient.connect(url, function(err, db) {
     }
 
     /* Checks to see if the user is already a host of another room */
-    function validateRoomHost(hostId) {
-        return db.collection('rooms').find({"host": hostId}).count() > 0;
+    function validateRoomHost(hostId, cb) {
+        db.collection('rooms').find({"host": hostId}).count().then(function(result) {
+            cb(null, result > 0);
+        });
     }
 
     function getRoomByAccessCode(code) {

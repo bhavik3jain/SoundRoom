@@ -76,15 +76,22 @@ var initialData = {
         "1": {
             "_id" : new ObjectID("000000000000000000000001"),
             "roomId": "1",
-            "host": "1",
-            "participants": [new ObjectID("000000000000000000000001")],
+            "host": "000000000000000000000001",
+            "participants": ["000000000000000000000001"],
             "playlist": []
         },
         "2": {
             "_id" : new ObjectID("000000000000000000000002"),
             "roomId": "2",
-            "host": "2",
-            "participants": [new ObjectID("000000000000000000000002")],
+            "host": "000000000000000000000002",
+            "participants": ["000000000000000000000002"],
+            "playlist": []
+        },
+        "3": {
+            "_id": new ObjectID("000000000000000000000003"),
+            "roomId": "ax34dsf",
+            "host": "000000000000000000000001",
+            "participants": ["000000000000000000000001"],
             "playlist": []
         }
     }
