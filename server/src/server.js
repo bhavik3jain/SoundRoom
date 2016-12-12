@@ -303,8 +303,14 @@ MongoClient.connect(url, function(err, db) {
 
     app.post('/room/host', function(req, res) {
       var roomId = req.body.roomId;
-      var room = getRoomByAccessCode(roomId);
-      res.send({"host": room.host});
+      getRoomData(roomId, function(err, room){
+        if (err){
+          res.status(500).send("A database error occurred: " + err);
+        } else{
+          res.status(201);
+          res.send({"host": room.host});
+        }
+      });
     });
 
     app.delete('/room/delete', function(req, res) {
