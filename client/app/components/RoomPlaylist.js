@@ -1,11 +1,12 @@
 import React from 'react';
-import {getRoomHostId, getRoomData, getSongsData, getUserDataNCB, saveSongsAsPlayist, getRoomDataServer, addSongToRoom, getSongMetadata, addLikeToSong} from '../server';
+import {getRoomHostId, deleteSongFromRoom, getRoomData, getSongsData, getUserDataNCB, saveSongsAsPlayist, getRoomDataServer, addSongToRoom, getSongMetadata, addLikeToSong} from '../server';
 import SoundCloudPlayer from './SoundCloudPlayer';
 import Select from 'react-select';
 import eachSeries from 'async/eachSeries';
 import update from 'immutability-helper';
 var each = require('async-each-series');
 var async = require('async');
+import SoundCloud from 'react-soundcloud-widget';
 
 
 export default class RoomPlaylist extends React.Component {
@@ -17,16 +18,15 @@ export default class RoomPlaylist extends React.Component {
     var socket = io();
 
     socket.on("add song to room", function(roomData) {
-        console.log("add song to room");
-        // this.setState({playlist: []});
         this.refreshPlaylist(roomData);
     }.bind(this));
 
 
     socket.on("song like", function(roomData) {
-        console.log("song like: update the state");
-        // this.setState({playlist: []});
-        console.log(roomData);
+        this.refreshPlaylist(roomData);
+    }.bind(this));
+
+    socket.on("delete song", function(roomData) {
         this.refreshPlaylist(roomData);
     }.bind(this));
 
@@ -162,6 +162,45 @@ export default class RoomPlaylist extends React.Component {
     }
   }
 
+  onPlay() {
+    console.log("playing");
+    console.log("delete from queue");
+  }
+
+  onFinish() {
+    console.log("TRACK FINISHED");
+    // console.log("index", this.state.playlist.indexOf(this.))
+    // console.log("state", this.state);
+    this.deleteSongFromQueue(this.state.songToPlay);
+
+    console.log("song to play", this.state.songToPlay);
+    console.log("room playlist", this.state.playlist);
+
+    // next song is the highest likes
+    var nextSong = this.getHighestVotedSong(this.state.playlist);
+    console.log("Playing the next song: ", nextSong);
+    this.setState({songToPlay: nextSong.soundcloud_url, songToPlayMetaData: nextSong});
+
+  }
+
+  deleteSongFromQueue(trackurl) {
+    // for (var song in this.state.playlist) {
+    //   if (this.state.playlist[song].soundcloud_url === trackurl) {
+    //     var oldState = this.state;
+    //     console.log("state", oldState);
+    //     this.state.playlist.splice(song, 1);
+    //     console.log("playlist", this.state.playlist);
+    //     oldState.playlist = this.state.playlist;
+    //     this.setState(oldState);
+    //   }
+    // }
+    var songId = parseInt(trackurl.split("/").slice(-1)[0], 10);
+    deleteSongFromRoom(this.state.currentRoomId, songId, function(newRoomData) {
+      console.log(newRoomData);
+    }.bind(this));
+    // console.log("Songid", songId);
+  }
+
   render() {
 
     const roomPlaylistArtwork = { width: '50px', height: '50px' };
@@ -178,6 +217,14 @@ export default class RoomPlaylist extends React.Component {
                                   <td className="notLike">{this.state.playlist[song].title}</td>
                                   <td><button type="button" className="btn btn-secondary btn-playlist" onClick={(e)=>this.addLikeToSong(e, song)}><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
                                 </tr>);
+
+    // console.log("Playlist: ", );
+    var currentSongMetaData;
+    if (this.state.playlist.length > 0) {
+      this.state.songToPlay = this.getHighestVotedSong(this.state.playlist).soundcloud_url;
+      currentSongMetaData = this.getHighestVotedSong(this.state.playlist);
+    }
+
     var track_url = this.state.songToPlay;
 
     SC.initialize({
@@ -231,12 +278,16 @@ export default class RoomPlaylist extends React.Component {
 
 
             var oldState = this.state;
+            var newSongToPlay;
+            if (this.state.playlist.length === 1) {
+              newSongToPlay = new_song.soundcloud_url;
+            }
             var oldPlaylist = oldState.playlist;
             //   oldState.playlist.push(songMetaData);
             console.log("Old Playlist: ", oldPlaylist);
             var newPlaylist = update(oldPlaylist, {$push: [new_song]});
             console.log("New Playlist: ", newPlaylist);
-            this.setState({playlist: newPlaylist});
+            this.setState({playlist: newPlaylist, songToPlay: newSongToPlay});
 
             // var oldState = this.state;
             // oldState.playlist.push(new_song);
@@ -251,12 +302,79 @@ export default class RoomPlaylist extends React.Component {
 		});
 	}
 
+    // var soundCloudPlayer;
+    // if(this.state.hostId == this.props.userLoggedIn) {
+    //     soundCloudPlayer =  <SoundCloudPlayer track_url={this.state.songToPlay} maxHeight={100} autoplay={true} shouldHide={true} />
+    // } else {
+    //     soundCloudPlayer = <div></div>;
+    // }
+
     var soundCloudPlayer;
-    if(this.state.hostId == this.props.userLoggedIn) {
-        soundCloudPlayer =  <SoundCloudPlayer track_url={this.state.songToPlay} maxHeight={100} autoplay={true} shouldHide={true} />
-    } else {
-        soundCloudPlayer = <div></div>;
+    //   if(this.state.hostId == this.props.userLoggedIn && track_url) {
+    //       soundCloudPlayer = <SoundCloud
+    //                             id={"sc-player"}
+    //                             url={track_url}
+    //                             onPlay={this.onPlay}
+    //                             onEnd={this.onFinish.bind(this)}
+    //                             opts = {{auto_play: true, show_comments: false, buying: false, sharing: false, liking: false, download: false, show_playcount: false}}
+    //                           />
+    // } else {
+    //   soundCloudPlayer = <div></div>;
+    //
+    // }
+
+
+    console.log("CurrentSongMetaData", currentSongMetaData);
+
+    if(track_url) {
+      if(this.state.hostId === this.props.userLoggedIn) {
+        soundCloudPlayer = <SoundCloud
+                              id={"sc-player"}
+                              url={track_url}
+                              onPlay={this.onPlay}
+                              onEnd={this.onFinish.bind(this)}
+                              opts = {{auto_play: true, show_comments: false, buying: false, sharing: false, liking: false, download: false, show_playcount: false}}
+                            />
+      }
+      else {
+        soundCloudPlayer = <div><h3>Current Song Playing: <strong>{currentSongMetaData.title}</strong></h3></div>
+      }
     }
+    else {
+      soundCloudPlayer = <div></div>
+    }
+
+    // if(this.state.hostId == this.props.userLoggedIn && track_url) {
+    //     // soundCloudPlayer =  <SoundCloudPlayer track_url={this.state.songToPlay} maxHeight={100} autoplay={true} shouldHide={true} />
+    //     // this.setupPlayer(this.state.songToPlay, 100, true);
+    //     //soundCloudPlayer =  <div dangerouslySetInnerHTML={{__html: this.state.soundPlayerIframe}}></div>
+    //     // var iframe = $(this.state.soundPlayerIframe);
+    //     // // console.log("iframe", iframe[0]);
+    //     // if (iframe[0]) {
+    //     //   console.log("before");
+    //     //   var widget = SC.Widget(iframe[0]);
+    //     //   widget.bind(SC.Widget.Events.FINISH, function() {
+    //     //     console.log("FINISHED");
+    //     //   });
+    //       // console.log("widget", widget);
+    //       soundCloudPlayer = <SoundCloud
+    //                             id={"sc-player"}
+    //                             url={track_url}
+    //                             onPlay={this.onPlay}
+    //                             onEnd={this.onFinish.bind(this)}
+    //                             opts = {{auto_play: true, show_comments: false, buying: false, sharing: false, liking: false, download: false, show_playcount: false}}
+    //                           />
+    //                           // id={"sc-player"}
+    //                           // opts = {auto_play: true}
+    //       //<div dangerouslySetInnerHTML={{__html: iframe[0]}}></div>
+    //     // } else {
+    //     //   soundCloudPlayer = <div></div>
+    //     // var widget = SC.Widget('sc-player');
+    //     // console.log("widget",widget);
+    //     // }
+    // } else {
+    //     soundCloudPlayer = <div></div>;
+    // }
 
     return (
 

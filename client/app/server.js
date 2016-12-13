@@ -205,6 +205,12 @@ export function deleteRoom(roomId, cb) {
   });
 }
 
+export function deleteSongFromRoom(roomId, songId, cb) {
+  sendXHR('DELETE', '/room/delete_song', {roomId: roomId, songId: songId}, (xhr) => {
+    cb(JSON.parse(xhr.responseText));
+  });
+}
+
 export function getRoomHostId(roomId, cb) {
     sendXHR('GET', '/room/host', {roomId: roomId}, (xhr) => {
         cb(JSON.parse(xhr.responseText));

@@ -32,6 +32,7 @@
     "mongodb": "^2.2.15",
     "react-dots-loader": "^2.0.0",
     "react-select": "^1.0.0-rc.2",
+    "react-soundcloud-widget": "^2.0.4",
     "react-spinjs": "^3.0.0",
     "react-spinkit": "^1.1.11",
     "socket.io": "^1.7.1",

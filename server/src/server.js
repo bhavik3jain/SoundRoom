@@ -425,6 +425,46 @@ MongoClient.connect(url, function(err, db) {
     });
 
 
+  app.delete('/room/delete_song', function(req, res) {
+        var body = req.body;
+        var roomId = body.roomId;
+        var songId = body.songId;
+
+        deleteSongFromRoom(roomId, songId, function(err, newRoomData) {
+          if(err) res.status(500).send(err);
+          else {
+            res.status(200).send(newRoomData);
+            io.emit("delete song", newRoomData);
+          }
+        });
+    });
+
+
+    function deleteSongFromRoom(roomId, songId, cb) {
+      getRoomData(roomId, function(err, roomData) {
+        if(err) cb(err);
+        else {
+          for(var song in roomData.playlist) {
+            if(roomData.playlist[song].trackID === songId) {
+              roomData.playlist.splice(song, 1);
+            }
+          }
+
+          db.collection('rooms').updateOne({"roomId": roomId}, roomData, function(err, newUpdatedRoomData) {
+            if(err) cb(err);
+            else {
+              getRoomData(roomId, function(err, newRoomData) {
+                if(err) cb(err);
+                else {
+                  cb(null, newRoomData);
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+
     /* Gets the participants (first and last name) from the room  */
     function getRoomParticipants(roomId, cb) {
         getRoomData(roomId, function(err, roomData) {
