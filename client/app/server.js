@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Link, browserHistory} from 'react-router';
 var token = 'eyJpZCI6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSJ9';
 
 function sendXHR(verb, resource, body, cb) {
@@ -235,7 +236,9 @@ export class ResetDatabase extends React.Component {
           xhr.open('POST', '/resetdb');
           xhr.addEventListener('load', function() {
             window.alert("Database reset! Refreshing the page now...");
-            document.location.reload(false);
+            // document.location.reload(false);
+            browserHistory.push("/");
+            window.location.reload();
           });
         xhr.send();
         }}>Reset Mock DB

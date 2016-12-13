@@ -11,12 +11,7 @@ app.use(bodyParser.text());
 app.use(express.static('../client/build'));
 
 //import database functions
-var database = require('./database.js');
-var readDocument = database.readDocument;
-var addDocument = database.addDocument;
-var writeDocument = database.writeDocument;
-var deleteDocument = database.deleteDocument;
-var getCollection = database.getCollection;
+var ResetDatabase = require('./resetdatabase');
 
 //schemas
 var roomSchema = require('./schemas/room.json');
@@ -338,9 +333,11 @@ MongoClient.connect(url, function(err, db) {
     app.post('/resetdb', function(req, res) {
       console.log("Resetting database...");
       // This is a debug route, so don't do any validation.
-      database.resetDatabase();
+      ResetDatabase(db, function() {
+        res.send({success: true});
+      });
       // res.send() sends an empty response with status code 200
-      res.send();
+
     });
 
     app.delete('/room/:roomId/participants/:participantid', function(req, res) {
