@@ -27,6 +27,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "immutability-helper": "^2.0.0",
     "mongo-express": "^0.33.0",
     "mongodb": "^2.2.15",
     "react-dots-loader": "^2.0.0",

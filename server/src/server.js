@@ -1,5 +1,3 @@
-// Implement your server in this file.
-// We should be able to run your server with node src/server.js
 var express = require('express');
 var app = express();
 var twilio = require('twilio');
@@ -61,7 +59,10 @@ MongoClient.connect(url, function(err, db) {
         var userAuth = getUserIdFromToken(req.get('Authorization'));
         // if(userAuth === userId){
             getUserData(userId, function(err, userData) {
-                res.status(200).send(userData);
+                if(err) res.status(500).end();
+                else {
+                    res.status(200).send(userData);
+                }
             });
         // }
         // else{
@@ -75,21 +76,25 @@ MongoClient.connect(url, function(err, db) {
         var userId = req.params.userId;
         var userAuth = getUserIdFromToken(req.get('Authorization'));
 
-        if(userAuth === userId) {
+        // if(userAuth === userId) {
             getUserData(userId, function(err, user) {
-                user.firstname = body.newInfo.firstName;
-                user.lastname = body.newInfo.lastName;
-                user.email = body.newInfo.email;
-                user.country = body.newInfo.country;
-                user.dob = body.newInfo.dob;
-                updateUserProfile(userId, user, function(err, updatedProfile) {
-                    res.status(200).send(updatedProfile);
-                });
+                if(err) res.status(500).end();
+                else {
+                    user.firstname = body.newInfo.firstName;
+                    user.lastname = body.newInfo.lastName;
+                    user.email = body.newInfo.email;
+                    user.country = body.newInfo.country;
+                    user.dob = body.newInfo.dob;
+                    updateUserProfile(userId, user, function(err, updatedProfile) {
+                        if(err) res.status(500).end();
+                        else res.status(200).send(updatedProfile);
+                    });
+                }
             });
-        }
-        else {
-            res.status(401).end();
-        }
+        // }
+        // else {
+        //     res.status(401).end();
+        // }
     });
 
     app.get('/user/:userId/playlists', function(req, res) {
@@ -97,14 +102,15 @@ MongoClient.connect(url, function(err, db) {
         var userAuth = getUserIdFromToken(req.get('Authorization'));
         var userId = req.params.userId;
 
-        if(userAuth === userId){
+        // if(userAuth === userId){
           getUserPlaylistData(userId, function(err, playlistData) {
-              res.status(200).send(playlistData);
+              if(err) res.status(500).end();
+              else res.status(200).send(playlistData);
           });
-        }
-        else{
-          res.status(401).end();
-        }
+        // }
+        // else{
+        //   res.status(401).end();
+        // }
     });
 
     app.post('/createroom/:hostId', validate({roomSchema}), function(req, res) {
@@ -200,6 +206,7 @@ MongoClient.connect(url, function(err, db) {
                             });
                         } else {
                             console.log("User in the room");
+                            console.log("Room Data for user already in the room: ", roomData);
                             res.status(200);
                             res.send({"success": true});
                             io.emit("joinroom", roomData);
@@ -287,9 +294,16 @@ MongoClient.connect(url, function(err, db) {
         //var userAuth = getUserIdFromToken(req.get('Authorization'));
         //if(userAuth === body.userId){
           addLikeToSong(roomId, userId, songId, function(err, newRoomData) {
-              res.status(200);
-              res.send(newRoomData);
-              io.emit("song like", {"message": "Song liked", success: true});
+              if(err) res.status(400).send(newRoomData);
+              else {
+                  if('message' in newRoomData) {
+                      res.status(400);
+                      res.send(newRoomData['message']);
+                  } else {
+                      res.send(newRoomData);
+                      io.emit("song like", newRoomData);
+                  }
+              }
           });
         //   res.send(addLikeToSong(roomId, userId, songId));
         //}
@@ -413,7 +427,6 @@ MongoClient.connect(url, function(err, db) {
 
     /* Gets the participants (first and last name) from the room  */
     function getRoomParticipants(roomId, cb) {
-        // TODO: callback issues with arrays
         getRoomData(roomId, function(err, roomData) {
             var participantsIds = [];
             for(var id in roomData.participants) {

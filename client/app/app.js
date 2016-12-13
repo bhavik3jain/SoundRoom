@@ -69,6 +69,12 @@ class LandingPage extends React.Component{
 
 class App extends React.Component{
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+        children: nextProps.children
+    });
+  }
+
   render(){
 
     const user_id_logged_in = this.props.location.query.user_id;

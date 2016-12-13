@@ -3,8 +3,9 @@ import {getRoomHostId, getRoomData, getSongsData, getUserDataNCB, saveSongsAsPla
 import SoundCloudPlayer from './SoundCloudPlayer';
 import Select from 'react-select';
 import eachSeries from 'async/eachSeries';
-
+import update from 'immutability-helper';
 var each = require('async-each-series');
+var async = require('async');
 
 
 export default class RoomPlaylist extends React.Component {
@@ -15,25 +16,32 @@ export default class RoomPlaylist extends React.Component {
     this.addLikeToSong = this.addLikeToSong.bind(this);
     var socket = io();
 
-    socket.on("add song to room", function(songData) {
+    socket.on("add song to room", function(roomData) {
         console.log("add song to room");
-        this.setState({playlist: []});
-        this.refresh();
+        // this.setState({playlist: []});
+        this.refreshPlaylist(roomData);
     }.bind(this));
 
 
-    socket.on("song like", function(res) {
+    socket.on("song like", function(roomData) {
         console.log("song like: update the state");
-        this.setState({playlist: []});
-        this.refresh();
+        // this.setState({playlist: []});
+        console.log(roomData);
+        this.refreshPlaylist(roomData);
     }.bind(this));
 
+  }
+
+  refreshPlaylist(roomData) {
+    //   getRoomData(this.state.currentRoomId, (roomData) => {
+    this.getRoomPlaylistSongs(roomData);
+    //   });
   }
 
   refresh() {
       getRoomData(this.state.currentRoomId, (roomData) => {
           this.setState({hostId: roomData.host});
-          this.getRoomPlaylistSongs(roomData)
+          this.getRoomPlaylistSongs(roomData);
       });
   }
 
@@ -42,8 +50,9 @@ export default class RoomPlaylist extends React.Component {
   }
 
   getRoomPlaylistSongs(roomData) {
-      each(roomData.playlist, (song, next) => {
-          getSongMetadata(song.trackID).then((songData) => {
+      var allSongs = [];
+      async.each(roomData.playlist, (song, callback) => {
+          getSongMetadata(song.trackID, function(songData) {
               console.log(songData);
               var songMetaData = {};
               songMetaData.likes = song.likes;
@@ -53,12 +62,24 @@ export default class RoomPlaylist extends React.Component {
               songMetaData.track_id = songData.id;
               songMetaData.soundcloud_url = songData.uri;
               songMetaData.artwork_url = songData.artwork_url;
-              var oldState = this.state;
-              oldState.playlist.push(songMetaData);
-              this.setState(oldState);
-         });
-         next();
-      });
+              console.log("Song Meta Data", songMetaData);
+              allSongs.push(songMetaData);
+            //   console.log("Songs: ", songs);
+              callback(null);
+          });
+          //   this.setState({playlist: []});
+            //   var oldState = this.state;
+            //   var oldPlaylist = oldState.playlist;
+            //   console.log("Old Playlist: ", oldPlaylist);
+            // //   oldState.playlist.push(songMetaData);
+            //   var newPlaylist = update(oldPlaylist, {$push: [songMetaData]});
+            //   console.log("New playlist: ", newPlaylist);
+            //   this.setState({playlist: newPlaylist});
+        //  });
+     }, function(err) {
+        //  console.log("Songs array", allSongs);
+         this.setState({playlist: allSongs});
+     }.bind(this));
   }
 
   getHighestVotedSong(playlist) {
@@ -75,14 +96,14 @@ export default class RoomPlaylist extends React.Component {
     var songTrackId =  this.state.playlist[song].track_id;
     addLikeToSong(this.state.currentRoomId, songTrackId, this.props.userLoggedIn, (roomData) => {
         if('message' in roomData) {
-            bootbox.alert({
-                message: roomData['message'],
-                backdrop: true
-            });
+            console.log(roomData["message"]);
+            // bootbox.alert({
+            //     message: roomData['message'],
+            //     backdrop: true
+            // });
         }
         else {
-            this.setState({currentRoomId: this.props.currentRoomId, playlist: [], "track_to_search": ""});
-            console.log("roomData after liked song", roomData);
+            this.setState({currentRoomId: this.props.currentRoomId, playlist: this.state.playlist, "track_to_search": ""});
             // this.getRoomPlaylistSongs(roomData);
         }
     });
@@ -208,9 +229,18 @@ export default class RoomPlaylist extends React.Component {
                 title : value.title
             };
 
+
             var oldState = this.state;
-            oldState.playlist.push(new_song);
-            this.setState(oldState);
+            var oldPlaylist = oldState.playlist;
+            //   oldState.playlist.push(songMetaData);
+            console.log("Old Playlist: ", oldPlaylist);
+            var newPlaylist = update(oldPlaylist, {$push: [new_song]});
+            console.log("New Playlist: ", newPlaylist);
+            this.setState({playlist: newPlaylist});
+
+            // var oldState = this.state;
+            // oldState.playlist.push(new_song);
+            // this.setState(oldState);
 
         });
     }

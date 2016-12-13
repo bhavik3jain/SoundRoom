@@ -18,6 +18,8 @@ export default class JoinRoom extends React.Component{
 
       var input_room_number = document.getElementById("userInput").value;
 
+      console.log("Input room number: ", input_room_number);
+      console.log("User joining the room", this.props.location.query.user_logged_in);
       joinRoom(input_room_number, this.props.location.query.user_logged_in, (success) => {
           browserHistory.push("room/?roomId=" + input_room_number + "&user_logged_in=" + this.props.location.query.user_logged_in);
       });
@@ -36,9 +38,8 @@ export default class JoinRoom extends React.Component{
                              placeholder="Enter Access Code" />
                            <center>
                             <button type = "button" className="btn btn-default" id="btn1" onClick={(e)=>this.letUserJoinRoom(e)}>Join</button>
-                           <Link to="/">
+                           <Link to={"/?user_id=" + this.props.location.query.user_logged_in}>
                              <button type = "button" className="btn btn-default" id="btn2" >Back</button>
-
                            </Link>
                            </center>
                        </div>

@@ -14,15 +14,16 @@ export default class RoomParticipants extends React.Component {
     var socket = io();
 
     socket.on("joinroom", function(data) {
-        this.setState({});
+        // this.setState({});
+        console.log("Getting roomId of: ", this.state.currentRoomId);
         getRoomParticipants(this.state.currentRoomId, (roomParticipants) => {
-            this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})
+        this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})
         });
     }.bind(this));
 
     socket.on("remove participant", function(data) {
         /// error here: it trys to post afte
-        this.setState({});
+        // this.setState({});
         getRoomParticipants(this.state.currentRoomId, (roomParticipants) => {
             this.setState({currentRoomId: this.state.currentRoomId, currentUser: this.state.currentUser, participants: roomParticipants.participants})
         });
@@ -36,6 +37,7 @@ export default class RoomParticipants extends React.Component {
     removeParticipant(userId, roomId, (data) => {
       console.log("removing participant", userId);
       browserHistory.push('/?user_id=' + this.state.currentUser);
+      window.location.reload();
     });
   }
 

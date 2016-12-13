@@ -18,15 +18,19 @@ export default class Room extends React.Component{
 
       var socket = io();
       socket.on("delete room", (data) => {
+          console.log("Deleting the room");
           bootbox.alert({
               message: data.message,
               backdrop: true,
-              className: 'soundroom_error_modal'
+              className: 'soundroom_error_modal',
+              callback: function() {
+                  emitter.emit('updateSidebar'); // Two above listeners invoke
+                  browserHistory.push('/?user_id=' + this.state.currentUser);
+                  window.location.reload();
+              }.bind(this)
           });
-
-          browserHistory.push('/?user_id=' + this.state.currentUser);
-          emitter.emit('updateSidebar'); // Two above listeners invoke
       });
+
     }
 
     shouldHideExitButton() {

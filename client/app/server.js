@@ -104,12 +104,14 @@ export function getSongsData(sc_track, cb) {
 }
 
 
-export function getSongMetadata(songId) {
+export function getSongMetadata(songId, cb) {
     SC.initialize({
         client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'
     });
 
-    return SC.get("tracks/" + songId);
+    SC.get("tracks/" + songId).then(function(tracks) {
+        cb(tracks);
+    });
 }
 
 
