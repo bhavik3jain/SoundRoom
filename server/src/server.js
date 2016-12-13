@@ -612,8 +612,12 @@ MongoClient.connect(url, function(err, db) {
         db.collection('rooms').findOne({"roomId": roomId}, function(err, roomData){
             if(err) cb(err);
             else {
-                console.log("Room data", roomData);
-                cb(null, roomData);
+                // console.log("Room data", roomData);
+                if(roomData === null) {
+                  console.log("roomData is null when: ", roomId);
+                } else {
+                  cb(null, roomData);
+                }
             }
         });
     }

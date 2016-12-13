@@ -174,7 +174,7 @@ export default class RoomPlaylist extends React.Component {
     playlist_N.sort(this.compareVotes.bind(this));
     var roomPlaylistSongsElements = playlist_N.map((song) =>
                                 <tr key={song} onClick={(e) => this.handleSongClick(e,this.state.playlist[song].soundcloud_url)}>
-                                  <td className="notLike"><img src={this.state.playlist[song].artwork_url} style={roomPlaylistArtwork}/></td>
+                                  <td className="notLike"><img src={this.state.playlist[song].artwork_url} className="img-circle" style={roomPlaylistArtwork}/></td>
                                   <td className="notLike">{this.state.playlist[song].title}</td>
                                   <td><button type="button" className="btn btn-secondary btn-playlist" onClick={(e)=>this.addLikeToSong(e, song)}><span className="glyphicon glyphicon-thumbs-up"></span></button> | {this.state.playlist[song].likes} likes</td>
                                 </tr>);
