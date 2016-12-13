@@ -1,0 +1,7 @@
+# Ignores node dependencies (e.g. webpack).
+node_modules
+# Ignores your built application.
+build/js/app.js
+*.0
+*.ns
+*.lock
