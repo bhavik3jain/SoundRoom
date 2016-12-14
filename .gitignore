@@ -5,4 +5,4 @@ local.0
 null.0
 null.ns
 storage.bson
-
+mongod.lock
