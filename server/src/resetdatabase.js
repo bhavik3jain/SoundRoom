@@ -78,16 +78,17 @@ var initialData = {
         "1": {
             "_id" : new ObjectID("000000000000000000000001"),
             "roomId": "1",
-            "host": "1",
+            "hostId": new ObjectID("000000000000000000000001"),
             "participants": [new ObjectID("000000000000000000000001")],
             "playlist": []
         },
         "2": {
             "_id" : new ObjectID("000000000000000000000002"),
             "roomId": "2",
-            "host": "2",
+            "hostId": new ObjectID("000000000000000000000002"),
             "participants": [new ObjectID("000000000000000000000002")],
-            "playlist": []
+            "playlist": [{"trackID": "91168166"},{"trackID":"158721013"}, {"trackID":"197028880"}]
+        
         }
     }
 };
