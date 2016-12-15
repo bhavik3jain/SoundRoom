@@ -1,7 +1,7 @@
 import React from 'react';
 import {getUserData, getUserInfo, updateProfile} from '../server';
 
-export default class signUp extends React.Component{
+export default class SignUp extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -100,48 +100,42 @@ export default class signUp extends React.Component{
   render() {
     return (
       <div>
-      <div className="row" id="main_content">
-      <div className="col-md-6">
-
-      <div className="input-group">
-      <form action="" method="post" id="user-form">
-      <h3>First Name</h3>
-      <input name="firstname" id="account-input-box" type="text" className="form-control" placeholder={"Enter first name here"} aria-describedby="basic-addon2" />
-      <br />
-      <h3>Last Name</h3>
-      <input name="lastname" id="account-input-box" type="text" className="form-control" placeholder={"Enter last name here"} aria-describedby="basic-addon2" />
-      <br />
-      <h3>Email</h3>
-      <input name="email" id="account-input-box" type="text" className="form-control" placeholder={"Enter email here"} aria-describedby="basic-addon2" />
-      <br />
-      <h3>Country</h3>
-      <input name="country "id="account-input-box" type="text" className="form-control" placeholder={"Enter country here"} aria-describedby="basic-addon2" />
-      <br />
-      <h3>State</h3>
-      <input name="state" id="account-input-box" type="text" className="form-control" placeholder={"Enter state here"} aria-describedby="basic-addon2" />
-      <br />
-      <h3>City</h3>
-      <input name="city "id="account-input-box" type="text" className="form-control" placeholder={"Enter city here"} aria-describedby="basic-addon2" />
-      <br />
-      <h3>Date of birth</h3>
-      <input name="dob" id="account-input-box" type="text" className="form-control" placeholder={"Enter date of birth here"} aria-describedby="basic-addon2" />
-      //must connect it to a function that is to save new user data and not updateUserData
-      <button type="button" id="accountinfo-btn1" className="btn btn-primary btn-lg" onClick={(e) => this.updateUserData()}>Sign Up</button>
-      </form>
-      </div>
-      </div>
-
-      <div className="col-md-6">
-      <h1 id="account_info_name">{this.state.account_info.firstname + " " + this.state.account_info.lastname}</h1>
-      <img src={this.state.account_info.avatar} alt="Profile pic" className="img-circle" id="account_info_pic"/>
-      <input ref="file" type="file" name="file" accept=".jpg,.jpeg,.png,.gif" onChange={(e) => this.uploadImage(e)}/>
-      <button type="button" id="accountinfo-btn1" className="btn btn-primary btn-lg"  onClick={(e) => this.triggerImageUpload(e)}>Upload Photo</button>
-
-  Post
-</button>
-      </button>
-      </div>
-      </div>
+        <div className="row" id="main_content">
+          <div className="col-md-6">
+            <div className="input-group">
+              <form action="" method="post" id="user-form">
+                  <h3>First Name</h3>
+                    <input name="firstname" id="account-input-box" type="text" className="form-control" placeholder={"Enter first name here"} aria-describedby="basic-addon2" />
+                    <br />
+                  <h3>Last Name</h3>
+                    <input name="lastname" id="account-input-box" type="text" className="form-control" placeholder={"Enter last name here"} aria-describedby="basic-addon2" />
+                    <br />
+                  <h3>Email</h3>
+                    <input name="email" id="account-input-box" type="text" className="form-control" placeholder={"Enter email here"} aria-describedby="basic-addon2" />
+                    <br />
+                  <h3>Country</h3>
+                    <input name="country "id="account-input-box" type="text" className="form-control" placeholder={"Enter country here"} aria-describedby="basic-addon2" />
+                    <br />
+                  <h3>State</h3>
+                    <input name="state" id="account-input-box" type="text" className="form-control" placeholder={"Enter state here"} aria-describedby="basic-addon2" />
+                    <br />
+                  <h3>City</h3>
+                    <input name="city "id="account-input-box" type="text" className="form-control" placeholder={"Enter city here"} aria-describedby="basic-addon2" />
+                    <br />
+                  <h3>Date of birth</h3>
+                    <input name="dob" id="account-input-box" type="text" className="form-control" placeholder={"Enter date of birth here"} aria-describedby="basic-addon2" />
+                    //must connect it to a function that is to save new user data and not updateUserData
+                    <button type="button" id="accountinfo-btn1" className="btn btn-primary btn-lg" onClick={(e) => this.updateUserData()}>Sign Up</button>
+              </form>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <h1 id="account_info_name">{this.state.account_info.firstname + " " + this.state.account_info.lastname}</h1>
+            <img src={this.state.account_info.avatar} alt="Profile pic" className="img-circle" id="account_info_pic"/>
+            <input ref="file" type="file" name="file" accept=".jpg,.jpeg,.png,.gif" onChange={(e) => this.uploadImage(e)}/>
+            <button type="button" id="accountinfo-btn1" className="btn btn-primary btn-lg"  onClick={(e) => this.triggerImageUpload(e)}>Upload Photo</button>
+          </div>
+        </div>
       </div>
     );
   }

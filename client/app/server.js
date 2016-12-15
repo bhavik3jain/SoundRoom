@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Link, browserHistory} from 'react-router';
 var token = 'eyJpZCI6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSJ9';
 
 function sendXHR(verb, resource, body, cb) {
@@ -104,12 +105,14 @@ export function getSongsData(sc_track, cb) {
 }
 
 
-export function getSongMetadata(songId) {
+export function getSongMetadata(songId, cb) {
     SC.initialize({
         client_id: 'd0cfb4e9bb689b898b7185fbd6d13a57'
     });
 
-    return SC.get("tracks/" + songId);
+    SC.get("tracks/" + songId).then(function(tracks) {
+        cb(tracks);
+    });
 }
 
 
@@ -203,6 +206,12 @@ export function deleteRoom(roomId, cb) {
   });
 }
 
+export function deleteSongFromRoom(roomId, songId, cb) {
+  sendXHR('DELETE', '/room/delete_song', {roomId: roomId, songId: songId}, (xhr) => {
+    cb(JSON.parse(xhr.responseText));
+  });
+}
+
 export function getRoomHostId(roomId, cb) {
     sendXHR('GET', '/room/host', {roomId: roomId}, (xhr) => {
         cb(JSON.parse(xhr.responseText));
@@ -227,7 +236,9 @@ export class ResetDatabase extends React.Component {
           xhr.open('POST', '/resetdb');
           xhr.addEventListener('load', function() {
             window.alert("Database reset! Refreshing the page now...");
-            document.location.reload(false);
+            // document.location.reload(false);
+            browserHistory.push("/");
+            window.location.reload();
           });
         xhr.send();
         }}>Reset Mock DB

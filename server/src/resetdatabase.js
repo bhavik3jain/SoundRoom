@@ -34,7 +34,7 @@ var initialData = {
             "state": "MA",
             "city": "Amherst",
             "dob": "04/10/1996",
-            "roomHostID": "2",
+            "roomHostID": null,
             "playlists": {
                   "Party Songs": ["tracks/91168166", "tracks/158721013", "tracks/197028880"]
             }
@@ -78,17 +78,9 @@ var initialData = {
         "1": {
             "_id" : new ObjectID("000000000000000000000001"),
             "roomId": "1",
-            "hostId": new ObjectID("000000000000000000000001"),
-            "participants": [new ObjectID("000000000000000000000001")],
+            "host": "000000000000000000000001",
+            "participants": ["000000000000000000000001"],
             "playlist": []
-        },
-        "2": {
-            "_id" : new ObjectID("000000000000000000000002"),
-            "roomId": "2",
-            "hostId": new ObjectID("000000000000000000000002"),
-            "participants": [new ObjectID("000000000000000000000002")],
-            "playlist": [{"trackID": "91168166"},{"trackID":"158721013"}, {"trackID":"197028880"}]
-        
         }
     }
 };
